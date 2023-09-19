@@ -1,4 +1,4 @@
-package main.java.gr2349.app;
+package gr2349.app;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
