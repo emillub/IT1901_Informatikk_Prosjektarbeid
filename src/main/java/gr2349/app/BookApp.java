@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class BookApp extends Application{
+public class BookApp extends Application {
+    //Add-functionality
 
     public static void main(String[] args) {
         launch(); 
