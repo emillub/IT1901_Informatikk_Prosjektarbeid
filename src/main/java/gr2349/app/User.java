@@ -1,7 +1,7 @@
+package gr2349.app;
+
 import java.util.ArrayList;
 
-
-package main.java.gr2349.app;
 
 public class User{
 
