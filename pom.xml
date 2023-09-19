@@ -97,7 +97,7 @@
                 <!-- Default configuration for running -->
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <mainClass>gr2349.app/gr2349.app.App</mainClass>
+                    <mainClass>gr2349.app/gr2349.app.BookApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
