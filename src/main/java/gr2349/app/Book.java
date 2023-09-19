@@ -45,7 +45,7 @@ public class Book {
         //iterere over finne avg rating 
         int sumOfRatings = 0;
         for (int i = 0; i < amountOfRatings; i++) {
-            sumOfRatings += reviewsOfBook[i].rating;
+            sumOfRatings += reviewsOfBook.get(i).getRating();
         }
         this.rating = sumOfRatings/amountOfRatings;
     } 
