@@ -43,7 +43,7 @@
                      <children>
                         <VBox layoutY="-4.0" prefHeight="389.0" prefWidth="500.0" spacing="10.0">
                            <children>
-                              <Text fx:id="markertBokText" strokeType="OUTSIDE" strokeWidth="0.0" text="Markert bok:" wrappingWidth="499.21630859375">
+                              <Text fx:id="markedBookText" strokeType="OUTSIDE" strokeWidth="0.0" text="Markert bok:" wrappingWidth="499.21630859375">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
@@ -64,7 +64,7 @@
                                  <children>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
-                                          <ListView fx:id="bookListView" prefHeight="320.0" prefWidth="240.0" />
+                                          <ListView fx:id="bookListView" onMouseClicked="#bookListViewClicked" prefHeight="320.0" prefWidth="240.0" />
                                        </content>
                                     </ScrollPane>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">

@@ -33,7 +33,7 @@ public class AppController {
     private TextField nameTextField;
 
     @FXML
-    private Text markertBokText,userNameText;
+    private Text markedBookText,userNameText;
 
     @FXML
     private ChoiceBox<Integer> rateChoiceBox;
@@ -52,13 +52,22 @@ public class AppController {
     private ArrayList<Object> books = new ArrayList<Object>();
 
     private static FileHandler fileHandler = new FileHandler();
+
+    private Object selectedBook;
     
-    public void loginButtonClick(){
+    @FXML private void loginButtonClick(){ //alt som skjer etter login
         loadLibrary();
         user = getUser();
         userNameText.setText("Innlogget som: " + user.getUserName());
         loginPane.setVisible(false);
         mainPane.setVisible(true);
+    }
+
+    @FXML private void bookListViewClicked(){
+        Object selectedItem = bookListView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null && selectedItem != selectedBook){
+            updateMarkedBookText(selectedItem.toString());
+        }
     }
 
    
@@ -68,13 +77,19 @@ public class AppController {
         updateBookListView();
     } 
 
-    private void updateBookListView(){
-        bookListView.setItems(FXCollections.observableArrayList(books));
-    }
-
-    public User getUser(){
+    private User getUser(){ //Henter bruker fra textfelt
         String name = nameTextField.getText();
         return user = new User(name);
     }
+
+    private void updateBookListView(){
+        bookListView.setItems(FXCollections.observableArrayList(books));    
+    }
+
+    private void updateMarkedBookText(String bookTitle){
+        markedBookText.setText("Markert bok: " + bookTitle);
+    }
+
+
     
 }
