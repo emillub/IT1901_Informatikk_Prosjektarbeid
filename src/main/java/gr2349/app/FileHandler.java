@@ -21,17 +21,19 @@ public class FileHandler {
     }
     
 
-    public void readBookFromFile(String filePath){
+    public Object readBookFromFile(String filePath){
         try{
             FileInputStream fis = new FileInputStream(filePath);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            System.out.println(ois.readObject());
+            Object book = ois.readObject();
             ois.close();
+            return book;
+
 
         } catch(Exception e){
             e.printStackTrace();
         }
-        
+        throw new IllegalAccessError();
     }
     
     public static void main(String[] args) {
