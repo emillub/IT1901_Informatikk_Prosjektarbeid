@@ -40,7 +40,7 @@ public class AppController {
 
     public void nameinput(ActionEvent event){
         String navn = name.getText();
-        System.out.println(navn);
+        User bruker = new User(navn);
     }
- 
+    
 }
