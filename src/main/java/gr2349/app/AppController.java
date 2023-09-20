@@ -9,21 +9,37 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 
 
 public class AppController {
 
     @FXML
-    private Button loginbutton;
+    private Button loginbutton, vurderButton;
 
     @FXML
     private Label mainwindow;
 
     @FXML 
     private TextField name;
+
+    @FXML
+    private Text markertBokText,userNameText;
+
+    @FXML
+    private ChoiceBox<Integer> rateChoiceBox;
+
+    @FXML
+    private ListView<BookReview> reviewList;
+    @FXML
+    private ListView<Book> bookList;
+
+
     
     public void handleclick(ActionEvent event){
         try{
@@ -37,6 +53,8 @@ public class AppController {
             e.printStackTrace();
         }
     }
+
+    
 
     public void nameinput(ActionEvent event){
         String navn = name.getText();
