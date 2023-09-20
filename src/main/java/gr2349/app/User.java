@@ -1,34 +1,24 @@
+package gr2349.app;
+
 import java.util.ArrayList;
 
 
-package main.java.gr2349.app;
-
 public class User{
 
-    String FirstName;
-    String LastName;
-    String UserName;
-    String email;
-    ArrayList<BookReview> reviews;
+    String Name;
 
-    public User(String FirstName, String LastName, String email, String UserName){
 
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.email = email;
-        this.UserName = UserName;
-        
-    }
+    public User(String Name){
 
-    public void setReview(BookReview review){
-        this.reviews.add(review);
+        this.Name = Name;
+
     }
 
     public String getUserName(){
-        return this.UserName;
+        return this.Name;
     }
     @Override
     public String toString() {
-        return this.FirstName + "," + this.LastName + "," + this.UserName + "," + this.email;
+        return this.Name;
     }
 }
