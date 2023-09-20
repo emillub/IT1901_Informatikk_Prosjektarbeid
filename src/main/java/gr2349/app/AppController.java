@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
 
@@ -20,6 +21,9 @@ public class AppController {
 
     @FXML
     private Label mainwindow;
+
+    @FXML 
+    private TextField name;
     
     public void handleclick(ActionEvent event){
         try{
@@ -32,6 +36,11 @@ public class AppController {
     } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void nameinput(ActionEvent event){
+        String navn = name.getText();
+        System.out.println(navn);
     }
  
 }

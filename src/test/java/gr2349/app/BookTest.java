@@ -11,7 +11,6 @@ public class BookTest {
 
     @Test
     public void click(){
-        
         clickbutton();
     }
 }
