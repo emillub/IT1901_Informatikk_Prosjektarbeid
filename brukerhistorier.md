@@ -9,6 +9,13 @@ Historie: "Som en (Hvem/Rolle) ønsker jeg...(Hva/Mål) slik at...(Hvorfor/Nytte
 * Funksjon 2
 
 
+### Grensesnitt (BH 1)
+Som bruker ønsker jeg å ha en oversikt over bøker og muligheten til å se vurderinger av dem, slik at jeg kan bestemme meg for om de er verdt å lese.
+
+### Hva må til
+* GUI-side for display av bøker
+* GUI-side for display av vurderinger per bok
+
 ### Signering av vuderinger (BH 1)
 Som en bruker ønsker jeg å signere vurderingene mine av ulike bøker, så andre kan se hvem som har skrevet dem.
 
