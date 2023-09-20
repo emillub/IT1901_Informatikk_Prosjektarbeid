@@ -1,9 +1,10 @@
 package gr2349.app;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-public class Book {
+public class Book implements Serializable{
     
     private Book book;
     private String title;
@@ -49,4 +50,8 @@ public class Book {
         }
         this.rating = sumOfRatings/amountOfRatings;
     } 
+
+    public String toString(){
+        return title;
+    }
 }
