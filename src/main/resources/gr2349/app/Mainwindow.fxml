@@ -15,7 +15,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr2349.app.AppController">
    <children>
       <AnchorPane fx:id="mainPane" prefHeight="513.0" prefWidth="540.0" visible="false">
@@ -55,6 +54,12 @@
                                     <Button fx:id="vurderButton" mnemonicParsing="false" text="Vurder" />
                                  </children>
                               </HBox>
+                              <HBox spacing="230.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bøker" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vurderinger" />
+                                 </children>
+                              </HBox>
                               <HBox>
                                  <children>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
@@ -85,7 +90,7 @@
                   <VBox spacing="10">
                      <children>
                         <Label text="Name" />
-                        <TextField fx:id="name" onAction="#nameinput" />
+                        <TextField fx:id="nameTextField" onAction="#loginButtonClick" />
                         <Button fx:id="loginbutton" onAction="#loginButtonClick" text="Log in" />
                      </children>
                   </VBox>

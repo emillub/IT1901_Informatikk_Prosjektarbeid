@@ -30,7 +30,7 @@ public class AppController {
     private Label mainwindow;
 
     @FXML 
-    private TextField name;
+    private TextField nameTextField;
 
     @FXML
     private Text markertBokText,userNameText;
@@ -47,6 +47,7 @@ public class AppController {
     @FXML
     private AnchorPane mainPane,loginPane;
 
+    private User user;
     
     private ArrayList<Object> books = new ArrayList<Object>();
 
@@ -54,12 +55,14 @@ public class AppController {
     
     public void loginButtonClick(){
         loadLibrary();
+        user = getUser();
+        userNameText.setText("Innlogget som: " + user.getUserName());
         loginPane.setVisible(false);
         mainPane.setVisible(true);
     }
 
    
-    private void loadLibrary(){//Funksjon for å laste
+    private void loadLibrary(){//Funksjon for å laste inn bibliotek
         Object book = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
         books.add(book);
         updateBookListView();
@@ -69,9 +72,9 @@ public class AppController {
         bookListView.setItems(FXCollections.observableArrayList(books));
     }
 
-    public void getUser(ActionEvent event){
-        String navn = name.getText();
-        User bruker = new User(navn);
+    public User getUser(){
+        String name = nameTextField.getText();
+        return user = new User(name);
     }
     
 }
