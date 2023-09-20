@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class FileHandler {
     private final static String FILE_EXTENSION = ".bok";
-    private static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
+    protected static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
 
     public void writeBookToFile(Book book){
         try {
