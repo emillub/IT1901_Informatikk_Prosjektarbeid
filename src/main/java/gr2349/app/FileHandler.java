@@ -27,6 +27,7 @@ public class FileHandler {
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object book = ois.readObject();
             ois.close();
+            System.out.println(book.toString());
             return book;
 
 
