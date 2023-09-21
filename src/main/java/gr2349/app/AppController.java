@@ -2,6 +2,7 @@ package gr2349.app;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,6 +55,10 @@ public class AppController {
     private static FileHandler fileHandler = new FileHandler();
 
     private Object selectedBook;
+
+    @FXML public void initialize(){
+        rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+    }
     
     @FXML private void loginButtonClick(){ //alt som skjer etter login
         loadLibrary();
