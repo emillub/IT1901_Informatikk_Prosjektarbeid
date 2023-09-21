@@ -17,6 +17,9 @@ For å kjøre prosjektet, naviger til gr2349 modulen ved hjelp av cd-kommandoer.
 Tidligste java versjon som fungerer til å kjøre appen er java versjon 16.0.1.
 Maven versjon som kreves for å kjøre appen er 3.9.4.
 
+# Skjermbilder for funksjonalitet til innlevering 1
 
+To skjermbilder som viser funksjonalitet knyttet til innlevering 1:
 
-
+![Viser innloggingsside](/docs/Bilder/Innlogging.png)
+![Viser hovedside](7docs/Bilder/Hovedside.png)
