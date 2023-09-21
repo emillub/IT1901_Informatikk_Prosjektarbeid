@@ -77,6 +77,7 @@ public class AppController {
 
    
     private void loadLibrary(){//Funksjon for å laste inn bibliotek
+        FileHandler.main(null);
         Object book = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
         books.add(book);
         updateBookListView();
