@@ -38,7 +38,7 @@ public class FileHandler {
     }
     
     public static void main(String[] args) {
-        Book book = new Book("Til musikken", "a", "author", 5);
+        Book book = new Book("Til musikken", "author");
         FileHandler fh = new FileHandler();
         fh.writeBookToFile(book);
         fh.readBookFromFile(DIR_PATH);
