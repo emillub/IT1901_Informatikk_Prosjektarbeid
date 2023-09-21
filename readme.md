@@ -22,4 +22,4 @@ Maven versjon som kreves for å kjøre appen er 3.9.4.
 To skjermbilder som viser funksjonalitet knyttet til innlevering 1:
 
 ![Viser innloggingsside](/docs/Bilder/Innlogging.png)
-![Viser hovedside](7docs/Bilder/Hovedside.png)
+![Viser hovedside](/docs/Bilder/Hovedside.png)
