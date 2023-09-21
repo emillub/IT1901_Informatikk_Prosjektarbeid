@@ -5,7 +5,7 @@ public class BookReview {
     private String reviewer; //Endre til et brukerobjektet som skriver vurderingen
     private int rating;
 
-    private final static int[] RATING_RANGE = {1,2,3,4,5};
+    protected final static int[] RATING_RANGE = {1,2,3,4,5};
 
     //Constructors
     public BookReview(Book book, String reviewer, int rating){
