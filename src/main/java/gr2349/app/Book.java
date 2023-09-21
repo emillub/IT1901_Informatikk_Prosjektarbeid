@@ -12,7 +12,7 @@ public class Book implements Serializable{
     private ArrayList<BookReview> reviewsOfBook;
     private float rating;
 
-    public Book(String title, String genre, String author, int pages) {
+    public Book(String title, String author, int pages) {
         this.title = title;
         this.author = author;
     }
