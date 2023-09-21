@@ -8,33 +8,21 @@ public class Book implements Serializable{
     
     private Book book;
     private String title;
-    private String genre;
     private String author;
-    private int pages;
     private ArrayList<BookReview> reviewsOfBook;
     private float rating;
 
     public Book(String title, String genre, String author, int pages) {
         this.title = title;
-        this.genre = genre;
         this.author = author;
-        this.pages = pages;
     }
 
     public String getTitle() {
         return this.title;
     }
 
-    public String getGenre() {
-        return this.genre;
-    }
-
     public String getAuthor() {
         return this.author;
-    }
-
-    public int getPages() {
-        return this.pages;
     }
 
     public Book getBook() {
@@ -51,6 +39,11 @@ public class Book implements Serializable{
         this.rating = sumOfRatings/amountOfRatings;
     } 
 
+    public void addReview(BookReview review){
+        reviewsOfBook.add(review);
+    }
+
+    @Override
     public String toString(){
         return title;
     }

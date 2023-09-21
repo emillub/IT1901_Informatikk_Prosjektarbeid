@@ -1,7 +1,6 @@
 package gr2349.app;
 
 public class BookReview {
-    private Book book;
     private String reviewer; //Endre til et brukerobjektet som skriver vurderingen
     private int rating;
 
@@ -9,15 +8,12 @@ public class BookReview {
 
     //Constructors
     public BookReview(Book book, String reviewer, int rating){
-        this.book = book;
+        addRatingToBook(book);
         this.reviewer = reviewer;
         setRating(rating);
     }
     
     //Getters
-    public Book getBook(){
-        return book;
-    }
     public String getReviewer(){
         return reviewer;
     }
@@ -25,11 +21,15 @@ public class BookReview {
         return rating;
     }
 
-    //Setters - Hva skal man kunne endre paa?
+    //Setters
     public void setRating(int r){
         if (validRating(r)){
             this.rating = r;
         }
+    }
+
+    public void addRatingToBook(Book book){
+        book.addReview(this);
     }
 
     //Validators
