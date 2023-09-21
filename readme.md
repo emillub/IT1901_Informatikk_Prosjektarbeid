@@ -12,8 +12,11 @@ For å bygge prosjektet, naviger til rotprosjekt-mappen og kjør mvn install i t
 
 For å kjøre prosjektet, naviger til gr2349 modulen ved hjelp av cd-kommandoer. Kjør dermed mvn javafx:run. Viktig at mvn install er kjørt før mvn javafx:run for at prosjektet skal kjøre. 
 
-# Krav til Java versjon
+# Krav til Java- og Maven versjon
 
 Tidligste java versjon som fungerer til å kjøre appen er java versjon 16.0.1.
 Maven versjon som kreves for å kjøre appen er 3.9.4.
+
+
+
 
