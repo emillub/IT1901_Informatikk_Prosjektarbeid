@@ -83,9 +83,11 @@
         		<artifactId>maven-surefire-plugin</artifactId>
 		        <version>3.1.2</version>
                 <configuration>
-                    <forkCount>0</forkCount>
+                    <printSummary>false</printSummary>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <forkCount>3</forkCount>
                     <argLine>
-                    --add-opens gr2349.app/gr2349.app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    ${surefireArgLine} -Xmx1024m -noverify --add-opens gr2349.app/gr2349.app=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
 	        </plugin>
@@ -103,12 +105,16 @@
             <plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.8.10</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+                        <configuration>
+                            <!-- Sets the VM argument line used when unit tests are run. -->
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
 					</execution>
 					<!-- attached to Maven test phase -->
 					<execution>
