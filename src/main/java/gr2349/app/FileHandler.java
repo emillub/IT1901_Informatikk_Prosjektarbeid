@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 
 public class FileHandler {
     private final static String FILE_EXTENSION = ".bok";
-    private static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
+    protected static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
 
     public void writeBookToFile(Book book){
         try {
@@ -21,21 +21,24 @@ public class FileHandler {
     }
     
 
-    public void readBookFromFile(String filePath){
+    public Object readBookFromFile(String filePath){
         try{
             FileInputStream fis = new FileInputStream(filePath);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            System.out.println(ois.readObject());
+            Object book = ois.readObject();
             ois.close();
+            System.out.println(book.toString());
+            return book;
+
 
         } catch(Exception e){
             e.printStackTrace();
         }
-        
+        throw new IllegalAccessError();
     }
     
     public static void main(String[] args) {
-        Book book = new Book("Title", "a", "author", 5);
+        Book book = new Book("Til musikken", "a", "author", 5);
         FileHandler fh = new FileHandler();
         fh.writeBookToFile(book);
         fh.readBookFromFile(DIR_PATH);
