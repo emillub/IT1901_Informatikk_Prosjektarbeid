@@ -22,21 +22,23 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 public class AppTest extends ApplicationTest {
 
-    private AppController controller;
-    private Parent root;
-
     @Override
     public void start(Stage stage) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Mainwindow.fxml"));
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent));
         stage.show();
     }
 
-    public Parent getRootNode(){
-        return root;
+    private void click(String... labels) {
+        for (var label : labels) {
+            clickOn(LabeledMatchers.hasText(label));
+        }
     }
 
-    //ADD NESSESARY FUNCTIONS FOR TESTS UNDERNEETH
-
+    @Test
+    public void buttonclick(){
+        click("Log in");
+        click("Vurder");
+    }
 }
