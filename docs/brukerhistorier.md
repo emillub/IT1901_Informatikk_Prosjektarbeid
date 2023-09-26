@@ -11,7 +11,7 @@ Historie: "Som en (Hvem/Rolle) ønsker jeg...(Hva/Mål) slik at...(Hvorfor/Nytte
 
 ### Grensesnitt (BH 1)
 Som bruker ønsker jeg å ha en oversikt over bøker og muligheten til å se vurderinger av dem, slik at jeg kan bestemme meg for om de er verdt å lese.
-### Hva må til
+### Hva må til:
 * GUI-side for display av bøker
 * GUI-side for display av vurderinger per bok
 
@@ -22,3 +22,11 @@ Som bruker ønsker jeg å legge igjen en signert vurdering fra 1-5 av bøker jeg
 *   BookReview-klasse må ta inn et navn-parameter
 *   Bruker-klasse må ha mulighet for å opprette en review
 *   Bruker må ha mulighet til å velge en bok og vurdere den 
+
+### Lagring (BH 3)
+Som bruker ønsker jeg at vurderingene mine lagres, så både andre og jeg kan se dem igjen senere.
+
+### Hva må til:
+*   Filhåndteringssystem som kan både skrive og lese fra fil
+*   Autolagring
+*   Sikring av at directorien finnes
