@@ -1,9 +1,12 @@
 package gr2349.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class BookReview {
-    private String reviewer; //Endre til et brukerobjektet som skriver vurderingen
+    private String reviewer; 
     private int rating;
 
+    @JsonIgnore
     protected final static Integer[] RATING_RANGE = {1,2,3,4,5};
 
     //Constructors
