@@ -3,6 +3,8 @@ package gr2349.app;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class Book implements Serializable{
@@ -44,8 +46,12 @@ public class Book implements Serializable{
         reviewsOfBook.add(review);
     }
 
-    public void setReviews(ArrayList<BookReview> reviews) {
-        this.reviewsOfBook = reviews;
+    public void setReviews(List<BookReview> reviews) {
+        this.reviewsOfBook = new ArrayList<>(reviews);;
+    }
+
+    public ArrayList<BookReview> getReviews(){
+        return this.reviewsOfBook;
     }
 
     @Override
