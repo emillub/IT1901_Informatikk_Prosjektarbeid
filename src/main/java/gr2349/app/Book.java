@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Book implements Serializable{
     
     private Book book;
     private String title;
     private String author;
+
+    @JsonIgnore //Henter ikke reviews av boken når boken skrives til fil
     private ArrayList<BookReview> reviewsOfBook;
     private float rating;
 
@@ -45,6 +49,6 @@ public class Book implements Serializable{
 
     @Override
     public String toString(){
-        return title;
+        return this.title;
     }
 }
