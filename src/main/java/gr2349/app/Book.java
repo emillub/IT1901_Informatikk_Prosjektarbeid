@@ -44,6 +44,10 @@ public class Book implements Serializable{
         reviewsOfBook.add(review);
     }
 
+    public void setReviews(ArrayList<BookReview> reviews) {
+        this.reviewsOfBook = reviews;
+    }
+
     @Override
     public String toString(){
         return this.title;
