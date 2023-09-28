@@ -4,15 +4,12 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Book implements Serializable{
     
     private Book book;
     private String title;
     private String author;
-
-    @JsonIgnore //Henter ikke reviews av boken når boken skrives til fil
     private ArrayList<BookReview> reviewsOfBook;
     private float rating;
 
@@ -33,7 +30,7 @@ public class Book implements Serializable{
         return this.book;
     }
 
-    public void getAverageRating(){
+    public void setAverageRating(){
         int amountOfRatings = this.reviewsOfBook.size();
         //iterere over finne avg rating 
         int sumOfRatings = 0;
