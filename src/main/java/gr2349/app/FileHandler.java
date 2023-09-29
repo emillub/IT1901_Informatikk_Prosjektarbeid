@@ -4,8 +4,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class FileHandler {
+    protected static Book[] LIBRARY = {new Book("Bok 1", "Forfatter 1"), new Book("Bok 2", "Forfatter 2"), new Book("Bok 3", "Forfatter 3")};
     private final static String FILE_EXTENSION = ".bok";
     protected static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
 
