@@ -26,7 +26,7 @@ To skjermbilder som viser funksjonalitet knyttet til innlevering 1:
 
 # Arbeidsvaner, arbeidsflyt og kodekvalitet
 
-Dette avsnittet gir en oversikt over viktige valg og tilnærminger som har blitt gjort i løpet av prosjektets utvikling relatert til arbeidsvaner, arbeidsflyt og kodekvalitet. 
+Dette avsnittet gir en oversikt over viktige valg og tilnærminger som har blitt gjort i løpet av prosjektets utvikling relatert til arbeidsvaner, arbeidsflyt og kodekvalitet i henhold til Release 2. 
 
 ## Arbeidsvaner
 
@@ -47,16 +47,7 @@ __Testing__ - Vi har vedtatt en tilnærming der hovedfunksjonene i appen blir te
 
 __Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode. 
 
-# Dokumentasjon av arkitektur: PlantUML
 
-Trenger graphviz og plantuml for å kjøre. 
-
-Graphviz installasjon: 
-    brew install --cask temurin
-    brew install graphviz
-
-PlantUML installasjon:
-    PlantUML kan lastes ned som en extension fra VS Code. Gå til "Extensions" og søk PlantUML. Den øverste laget av "jebbs" er versjonen som brukes i prosjektet. 
 
 
 
