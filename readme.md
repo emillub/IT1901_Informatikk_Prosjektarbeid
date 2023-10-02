@@ -49,6 +49,10 @@ __Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av 
 
 ## Arkitektur av app med PlantUML
 
+@startuml
+!include docs/Arkitektur.plantuml
+@enduml
+
 ![Arkitektur](https://www.planttext.com/)
 
 
