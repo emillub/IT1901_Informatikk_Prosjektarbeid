@@ -24,6 +24,16 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
-  
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.8</version>
+            <configuration>
+                <mainClass>bookapp.fxui/bookapp.fxui.BookApp</mainClass>
+            </configuration>
+          </plugin>
+      </plugins>
+  </build>
 </project>  
