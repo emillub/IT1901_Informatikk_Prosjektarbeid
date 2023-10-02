@@ -47,6 +47,10 @@ __Testing__ - Vi har vedtatt en tilnærming der hovedfunksjonene i appen blir te
 
 __Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode. 
 
+## Arkitektur av app med PlantUML
+
+![Arkitektur](https://www.planttext.com/)
+
 
 
 
