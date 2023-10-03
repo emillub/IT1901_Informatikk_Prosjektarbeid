@@ -13,7 +13,7 @@ public class Book implements Serializable{
     private Book book;
     private String title;
     private String author;
-    private ArrayList<BookReview> reviewsOfBook;
+    private ArrayList<BookReview> reviewsOfBook = new ArrayList<BookReview>();
 
     public Book(){}
     public Book(String title, String author) {
@@ -49,11 +49,21 @@ public class Book implements Serializable{
         return sumOfRatings/amountOfRatings;
     } 
 
+    private void validateReview(BookReview review){
+        if (reviewsOfBook.contains(review)) throw new IllegalArgumentException("Review eksisterer fra før");
+        
+        if (reviewsOfBook.stream().anyMatch(r -> r.getReviewer().equals(review.getReviewer()))){
+            throw new IllegalArgumentException("Users cannot write more than one review per book");
+        }
+
+    }
+
     public void addReview(BookReview review){
+        validateReview(review);
         reviewsOfBook.add(review);
     }
 
-    public void setReviews(List<BookReview> reviews) {
+    protected void setReviews(List<BookReview> reviews) {
         if (reviews == null) return;
         this.reviewsOfBook = new ArrayList<>(reviews);
     }
