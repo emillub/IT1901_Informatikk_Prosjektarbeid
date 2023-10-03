@@ -15,13 +15,16 @@ public class FileHandler {
 
     private final static String FILE_EXTENSION = ".json";
     public static String DIR_PATH = "bookapp\\persistence\\src\\main\\resources\\bookapp\\persistence\\book.json";
+    private List<Book> bookList = new ArrayList<>();
 
     public void writeBookToFile(Book book) {
+        bookList.add(book);
         try {
             ObjectMapper mapper = new ObjectMapper();
             // Writing the book object to file as JSON
-            mapper.writeValue(new File(DIR_PATH), book);
+            mapper.writeValue(new File(DIR_PATH), bookList);
         } catch (Exception ex) {
+            System.out.println("Error writing book: " +book.getTitle());
             ex.printStackTrace();
         }
     }
@@ -36,15 +39,6 @@ public class FileHandler {
     
             // Iterate over each book
             for (Book book : books) {
-                List<BookReview> reviews = book.getReviews();
-                if (reviews == null) {
-                    reviews = new ArrayList<>();
-                    book.setReviews(reviews);
-                } else {
-                    for (BookReview review : reviews) {
-                        book.addReview(review);
-                    }
-                }
                 book.setAverageRating();
             }
             return books;
@@ -57,10 +51,17 @@ public class FileHandler {
 
     public static void main(String[] args) {
         Book book = new Book("Til musikken", "author");
+        Book book1 = new Book("To kill a mockingbird", "Ukjent");
+        Book book2 = new Book("Maskiner som tenker", "Inga Stromke");
+
         FileHandler fh = new FileHandler();
         fh.writeBookToFile(book);
+        fh.writeBookToFile(book1);
+        fh.writeBookToFile(book2);
         fh.readBookFromFile(DIR_PATH);
     }
+
+
 
     
 }

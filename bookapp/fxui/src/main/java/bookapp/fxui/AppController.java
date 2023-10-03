@@ -7,6 +7,7 @@ import bookapp.core.User;
 import bookapp.core.BookReview;
 import bookapp.persistence.FileHandler;
 import bookapp.core.Book;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,8 +94,10 @@ public class AppController {
    
     private void loadLibrary(){//Funksjon for å laste inn bibliotek
         FileHandler.main(null);
-        Object book = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
+        List<Book> booklist = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
+        for (Book book: booklist){
         books.add(book);
+        }
         updateBookListView();
     } 
 

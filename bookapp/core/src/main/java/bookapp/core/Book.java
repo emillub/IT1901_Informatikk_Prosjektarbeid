@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class Book implements Serializable{
@@ -28,6 +29,7 @@ public class Book implements Serializable{
         return this.author;
     }
 
+    @JsonIgnore
     public Book getBook() {
         return this.book;
     }
