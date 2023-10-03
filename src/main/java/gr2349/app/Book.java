@@ -3,6 +3,9 @@ package gr2349.app;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class Book implements Serializable{
     
@@ -29,7 +32,7 @@ public class Book implements Serializable{
         return this.book;
     }
 
-    public void getAverageRating(){
+    public void setAverageRating(){
         int amountOfRatings = this.reviewsOfBook.size();
         //iterere over finne avg rating 
         int sumOfRatings = 0;
@@ -43,8 +46,16 @@ public class Book implements Serializable{
         reviewsOfBook.add(review);
     }
 
+    public void setReviews(List<BookReview> reviews) {
+        this.reviewsOfBook = new ArrayList<>(reviews);;
+    }
+
+    public ArrayList<BookReview> getReviews(){
+        return this.reviewsOfBook;
+    }
+
     @Override
     public String toString(){
-        return title;
+        return this.title;
     }
 }
