@@ -90,7 +90,6 @@
                 <configuration>
                     <printSummary>false</printSummary>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                    <forkCount>3</forkCount>
                     <argLine>
                     ${surefireArgLine} -Xmx1024m -noverify --add-opens bookapp.core/bookapp.core=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
