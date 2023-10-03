@@ -14,9 +14,8 @@ public class User{
         return this.name;
     }
 
-    public void writeReview(Book book, int Rating){
-        BookReview review = new BookReview(book, name, Rating);
-        review.addRatingToBook(book);
+    public void writeReview(Book book, int rating){
+        new BookReview(book, this, rating);
     }
 
     @Override
