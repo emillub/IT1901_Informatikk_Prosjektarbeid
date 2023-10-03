@@ -6,7 +6,7 @@ public class User{
     private String name;
 
 
-    public User(String Name){
+    public User(String name){
         this.name = name;
     }
 

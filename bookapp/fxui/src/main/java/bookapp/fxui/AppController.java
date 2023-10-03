@@ -6,6 +6,7 @@ import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
 import bookapp.persistence.FileHandler;
+import bookapp.core.Book;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

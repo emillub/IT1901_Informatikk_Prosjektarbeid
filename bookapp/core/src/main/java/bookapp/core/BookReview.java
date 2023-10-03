@@ -7,7 +7,7 @@ public class BookReview {
     private int rating;
 
     @JsonIgnore
-    protected final static Integer[] RATING_RANGE = {1,2,3,4,5};
+    public final static Integer[] RATING_RANGE = {1,2,3,4,5};
 
     //Constructors
     public BookReview(Book book, String reviewer, int rating){

@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookapp.core.Book;
+import bookapp.core.BookReview;
+
 
 
 public class FileHandler {
 
     private final static String FILE_EXTENSION = ".json";
-    protected static String DIR_PATH = "src/main/resources/bookapp/persistance/book.json";
+    public static String DIR_PATH = "bookapp\\persistence\\src\\main\\resources\\bookapp\\persistence\\book.json";
 
     public void writeBookToFile(Book book) {
         try {
