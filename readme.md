@@ -10,7 +10,7 @@ Applikasjonen bruker maven til bygging og kjøring.
 
 For å bygge prosjektet, naviger til rotprosjekt-mappen og kjør mvn install i terminalen. 
 
-For å kjøre prosjektet, naviger til gr2349 modulen ved hjelp av cd-kommandoer. Kjør dermed mvn javafx:run. Viktig at mvn install er kjørt før mvn javafx:run for at prosjektet skal kjøre. 
+For å kjøre prosjektet, naviger til bookapp modulen ved hjelp av cd-kommandoer. Kjør dermed mvn javafx:run. Viktig at mvn install er kjørt før mvn javafx:run for at prosjektet skal kjøre. 
 
 # Krav til Java- og Maven versjon
 
