@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -48,22 +49,30 @@ public class AppController {
     @FXML
     private AnchorPane mainPane,loginPane;
 
+    @FXML
+    private HBox vurderHBox;
+
+
     private User user;
     
     private ArrayList<Object> books = new ArrayList<Object>();
 
     private static FileHandler fileHandler = new FileHandler();
 
-    private Object selectedBook;
+    private Book selectedBook;
 
     @FXML public void initialize(){
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        loginPane.setVisible(true);
+        mainPane.setVisible(false);
     }
     
     @FXML private void loginButtonClick(){ //alt som skjer etter login
         loadLibrary();
         user = getUser();
+        System.out.println(user);
         userNameText.setText("Innlogget som: " + user.getUserName());
+        updateVurderHbox();
         loginPane.setVisible(false);
         mainPane.setVisible(true);
     }
@@ -71,6 +80,8 @@ public class AppController {
     @FXML private void bookListViewClicked(){
         Object selectedItem = bookListView.getSelectionModel().getSelectedItem();
         if (selectedItem != null && selectedItem != selectedBook){
+            selectedBook = (Book) selectedItem;
+            updateVurderHbox();
             updateMarkedBookText(selectedItem.toString());
         }
     }
@@ -85,7 +96,7 @@ public class AppController {
 
     private User getUser(){ //Henter bruker fra textfelt
         String name = nameTextField.getText();
-        return user = new User(name);
+        return new User(name);
     }
 
     private void updateBookListView(){
@@ -96,6 +107,16 @@ public class AppController {
         markedBookText.setText("Markert bok: " + bookTitle);
     }
 
+    private void updateReviewListView(){
+        reviewListView.setItems(FXCollections.observableArrayList(selectedBook.getReviews()));
+    }
 
+    private void updateVurderHbox(){
+        if (selectedBook == null){
+            vurderHBox.setDisable(true);
+        } else {
+            vurderHBox.setDisable(false);
+        }
+    }
     
 }
