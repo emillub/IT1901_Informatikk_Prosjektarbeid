@@ -39,4 +39,8 @@ public class BookReview {
         
         return true;
     }
+
+    public String toString(){
+        return "Gitt "+rating + " stjerner \n av " + reviewer.getUserName();
+    }
 }
