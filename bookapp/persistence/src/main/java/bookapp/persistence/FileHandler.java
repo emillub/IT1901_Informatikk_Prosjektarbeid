@@ -14,7 +14,7 @@ import bookapp.core.BookReview;
 public class FileHandler {
 
     private final static String FILE_EXTENSION = ".json";
-    public static String DIR_PATH = "bookapp\\persistence\\src\\main\\resources\\bookapp\\persistence\\book.json";
+    public static String DIR_PATH = "bookapp/persistence/src/main/resources/bookapp/persistance/book.json";
     private List<Book> bookList = new ArrayList<>();
 
     public void writeBookToFile(Book book) {
