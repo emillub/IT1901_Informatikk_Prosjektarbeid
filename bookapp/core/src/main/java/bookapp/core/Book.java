@@ -13,8 +13,7 @@ public class Book implements Serializable{
     private Book book;
     private String title;
     private String author;
-    public ArrayList<BookReview> reviewsOfBook;
-    private float rating;
+    private ArrayList<BookReview> reviewsOfBook;
 
     public Book(){}
     public Book(String title, String author) {
@@ -35,14 +34,18 @@ public class Book implements Serializable{
         return this.book;
     }
 
-    public void setAverageRating(){
+    public float getAverageRating(){
+        //Unngår divisionByZero error og reviewsOfBook is null, error
+        if (this.reviewsOfBook == null || this. reviewsOfBook.size() == 0) {
+            return 0;
+        }
         int amountOfRatings = this.reviewsOfBook.size();
         //iterere over finne avg rating 
         int sumOfRatings = 0;
         for (int i = 0; i < amountOfRatings; i++) {
             sumOfRatings += reviewsOfBook.get(i).getRating();
         }
-        this.rating = sumOfRatings/amountOfRatings;
+        return sumOfRatings/amountOfRatings;
     } 
 
     public void addReview(BookReview review){
