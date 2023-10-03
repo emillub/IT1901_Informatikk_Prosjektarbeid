@@ -34,8 +34,9 @@ public class Book implements Serializable{
         return this.book;
     }
 
+    @JsonIgnore
     public float getAverageRating(){
-        //Unngår divisionByZero error og reviewsOfBook is null, error
+        //Unngår divisionByZero error og reviewsOfBook is null error
         if (this.reviewsOfBook == null || this. reviewsOfBook.size() == 0) {
             return 0;
         }
@@ -63,6 +64,6 @@ public class Book implements Serializable{
 
     @Override
     public String toString(){
-        return this.title;
+        return this.title + "\nSkrevet av: " + this.author + "\nGjennomsnittsvurdering: " + getAverageRating();
     }
 }

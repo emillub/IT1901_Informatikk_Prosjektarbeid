@@ -60,7 +60,7 @@ public class AppController {
 
     private User user;
     
-    private ArrayList<Object> books = new ArrayList<Object>();
+    private ArrayList<Book> bookList = new ArrayList<Book>();
 
     private static FileHandler fileHandler = new FileHandler();
 
@@ -75,7 +75,6 @@ public class AppController {
     @FXML private void loginButtonClick(){ //alt som skjer etter login
         loadLibrary();
         user = getUser();
-        System.out.println(user);
         userNameText.setText("Innlogget som: " + user.getUserName());
         updateVurderHbox();
         loginPane.setVisible(false);
@@ -87,17 +86,14 @@ public class AppController {
         if (selectedItem != null && selectedItem != selectedBook){
             selectedBook = (Book) selectedItem;
             updateVurderHbox();
-            updateMarkedBookText(selectedItem.toString());
+            updateMarkedBookText(selectedBook.getTitle());
         }
     }
 
    
     private void loadLibrary(){//Funksjon for å laste inn bibliotek
-        FileHandler.main(null);
-        List<Book> booklist = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
-        for (Book book: booklist){
-        books.add(book);
-        }
+        List<Book> loadedBooks = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
+        bookList.addAll(loadedBooks);
         updateBookListView();
     } 
 
@@ -107,7 +103,7 @@ public class AppController {
     }
 
     private void updateBookListView(){
-        bookListView.setItems(FXCollections.observableArrayList(books));    
+        bookListView.setItems(FXCollections.observableArrayList(bookList));    
     }
 
     private void updateMarkedBookText(String bookTitle){
