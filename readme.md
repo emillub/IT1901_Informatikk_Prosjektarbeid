@@ -45,15 +45,16 @@ __Oppgavestyring__ - I GitLab bruker vi "Issues" og "Tasks" for oppgavestrying. 
 
 __Testing__ - Vi har vedtatt en tilnærming der hovedfunksjonene i appen blir testet. 
 
-__Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode. 
+__Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode.
 
 ## Arkitektur av app med PlantUML
 
 @startuml
-!include docs/Arkitektur.plantuml
+!include docs/Bilder/Arkitektur.plantuml
 @enduml
 
-![Arkitektur](https://www.planttext.com/)
+![Arkitektur](/docs/Bilder/Arkitektur.plantuml)
+
 
 
 
