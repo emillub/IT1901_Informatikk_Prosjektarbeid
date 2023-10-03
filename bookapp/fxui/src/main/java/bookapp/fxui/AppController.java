@@ -87,7 +87,17 @@ public class AppController {
             selectedBook = (Book) selectedItem;
             updateVurderHbox();
             updateMarkedBookText(selectedBook.getTitle());
+            updateReviewListView();
         }
+    }
+
+    @FXML private void vurderButtonClicked(){
+        if (selectedBook == null) return;
+        var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
+        if(rating == null) return;
+        user.writeReview(selectedBook, (int) rating);
+        updateReviewListView();
+        updateBookListView();
     }
 
    
@@ -106,12 +116,12 @@ public class AppController {
         bookListView.setItems(FXCollections.observableArrayList(bookList));    
     }
 
-    private void updateMarkedBookText(String bookTitle){
-        markedBookText.setText("Markert bok: " + bookTitle);
-    }
-
     private void updateReviewListView(){
         reviewListView.setItems(FXCollections.observableArrayList(selectedBook.getReviews()));
+    }
+
+    private void updateMarkedBookText(String bookTitle){
+        markedBookText.setText("Markert bok: " + bookTitle);
     }
 
     private void updateVurderHbox(){
