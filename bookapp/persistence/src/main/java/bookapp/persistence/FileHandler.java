@@ -35,12 +35,9 @@ public class FileHandler {
         try {
             ObjectMapper mapper = new ObjectMapper();
             // Reading a list of books from the JSON file
+            System.out.println("Kjører");
             List<Book> books = mapper.readValue(new File(filepath), new TypeReference<List<Book>>() {});
-    
             // Iterate over each book
-            for (Book book : books) {
-                book.setAverageRating();
-            }
             return books;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -58,7 +55,7 @@ public class FileHandler {
         fh.writeBookToFile(book);
         fh.writeBookToFile(book1);
         fh.writeBookToFile(book2);
-        fh.readBookFromFile(DIR_PATH);
+        System.out.println(fh.readBookFromFile(DIR_PATH));
     }
 
 

@@ -13,9 +13,10 @@ public class Book implements Serializable{
     private Book book;
     private String title;
     private String author;
-    private ArrayList<BookReview> reviewsOfBook;
+    public ArrayList<BookReview> reviewsOfBook;
     private float rating;
 
+    public Book(){}
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
@@ -49,7 +50,8 @@ public class Book implements Serializable{
     }
 
     public void setReviews(List<BookReview> reviews) {
-        this.reviewsOfBook = new ArrayList<>(reviews);;
+        if (reviews == null) return;
+        this.reviewsOfBook = new ArrayList<>(reviews);
     }
 
     public ArrayList<BookReview> getReviews(){
