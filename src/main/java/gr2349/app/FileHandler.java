@@ -1,42 +1,55 @@
 package gr2349.app;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileHandler {
-    private final static String FILE_EXTENSION = ".bok";
-    protected static String DIR_PATH = "src/main/resources/gr2349/app/books/book.txt";
 
-    public void writeBookToFile(Book book){
+    private final static String FILE_EXTENSION = ".json";
+    protected static String DIR_PATH = "src/main/resources/gr2349/app/books/book.json";
+
+    public void writeBookToFile(Book book) {
         try {
-            FileOutputStream fos = new FileOutputStream(DIR_PATH);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(book);
-            oos.close();
-        } catch (Exception ex){
+            ObjectMapper mapper = new ObjectMapper();
+            // Writing the book object to file as JSON
+            mapper.writeValue(new File(DIR_PATH), book);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
+
+    //Reads books and reviews related to them from file and creates instances of them 
+    public List<Book> readBookFromFile(String filepath) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            // Reading a list of books from the JSON file
+            List<Book> books = mapper.readValue(new File(filepath), new TypeReference<List<Book>>() {});
     
-
-    public Object readBookFromFile(String filePath){
-        try{
-            FileInputStream fis = new FileInputStream(filePath);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Object book = ois.readObject();
-            ois.close();
-            System.out.println(book.toString());
-            return book;
-
-
-        } catch(Exception e){
-            e.printStackTrace();
+            // Iterate over each book
+            for (Book book : books) {
+                List<BookReview> reviews = book.getReviews();
+                if (reviews == null) {
+                    reviews = new ArrayList<>();
+                    book.setReviews(reviews);
+                } else {
+                    for (BookReview review : reviews) {
+                        book.addReview(review);
+                    }
+                }
+                book.setAverageRating();
+            }
+            return books;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        throw new IllegalAccessError();
+        return null;
     }
     
+
     public static void main(String[] args) {
         Book book = new Book("Til musikken", "author");
         FileHandler fh = new FileHandler();
@@ -44,4 +57,5 @@ public class FileHandler {
         fh.readBookFromFile(DIR_PATH);
     }
 
+    
 }
