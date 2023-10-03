@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookapp.app.AppController"
+     alignment="center" hgap="100.0" vgap="100.0" >
+
+     <ListView fx:id="operandsView" prefHeight="100.0" />
+     <VBox spacing="10" >
+          <children> 
+               <Label text="Name"/>
+               <TextField fx:id="name" onAction="#nameinput" />
+               <Button text="Log in" fx:id="loginbutton" onAction="#handleclick" />
+          </children>
+     </VBox>
+</GridPane>
