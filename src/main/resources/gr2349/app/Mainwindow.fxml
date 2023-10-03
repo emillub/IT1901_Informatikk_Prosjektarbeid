@@ -17,7 +17,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr2349.app.AppController">
    <children>
-      <AnchorPane fx:id="mainPane" prefHeight="513.0" prefWidth="540.0" visible="false">
+      <AnchorPane fx:id="mainPane" prefHeight="513.0" prefWidth="540.0">
          <children>
             <VBox layoutX="14.0" prefHeight="443.0" prefWidth="500.0" spacing="50.0">
                <children>
@@ -25,7 +25,7 @@
                      <children>
                         <VBox>
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Appnavn" wrappingWidth="472.21630859375">
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Biblioteket" wrappingWidth="472.21630859375">
                                  <font>
                                     <Font size="32.0" />
                                  </font>
@@ -48,8 +48,13 @@
                                     <Font size="21.0" />
                                  </font>
                               </Text>
-                              <HBox prefHeight="26.0" prefWidth="268.0">
+                              <HBox fx:id="vurderHBox" prefHeight="26.0" prefWidth="268.0">
                                  <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Legg inn en vurdering:" wrappingWidth="151.07861328125">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Text>
                                     <ChoiceBox fx:id="rateChoiceBox" prefHeight="26.0" prefWidth="57.0" />
                                     <Button fx:id="vurderButton" mnemonicParsing="false" text="Vurder" />
                                  </children>
@@ -82,7 +87,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="loginPane" layoutX="146.0" layoutY="207.0">
+      <AnchorPane fx:id="loginPane" layoutX="146.0" layoutY="207.0" visible="false">
          <children>
             <GridPane alignment="center" hgap="100.0" vgap="100.0">
                <children>
