@@ -4,6 +4,7 @@ metadata:
 components:
   - name: bookapp
     container:
+      image: gr2349/it1901:latest
       memoryLimit: 3Gi
       endpoints:
         - exposure: public
