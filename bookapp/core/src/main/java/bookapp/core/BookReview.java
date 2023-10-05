@@ -1,5 +1,6 @@
 package bookapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class BookReview {
@@ -8,8 +9,8 @@ public class BookReview {
 
     @JsonIgnore
     public final static Integer[] RATING_RANGE = {1,2,3,4,5}; //Er int-array så den kan brukes til å opprette choiceBox i GUI
-
     //Constructors
+    public BookReview(){}
     public BookReview(Book book, User reviewer, int rating){
         if(reviewer == null) throw new IllegalArgumentException("BookReview-objekt må opprettes med en bruker");
         this.reviewer = reviewer;
@@ -41,6 +42,6 @@ public class BookReview {
     }
 
     public String toString(){
-        return "Gitt "+rating + " stjerner \n av " + reviewer.getUserName();
+        return "Gitt "+rating + " stjerner \n av " + reviewer.getName();
     }
 }

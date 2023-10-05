@@ -75,7 +75,7 @@ public class AppController {
     @FXML private void loginButtonClick(){ //alt som skjer etter login
         loadLibrary();
         user = getUser();
-        userNameText.setText("Innlogget som: " + user.getUserName());
+        userNameText.setText("Innlogget som: " + user.getName());
         updateVurderHbox();
         loginPane.setVisible(false);
         mainPane.setVisible(true);

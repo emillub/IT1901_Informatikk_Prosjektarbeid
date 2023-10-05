@@ -8,6 +8,7 @@ import java.util.List;
 
 import bookapp.core.Book;
 import bookapp.core.BookReview;
+import bookapp.core.User;
 
 
 
@@ -48,7 +49,8 @@ public class FileHandler {
         Book book = new Book("Til musikken", "author");
         Book book1 = new Book("To kill a mockingbird", "Ukjent");
         Book book2 = new Book("Maskiner som tenker", "Inga Stromke");
-        
+        User user1 = new User("Emil2");
+        user1.writeReview(book2, 2);
         FileHandler fh = new FileHandler();
         fh.writeBookToFile(book);
         fh.writeBookToFile(book1);
