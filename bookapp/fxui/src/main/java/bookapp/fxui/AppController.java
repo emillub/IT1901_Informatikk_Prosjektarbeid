@@ -1,5 +1,6 @@
 package bookapp.fxui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +63,6 @@ public class AppController {
     
     private ArrayList<Book> bookList = new ArrayList<Book>();
 
-    private static FileHandler fileHandler = new FileHandler();
 
     private Book selectedBook;
 
@@ -103,14 +103,14 @@ public class AppController {
 
    
     private void loadLibrary(){//Funksjon for å laste inn bibliotek
-        List<Book> loadedBooks = fileHandler.readBookFromFile(FileHandler.DIR_PATH);
+        List<Book> loadedBooks = FileHandler.readBooksFromFile();
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
 
     private void saveLibrary(){
         for (Book book : bookList){
-            fileHandler.writeBookToFile(book);
+            FileHandler.updateBookInLibrary(book);
         }
     }
 
