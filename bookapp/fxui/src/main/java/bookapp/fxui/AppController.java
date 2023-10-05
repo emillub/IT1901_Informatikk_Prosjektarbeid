@@ -98,6 +98,7 @@ public class AppController {
         user.writeReview(selectedBook, (int) rating);
         updateReviewListView();
         updateBookListView();
+        saveLibrary();
     }
 
    
@@ -106,6 +107,12 @@ public class AppController {
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
+
+    private void saveLibrary(){
+        for (Book book : bookList){
+            fileHandler.writeBookToFile(book);
+        }
+    }
 
     private User getUser(){ //Henter bruker fra textfelt
         String name = nameTextField.getText();
