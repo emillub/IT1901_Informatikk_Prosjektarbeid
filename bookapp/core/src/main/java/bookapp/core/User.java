@@ -1,22 +1,25 @@
 package bookapp.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class User{
+public class User {
 
     private String name;
-
-
-    public User(String name){
+    
+    @JsonCreator
+    public User(@JsonProperty("name") String name){
         this.name = name;
     }
 
-    public String getUserName(){
+    public String getName(){
         return this.name;
     }
 
-    public void writeReview(Book book, int Rating){
-        BookReview review = new BookReview(book, name, Rating);
-        review.addRatingToBook(book);
+    public void writeReview(Book book, int rating){
+        new BookReview(book, this, rating);
     }
 
     @Override

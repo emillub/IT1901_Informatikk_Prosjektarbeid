@@ -8,13 +8,14 @@ import java.util.List;
 
 import bookapp.core.Book;
 import bookapp.core.BookReview;
+import bookapp.core.User;
 
 
 
 public class FileHandler {
 
     private final static String FILE_EXTENSION = ".json";
-    public static String DIR_PATH = "bookapp\\persistence\\src\\main\\resources\\bookapp\\persistence\\book.json";
+    public static String DIR_PATH = "bookapp/persistence/src/main/resources/bookapp/persistance/book.json";
     private List<Book> bookList = new ArrayList<>();
 
     public void writeBookToFile(Book book) {
@@ -36,11 +37,6 @@ public class FileHandler {
             ObjectMapper mapper = new ObjectMapper();
             // Reading a list of books from the JSON file
             List<Book> books = mapper.readValue(new File(filepath), new TypeReference<List<Book>>() {});
-    
-            // Iterate over each book
-            for (Book book : books) {
-                book.setAverageRating();
-            }
             return books;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -53,12 +49,13 @@ public class FileHandler {
         Book book = new Book("Til musikken", "author");
         Book book1 = new Book("To kill a mockingbird", "Ukjent");
         Book book2 = new Book("Maskiner som tenker", "Inga Stromke");
-
+        User user1 = new User("Emil2");
+        user1.writeReview(book2, 2);
         FileHandler fh = new FileHandler();
         fh.writeBookToFile(book);
         fh.writeBookToFile(book1);
         fh.writeBookToFile(book2);
-        fh.readBookFromFile(DIR_PATH);
+        //System.out.println(fh.readBookFromFile(DIR_PATH));
     }
 
 

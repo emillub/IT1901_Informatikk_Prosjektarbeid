@@ -56,7 +56,7 @@
                                        </font>
                                     </Text>
                                     <ChoiceBox fx:id="rateChoiceBox" prefHeight="26.0" prefWidth="57.0" />
-                                    <Button fx:id="vurderButton" mnemonicParsing="false" text="Vurder" />
+                                    <Button fx:id="vurderButton" mnemonicParsing="false" onAction="#vurderButtonClicked" text="Vurder" />
                                  </children>
                               </HBox>
                               <HBox spacing="230.0">
