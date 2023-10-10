@@ -1,26 +1,70 @@
 package bookapp.persistance;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bookapp.core.Book;
+import bookapp.core.BookReview;
 import bookapp.core.User;
 import bookapp.persistence.FileHandler;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class FileHandlerTest {
-    FileHandler fh = new FileHandler();
-    Book book1;
-    User user1;
 
-    @BeforeEach
-    private void setUp(){
-        book1 = new Book("book 1", "author 1");
-        user1 = new User("user1");
-        user1.writeReview(book1, 5);
+
+    @Test void testGetFilePath(){
+        String expectedEndOFPath = "bookapp/persistance/Library.json";
+        assertTrue(FileHandler.getDefaultFilePath().endsWith(expectedEndOFPath));
     }
 
-    @Test
-    private void testWriteBookToFile(){
+    private void deleteLibraryIfExists(){
+        try {
+            Files.deleteIfExists(Paths.get(FileHandler.getDefaultFilePath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    @Test void testCreateLibrary(){
+        deleteLibraryIfExists();
+        assertFalse(Files.exists(Paths.get(FileHandler.getDefaultFilePath())));
+        FileHandler.readBooksFromFile();
+        assertTrue(Files.exists(Paths.get(FileHandler.getDefaultFilePath())));
+    }
+
+    @Test void readFromBooksFromFile(){
+        deleteLibraryIfExists();
+        List<Book> books = FileHandler.readBooksFromFile();
+        assertTrue(books.toString().equals(Arrays.asList(FileHandler.LIBRARY).toString()));
+    }
+
+    @Test void testGetBookFromFile(){
+        Book bookInLibrary = FileHandler.LIBRARY[0];
+        Book bookNotInLibrary = new Book("book", "Author");
+        assertThrows(NoSuchElementException.class,()->FileHandler.updateBookInLibrary(bookNotInLibrary));
+        FileHandler.getBookFromLibrary(bookInLibrary,null);
+    }
+
+    @Test void testUpdateBook(){
+        deleteLibraryIfExists();
+        List<Book> books = FileHandler.readBooksFromFile();
+        User user1 = new User("User1");
+        Book updatedBook = books.get(0);
+        user1.writeReview(updatedBook, BookReview.RATING_RANGE[2]);
+        System.out.println(updatedBook);
+        assertFalse(updatedBook.toString().equals(FileHandler.getBookFromLibrary(updatedBook,null).toString()));
+        
+        FileHandler.updateBookInLibrary(updatedBook);
+        assertTrue(updatedBook.toString().equals(FileHandler.getBookFromLibrary(updatedBook,null).toString()));
+    }
+
+    
 }
+
+

@@ -1,13 +1,9 @@
 package bookapp.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.annotation.JsonFormat.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +15,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import bookapp.core.Book;
-import bookapp.core.BookReview;
-import bookapp.core.User;
 
 
 
@@ -50,7 +44,7 @@ public class FileHandler {
             ObjectMapper mapper = new ObjectMapper();
             String filePath = getDefaultFilePath();
             mapper.writeValue(Paths.get(filePath).toFile(), books);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file");
             ex.printStackTrace();
         }
@@ -104,12 +98,13 @@ public class FileHandler {
         return null;
     }
 
+
+    //Creates file if it doesnt exist
     private static Boolean fileCreated(){
         File file = new File(getDefaultFilePath());
         try {
             return file.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
@@ -139,16 +134,5 @@ public class FileHandler {
             e.printStackTrace();
             return null;
         }
-
     }   
-    
-
-    public static void main(String[] args) {
-        User user1 = new User("user1");
-        //System.out.println(FileHandler.readBooksFromFile());
-    }
-
-
-
-    
 }
