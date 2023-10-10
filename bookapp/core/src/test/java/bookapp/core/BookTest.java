@@ -1,0 +1,60 @@
+package bookapp.core;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class BookTest {
+
+    private Book book;
+    private User user1;
+    private User user2;
+
+    @BeforeEach
+    void setUp() {
+        book = new Book("Test Book", "John Doe");
+        user1 = new User("User1");
+        user2 = new User("User2");
+    }
+
+    @Test
+    void testAddReview() {
+        BookReview review1 = new BookReview(book, user1, 4);
+        BookReview review2 = new BookReview(book, user2, 5);
+
+        assertEquals(2, book.getReviews().size());
+    }
+
+    @Test
+    void testAverageRating() {
+        BookReview review1 = new BookReview(book, user1, 4);
+        BookReview review2 = new BookReview(book, user2, 4);
+
+        float expected = 4.0f;
+        assertEquals(expected, book.getAverageRating());
+    }
+
+    @Test
+    void testAddMultipleReviewsFromSameUser() {
+        BookReview review1 = new BookReview(book, user1, 4);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            BookReview review2 = new BookReview(book, user1, 5);
+        });
+
+        String expectedMessage = "Users cannot write more than one review per book";
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+
+    @Test
+    void testValidRating() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            BookReview review = new BookReview(book, user1, 6);
+        });
+
+        String expectedMessage = "Rating må være mellom 1 og 5";
+        assertTrue(exception.getMessage().contains(expectedMessage));
+    }
+}
+
