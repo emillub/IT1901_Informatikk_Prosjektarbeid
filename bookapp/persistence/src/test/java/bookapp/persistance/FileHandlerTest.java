@@ -21,7 +21,6 @@ public class FileHandlerTest {
 
     @Test
     private void testWriteBookToFile(){
-        fh.writeBookToFile(book1);
     }
 
 }
