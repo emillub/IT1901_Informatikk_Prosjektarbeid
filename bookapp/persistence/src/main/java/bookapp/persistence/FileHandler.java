@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import bookapp.core.Book;
@@ -59,12 +60,12 @@ public class FileHandler {
         List<Book> books = readBooksFromFile();
 
         //Gets book to be updated
-        Book bookInLibrary = books.stream()
+        Optional<Book> bookInLibraryOptional = books.stream()
                 .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
-                .findFirst().get(); 
+                .findFirst(); 
         
-        if (bookInLibrary == null) throw new IllegalArgumentException("Cannot write book not in library to file");
-
+        if (!bookInLibraryOptional.isPresent()) throw new IllegalArgumentException("Cannot write book not in library to file");
+        Book bookInLibrary = bookInLibraryOptional.get();
         //Replaces book object in list of books and writes list of books to file
         int index = books.indexOf(bookInLibrary);
         books.remove(index);
