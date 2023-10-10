@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -55,19 +56,25 @@ public class FileHandler {
         }
     }
 
-    //Updates book in list of books read from file and rewrites all the books to file
-    public static void updateBookInLibrary(Book book){ 
+    public static Book getBookFromFile(Book book){
         List<Book> books = readBooksFromFile();
 
-        //Gets book to be updated
+        //Gets book by checking if matching author and name
         Optional<Book> bookInLibraryOptional = books.stream()
                 .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
                 .findFirst(); 
         
-        if (!bookInLibraryOptional.isPresent()) throw new IllegalArgumentException("Cannot write book not in library to file");
+        if (!bookInLibraryOptional.isPresent()) throw new NoSuchElementException("Book not in library");
+        
         Book bookInLibrary = bookInLibraryOptional.get();
+        return bookInLibrary;
+    }
+
+    //Updates book in list of books read from file and rewrites all the books to file
+    public static void updateBookInLibrary(Book book){ 
+        List<Book> books = readBooksFromFile();
         //Replaces book object in list of books and writes list of books to file
-        int index = books.indexOf(bookInLibrary);
+        int index = books.indexOf(getBookFromFile(book));
         books.remove(index);
         books.add(index, book);
         writeBooksToFile(books);
