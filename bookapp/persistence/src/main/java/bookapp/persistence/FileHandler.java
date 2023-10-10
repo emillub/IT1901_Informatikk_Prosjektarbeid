@@ -67,13 +67,9 @@ public class FileHandler {
                 createLibrary();
             }
             ObjectMapper mapper = new ObjectMapper();
-            // Reading a list of books from the JSON file
             String filePath = getDefaultFilePath();
             File file = Path.of(filePath).toFile();
-            System.out.println("Leser fra " + filePath);
-            //System.out.println(file);
-            //System.out.println(FileHandler.class.getResource(""));
-            List<Book> books = mapper.readValue(file, new TypeReference<List<Book>>() {});
+            List<Book> books = mapper.readValue(file, new TypeReference<List<Book>>() {}); 
             return books;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -96,9 +92,19 @@ public class FileHandler {
     protected static String getDefaultFilePath(){
         try {
             Path path = Path.of(new File("").getAbsolutePath());
-            Files.createDirectories(path);
-            String filePath = path + "/" + FILE_NAME;
-            System.out.println(System.getProperty("user.dir"));
+            String pathString = path.toString();
+            if(pathString.endsWith("gr2349")) {
+                pathString = pathString + "/bookapp/persistence/src/main/resources/bookapp/persistance";
+            }
+            else if (path.toString().endsWith("fxui")){
+                pathString = pathString.substring(0, pathString.length()-4);
+                pathString += "/persistence/src/main/resources/bookapp/persistance";
+            }
+
+            
+            Files.createDirectories(Paths.get(pathString));
+            System.out.println(pathString);
+            String filePath = pathString + "/" + FILE_NAME;
             return filePath;
         } catch (IOException e) {
             e.printStackTrace();
@@ -110,7 +116,7 @@ public class FileHandler {
 
     public static void main(String[] args) {
         User user1 = new User("user1");
-        System.out.println(FileHandler.readBooksFromFile());
+        //System.out.println(FileHandler.readBooksFromFile());
     }
 
 
