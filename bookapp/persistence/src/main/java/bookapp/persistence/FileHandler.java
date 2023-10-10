@@ -56,11 +56,12 @@ public class FileHandler {
         }
     }
 
-    public static Book getBookFromFile(Book book){
-        List<Book> books = readBooksFromFile();
 
+    //Gets book from list of books. Meant to be used on books from file, but can be used on all lists of books
+    public static Book getBookFromLibrary(Book book, List<Book> booksInLibrary){
+        if(booksInLibrary == null) booksInLibrary = readBooksFromFile();
         //Gets book by checking if matching author and name
-        Optional<Book> bookInLibraryOptional = books.stream()
+        Optional<Book> bookInLibraryOptional = booksInLibrary.stream()
                 .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
                 .findFirst(); 
         
@@ -74,7 +75,7 @@ public class FileHandler {
     public static void updateBookInLibrary(Book book){ 
         List<Book> books = readBooksFromFile();
         //Replaces book object in list of books and writes list of books to file
-        int index = books.indexOf(getBookFromFile(book));
+        int index = books.indexOf(getBookFromLibrary(book, books));
         books.remove(index);
         books.add(index, book);
         writeBooksToFile(books);
