@@ -1,9 +1,11 @@
 package bookapp.core;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class BookReview {
+public class BookReview implements Serializable{
     private User reviewer; 
     private int rating;
 
@@ -12,7 +14,7 @@ public class BookReview {
     //Constructors
     public BookReview(){}
     public BookReview(Book book, User reviewer, int rating){
-        if(reviewer == null) throw new IllegalArgumentException("BookReview-objekt må opprettes med en bruker");
+        if(reviewer == null) throw new IllegalArgumentException("Need user to create review");
         this.reviewer = reviewer;
         book.addReview(this);
         setRating(rating);
