@@ -24,8 +24,6 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 public class AppTest extends ApplicationTest {
 
-    private AppController controller;
-
     @Override
     public void start(Stage stage) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Mainwindow.fxml"));
