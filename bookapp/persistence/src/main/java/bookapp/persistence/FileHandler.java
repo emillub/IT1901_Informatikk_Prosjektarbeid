@@ -1,23 +1,20 @@
 package bookapp.persistence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.annotation.JsonFormat.Feature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import bookapp.core.Book;
-import bookapp.core.BookReview;
-import bookapp.core.User;
 
 
 
@@ -30,30 +27,52 @@ public class FileHandler {
     new Book("Maskiner som tenker", "Inga Stromke"),
     new Book("To kill a mockingbird", "Ukjent")};
 
-    private static void createLibrary(){
-        writeBooksToFile(Arrays.asList(LIBRARY));
+    //Checks if Library has new books since last time
+    private static void CheckIfMoreBooksInLibrary(List<Book> oldBooks){
+        if (oldBooks.size() < LIBRARY.length){
+            List<String> bookTitles = oldBooks.stream().map(b -> b.getTitle()).collect(Collectors.toList());
+            List<Book> newBooksInLibrary = Arrays.asList(LIBRARY).stream()
+                .parallel().filter(b -> !bookTitles.contains(b.getTitle())).collect(Collectors.toList());
+            oldBooks.addAll(newBooksInLibrary);
+        }
     }
 
+    //Writes books to JSON
     private static void writeBooksToFile(List<Book> books){
         try {
+            CheckIfMoreBooksInLibrary(books);
             ObjectMapper mapper = new ObjectMapper();
-            // Writing the book object to file as JSON
             String filePath = getDefaultFilePath();
             mapper.writeValue(Paths.get(filePath).toFile(), books);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file");
             ex.printStackTrace();
         }
     }
 
-    public static void updateBookInLibrary(Book book){
+
+    //Gets book from list of books. Meant to be used on books from file, but can be used on all lists of books
+    public static Book getBookFromLibrary(Book book, List<Book> booksInLibrary){
+        if(booksInLibrary == null) booksInLibrary = readBooksFromFile();
+        //Gets book by checking if matching author and name
+        Optional<Book> bookInLibraryOptional = booksInLibrary.stream()
+                .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
+                .findFirst(); 
+        
+        if (!bookInLibraryOptional.isPresent()) throw new NoSuchElementException("Book not in library");
+        
+        Book bookInLibrary = bookInLibraryOptional.get();
+        return bookInLibrary;
+    }
+
+    //Updates book in list of books read from file and rewrites all the books to file
+    public static void updateBookInLibrary(Book book){ 
         List<Book> books = readBooksFromFile();
-        Book bookInLibrary = books.stream().filter(b -> b.getTitle().equals(book.getTitle())).findFirst().get();
-        int index = books.indexOf(bookInLibrary);
+        //Replaces book object in list of books and writes list of books to file
+        int index = books.indexOf(getBookFromLibrary(book, books));
         books.remove(index);
         books.add(index, book);
         writeBooksToFile(books);
-
     }
 
     
@@ -63,13 +82,15 @@ public class FileHandler {
     public static List<Book> readBooksFromFile() {
         try {
             if(fileCreated()){
-                System.out.println("Fil eksisterer ikke. Oppretter nå");
-                createLibrary();
+                System.out.println("Library file not found. Creating...");
+                writeBooksToFile(new ArrayList<Book>());
             }
+
             ObjectMapper mapper = new ObjectMapper();
             String filePath = getDefaultFilePath();
             File file = Path.of(filePath).toFile();
             List<Book> books = mapper.readValue(file, new TypeReference<List<Book>>() {}); 
+
             return books;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -77,49 +98,41 @@ public class FileHandler {
         return null;
     }
 
+
+    //Creates file if it doesnt exist
     private static Boolean fileCreated(){
         File file = new File(getDefaultFilePath());
         try {
             return file.createNewFile();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
 
     }
 
-    protected static String getDefaultFilePath(){
+    public static String getDefaultFilePath(){
         try {
+            //Checks what directory is the app is running from and finds the correct path from there
             Path path = Path.of(new File("").getAbsolutePath());
             String pathString = path.toString();
             if(pathString.endsWith("gr2349")) {
                 pathString = pathString + "/bookapp/persistence/src/main/resources/bookapp/persistance";
             }
-            else if (path.toString().endsWith("fxui")){
-                pathString = pathString.substring(0, pathString.length()-4);
+            else if (path.toString().endsWith("fxui") || path.toString().endsWith("persistence")){   
+                //Removes string until at /bookapp
+                while (!pathString.endsWith("bookapp")){ 
+                    pathString = pathString.substring(0, pathString.length()-1);
+                }
                 pathString += "/persistence/src/main/resources/bookapp/persistance";
             }
 
-            
-            Files.createDirectories(Paths.get(pathString));
-            System.out.println(pathString);
+            Files.createDirectories(Paths.get(pathString)); //Creates the directory if it doesn't exist
             String filePath = pathString + "/" + FILE_NAME;
             return filePath;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
     }   
-    
-
-    public static void main(String[] args) {
-        User user1 = new User("user1");
-        //System.out.println(FileHandler.readBooksFromFile());
-    }
-
-
-
-    
 }

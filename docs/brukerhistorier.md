@@ -1,5 +1,5 @@
 # Brukerhistorier
-Her skriver vi brukerhistorier. Brukerhistoriene brukes for å beskrive hvilke behov applikasjonen vår dekker, og hva som kreves for å dekke dem. Når vi oppretter issues i gitlab, knytter vi dem opp mot brukerhistorien vi jobber under ved hjelp av labels.
+Her skriver vi brukerhistorier. Brukerhistoriene brukes for å beskrive hvilke behov applikasjonen vår dekker, og hva som kreves for å dekke dem. 
 
 ## Konvensjon for brukerhistorier: 
 ### Tittel: Funksjon (BH nummer)
