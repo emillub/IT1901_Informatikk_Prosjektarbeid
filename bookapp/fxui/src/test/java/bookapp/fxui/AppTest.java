@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
@@ -38,7 +40,11 @@ public class AppTest extends ApplicationTest {
 
     @Test
     public void buttonclick(){
+        clickOn("#nameTextField").write("Donald Trump");
         click("Log in");
+        clickOn("#bookListView");
+        clickOn("#rateChoiceBox");
+        click("5");
         click("Vurder");
     }
 }

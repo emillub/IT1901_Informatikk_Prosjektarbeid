@@ -45,8 +45,8 @@ public class Book implements Serializable{
         for (int i = 0; i < amountOfRatings; i++) {
             sumOfRatings += reviewsOfBook.get(i).getRating();
         }
-        float averageRating = sumOfRatings/amountOfRatings;
-        return averageRating;
+        float avgRating = sumOfRatings/amountOfRatings;
+        return avgRating;
     } 
 
     private void validateReview(BookReview review){
