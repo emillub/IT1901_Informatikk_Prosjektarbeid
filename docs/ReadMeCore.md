@@ -1,12 +1,16 @@
 # README - Persistence
 
 ## Introduksjon
-* Core modulen består av tre klasser, Book, BookReview og User, og er å håndtere kjernelogikken i appen. 
+
+* Core modulen består av tre klasser, Book, BookReview og User, og er å håndtere kjernelogikken i appen.
 
 ## Teknologier brukt
-* Java
+
+* Jackson bibloteket
+  * Jackson-bibloteket konverterer objekter fra core-modulen om til JSON format som skrives til fil.
 
 ## Funksjonalitet
+
 * Book-klassen holder informasjon om en bok og referanser til BookReview-objekter. Den representerer en bok med vurderinger og har en enkel ```toString()```-funksjon som brukes i grensesnittet.
   * ```getAvarageRating()```
     * Itererer over BookReview-objektene og regner ut gjennomsnittet av alle rating-ene
@@ -19,4 +23,4 @@
     * Sjekker om ratingen som er gitt er lovling og gir error om ikke
 * User-klassen håndterer alt som har med bruker å gjøre. Den inneholder lite logikk, men holder informasjon om brukereren, og det er fra den BookReview-objekter opprettes.
   * ```writeReview(Book bok, in rating)```
-	* Oppretter et BookReview-objekt med en rating og knytter det til en bok.
+    * Oppretter et BookReview-objekt med en rating og knytter det til en bok.
