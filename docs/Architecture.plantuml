@@ -35,6 +35,7 @@ bookapp.fxui ..> bookapp.core
 bookapp.persistence ..> Library.json
 bookapp.core ..> Library.json
 bookapp.fxui ..> bookapp.persistence
+bookapp.persistence ..> bookapp.core
 
 @enduml
 
