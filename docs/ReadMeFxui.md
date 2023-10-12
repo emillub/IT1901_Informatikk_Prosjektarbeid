@@ -21,6 +21,6 @@
 
 ## Skjermbilder
 
-![Viser innloggingsside](/docs/Bilder/Innlogging.png)
-![Viser hovedside før review](/docs/Bilder/PreReviewR2.png)
-![Viser hovedside etter review](/docs/Bilder/PostReviewR2.png)
+![Viser innloggingsside](/docs/imgs/loginpage.png)
+![Viser hovedside før review](/docs/imgs/mainpagePreReviewR2.png)
+![Viser hovedside etter review](/docs/imgs/mainpagePostReviewR2.png)
