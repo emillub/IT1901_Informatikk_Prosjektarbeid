@@ -1,10 +1,10 @@
 # README - Persistence
 
 ## Introduksjon
-* Hensikten til Core modulen er å håndtere kjernelogikken i appen.
+* Core modulen består av tre klasser, Book, BookReview og User, og er å håndtere kjernelogikken i appen. 
 
 ## Teknologier brukt
-* 
+* Java
 
 ## Funksjonalitet
 * Book-klassen holder informasjon om en bok og referanser til BookReview-objekter. Den representerer en bok med vurderinger og har en enkel ```toString()```-funksjon som brukes i grensesnittet.
