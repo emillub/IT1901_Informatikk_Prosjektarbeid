@@ -53,6 +53,8 @@ I tillegg bruker vi også en rekke plugins for å oppnå all funksjonaliteten vi
 2. Jacoco; for dekningsgradsrapporter
 3. Checkstyle og spotbugs; for å sikre kodekvalitet
 
+Konfigurasjon for verktøyene som sikrer kodekvalitet eksisterer i [config](bookapp\config) mappen, og innholdet er basert et standardformat for respektive filer.
+
 ## Skjermbilder for funksjonalitet til innlevering 1
 
 To skjermbilder som viser funksjonalitet knyttet til innlevering 1:
