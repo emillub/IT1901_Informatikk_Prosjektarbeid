@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Book implements Serializable{
     
-    private Book book;
     private String title;
     private String author;
     private ArrayList<BookReview> reviewsOfBook = new ArrayList<BookReview>();
@@ -31,7 +30,7 @@ public class Book implements Serializable{
 
     @JsonIgnore
     public Book getBook() {
-        return this.book;
+        return this;
     }
 
     @JsonIgnore
@@ -42,7 +41,7 @@ public class Book implements Serializable{
         }
         int amountOfRatings = this.reviewsOfBook.size();
         //iterere over finne avg rating 
-        int sumOfRatings = 0;
+        float sumOfRatings = 0;
         for (int i = 0; i < amountOfRatings; i++) {
             sumOfRatings += reviewsOfBook.get(i).getRating();
         }

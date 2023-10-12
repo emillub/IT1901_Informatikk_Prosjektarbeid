@@ -23,6 +23,7 @@
             <artifactId>persistence</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
   <build>
     <plugins>
@@ -33,6 +34,15 @@
             <configuration>
                 <mainClass>bookapp.fxui/bookapp.fxui.BookApp</mainClass>
             </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
           </plugin>
       </plugins>
   </build>
