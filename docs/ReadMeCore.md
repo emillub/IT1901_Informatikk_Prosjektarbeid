@@ -1,4 +1,4 @@
-# README - Persistence
+# README - Core
 
 ## Introduksjon
 
