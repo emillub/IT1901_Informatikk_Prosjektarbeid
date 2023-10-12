@@ -9,9 +9,9 @@ Som en bruker er du ment til å kunne "logge" inn slik at du kan få tilgang til
 Prosjektet følger nå en struktur hvor vi har forskjellige moduler for spesifikk funksjonalitet. Det gjør prosjektet mer oversiktelig og navigerbart. Hele prosjektet eksisterer i **bookapp**-mappen og inni denne finnes "parent"-pom-filen vår [pom.xml](bookapp\pom.xml). Det er fra denne filen at oppstartskommandoene først må kjøres. Se seksjonen *Bygging/kjøring av applikasjon*. 
 
 Videre finner vi modulene våre som er følgende; **core**, **fxui** og **persistens**. Disse håndterer henholdsvis domenelogikk, GUI og filhåndtering, og hver fil har en egen modul-pom-fil;
-[core](core/readme.md)
-[fxui](fxui/readme.md)
-[persistence](persistence/readme.md)
+[core](docs\ReadMeCore.md)
+[fxui](docs\ReadMeFxui.md)
+[persistence](docs\ReadMePersistence.md)
  som spesifiserer ekstra nødvendige tillegg og avhengigheter. Mer om det i hver moduls respektive **Readme.md**-fil. 
 
 **Core**-modulen er grunnsteinen i prosjektet og både **fxui**- og **persistens**-modulen er avhengig av den for å kunne kjøre. **Fxui**-modulen er også avhengig av **persistens**-modulen, mens **persistens**-modulen, kun er avhengig av **core**-modulen, ikke **fxui**-modulen.
