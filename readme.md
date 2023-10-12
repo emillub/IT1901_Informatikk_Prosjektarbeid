@@ -18,7 +18,7 @@ Videre finner vi modulene våre som er følgende; **core**, **fxui** og **persis
 
 ## Konfigurasjonsbehov
 
-Applikasjonen bruker maven til bygging og kjøring, og er konfigurert til å kunne kjøre med [Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2349/gr2349). Det er viktig at prosjektet kjører på **java 20.0.2-oracle** og **maven 3.9.4**. For å oppnå dette bruker vi sdk man for å endre java. Versjonene av java og maven er gitt av kommandoene: 
+Applikasjonen bruker maven til bygging og kjøring, og er konfigurert til å kunne kjøre med [Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2349/gr2349?new). Det er viktig at prosjektet kjører på **java 20.0.2-oracle** og **maven 3.9.4**. For å oppnå dette bruker vi sdk man for å endre java. Versjonene av java og maven er gitt av kommandoene: 
 
 `java --version` 
 og 
