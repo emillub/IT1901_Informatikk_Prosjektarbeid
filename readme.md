@@ -55,14 +55,6 @@ I tillegg bruker vi også en rekke plugins for å oppnå all funksjonaliteten vi
 
 Konfigurasjon for verktøyene som sikrer kodekvalitet eksisterer i [config](bookapp\config) mappen, og innholdet er basert et standardformat for respektive filer.
 
-## Skjermbilder for funksjonalitet til innlevering 1
-
-To skjermbilder som viser funksjonalitet knyttet til innlevering 1:
-
-![Viser innloggingsside](/docs/Bilder/Innlogging.png)
-
-![Viser hovedside](/docs/Bilder/Hovedside.png)
-  
 ## Arbeidsvaner, arbeidsflyt og kodekvalitet
 
 Dette avsnittet gir en oversikt over viktige valg og tilnærminger som har blitt gjort i løpet av prosjektets utvikling relatert til arbeidsvaner, arbeidsflyt og kodekvalitet i henhold til Release 2.
@@ -85,12 +77,6 @@ __Testing__ - Vi har vedtatt en tilnærming der hovedfunksjonene i appen blir te
 
 __Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode. I tillegg har vi nå lagt til checkstyle og spotbugs for å bedre kunne beholde kodekvalitet.
 
-## Arkitektur av app med PlantUML
+__Checkstyle__ - Vi bruker checkstyle for å sjekke kodestil. Dette gjør det enklere å holde koden strukturert rent stilmessig.
 
-@startuml
-
-!include docs/Bilder/Arkitektur.plantuml
-
-@enduml
-
-![Arkitektur](/docs/Bilder/Arkitektur.plantuml)
+__Spotbugs__ - Spotbugs brukes for å lettere identifisere hvor vi har bugs i programmet. Dette gjør naturligvis dekoding enklere.

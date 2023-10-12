@@ -15,7 +15,7 @@ Release 2 introduserer en rekke endringer til prosjektet sammenlignet med Releas
 
 Prosjektet til release 1 var en en-moduls konfigurasjon hvor filhåntering, GUI og domenelogikk eksisterte om hverandre. Vi hadde en pom.xml fil som håndterte alle konfigurasjoner. For release 2 har vi introdusert en 3-moduls struktur. Vi har nå skilt domenelogikk, GUI og filhåndtering i tre forskjellige moduler som snakker sammen; core, fxui og persistens. En overordnet pom.xml-fil definerer "regler" for hele prosjektet mens mer spesifikke konfigurasjoner eksisterer innen hver moduls pom.xml-fil.
 
-Vi har lagt til ekstra funksjonalitet som nå tvinger brukere til å oppgi et navn hvis de ønsker å vurdere en bok i tillegg til mer sofistikert filhåndtering gjennom et jackson-biblotek med et json format. Dette gjør at vi kan lagre input fra programmet på en mer effektiv måte. For mer detaljert informasjon rundt dette, vennligst se [Readme-persistens] (LEGGTILLINKSENERE)
+Vi har lagt til ekstra funksjonalitet som nå tvinger brukere til å oppgi et navn hvis de ønsker å vurdere en bok i tillegg til mer sofistikert filhåndtering gjennom et jackson-biblotek med et json format. Dette gjør at vi kan lagre input fra programmet på en mer effektiv måte. For mer detaljert informasjon rundt dette, vennligst se [Readme-persistens](../persistence/readme.md)
 
 Prosjektet er også konfigurert for Eclipse Che.
 
@@ -24,7 +24,7 @@ Vi har også inkludert flere brukerhistorier for å videre beskrive formålet me
   
 ### 3. Refleksjoner
 
-Friheten rundt valgene vi har tatt for denne releasen ligger i all hovedsak rundt arbeidsvaner og filhåndteringssystemer. For å ta det enkleste først har vi valgt en dokumentmetafor-lagringsmetode. Dette handler i stor grad om at det gjør det tydelig for brukere når inputen deres er lagret. Mer om dette i [Readme-persistens] (LEGGTILLINKSENERE). 
+Friheten rundt valgene vi har tatt for denne releasen ligger i all hovedsak rundt arbeidsvaner og filhåndteringssystemer. For å ta det enkleste først har vi valgt en dokumentmetafor-lagringsmetode. Dette handler i stor grad om at det gjør det tydelig for brukere når inputen deres er lagret. Mer om dette i [Readme-persistens](../persistence/readme.md). 
 
 Gjennom arbeidet gjort har vi funnet en struktur hvor vi baserer oss på scrum-teknikken med litt modifiseringer. Vi startet med ukentlige møter, hvor vi har jobbet med individuelle oppgaver mellom møtene, men mot senere i innleveringen ble det behov for mer samarbeid på problemene og vi tok i bruk par-programmering. Ettersom prosjektet er konfigurert til å fungere på våre individuelle datamaskiner, har vi ikke utnyttet Eclipse Che gjennom "cloud"-utvikling. Skulle vi ønske det, er prosjektet satt opp til å fungere i Eclipse Che.
 
