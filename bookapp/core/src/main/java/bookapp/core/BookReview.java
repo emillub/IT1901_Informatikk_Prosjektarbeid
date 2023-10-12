@@ -14,7 +14,7 @@ public class BookReview implements Serializable{
     //Constructors
     public BookReview(){}
     public BookReview(Book book, User reviewer, int rating){
-        if(reviewer == null) throw new IllegalArgumentException("Need user to create review");
+        if(reviewer == null) throw new IllegalArgumentException("BookReview-object must be created with a user");
         this.reviewer = reviewer;
         book.addReview(this);
         setRating(rating);
@@ -38,7 +38,7 @@ public class BookReview implements Serializable{
     //Validators
     private boolean validRating(int r){
         if (r < RATING_RANGE[0] || r>RATING_RANGE[RATING_RANGE.length-1]){ 
-            throw new IllegalArgumentException("Rating må være mellom 1 og 5");}
+            throw new IllegalArgumentException("Rating needs to be between 1 and 5");}
         
         return true;
     }
