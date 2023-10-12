@@ -53,7 +53,7 @@ class BookTest {
             BookReview review = new BookReview(book, user1, 6);
         });
 
-        String expectedMessage = "Rating må være mellom 1 og 5";
+        String expectedMessage = "Rating needs to be between 1 and 5";
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
 }
