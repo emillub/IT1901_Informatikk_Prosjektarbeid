@@ -35,12 +35,12 @@ public class Book implements Serializable{
 
     @JsonIgnore
     public float getAverageRating(){
-        //Unngår divisionByZero error og reviewsOfBook is null error
+        //Avoid divisionByZero error og reviewsOfBook is null error
         if (this.reviewsOfBook == null || this. reviewsOfBook.size() == 0) {
             return 0;
         }
         int amountOfRatings = this.reviewsOfBook.size();
-        //iterere over finne avg rating 
+        //Find avarage rating
         float sumOfRatings = 0;
         for (int i = 0; i < amountOfRatings; i++) {
             sumOfRatings += reviewsOfBook.get(i).getRating();

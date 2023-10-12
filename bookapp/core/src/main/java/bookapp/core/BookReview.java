@@ -10,7 +10,7 @@ public class BookReview implements Serializable{
     private int rating;
 
     @JsonIgnore
-    public final static Integer[] RATING_RANGE = {1,2,3,4,5}; //Er int-array så den kan brukes til å opprette choiceBox i GUI
+    public final static Integer[] RATING_RANGE = {1,2,3,4,5}; 
     //Constructors
     public BookReview(){}
     public BookReview(Book book, User reviewer, int rating){

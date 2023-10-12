@@ -72,7 +72,7 @@ public class AppController {
         mainPane.setVisible(false);
     }
     
-    @FXML private void loginButtonClick(){ //alt som skjer etter login
+    @FXML private void loginButtonClick(){ 
         loadLibrary();
         user = getUser();
         userNameText.setText("Innlogget som: " + user.getName());
@@ -102,7 +102,7 @@ public class AppController {
     }
 
    
-    private void loadLibrary(){//Funksjon for å laste inn bibliotek
+    private void loadLibrary(){
         List<Book> loadedBooks = FileHandler.readBooksFromFile();
         bookList.addAll(loadedBooks);
         updateBookListView();
@@ -114,7 +114,7 @@ public class AppController {
         }
     }
 
-    private User getUser(){ //Henter bruker fra textfelt
+    private User getUser(){ 
         String name = nameTextField.getText();
         return new User(name);
     }
