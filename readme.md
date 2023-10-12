@@ -8,7 +8,11 @@ Som en bruker er du ment til å kunne "logge" inn slik at du kan få tilgang til
 
 Prosjektet følger nå en struktur hvor vi har forskjellige moduler for spesifikk funksjonalitet. Det gjør prosjektet mer oversiktelig og navigerbart. Hele prosjektet eksisterer i **bookapp**-mappen og inni denne finnes "parent"-pom-filen vår [pom.xml](bookapp\pom.xml). Det er fra denne filen at oppstartskommandoene først må kjøres. Se seksjonen *Bygging/kjøring av applikasjon*. 
 
-Videre finner vi modulene våre som er følgende; **core**, **fxui** og **persistens**. Disse håndterer henholdsvis domenelogikk, GUI og filhåndtering, og hver fil har en egen modul-pom-fil som spesifiserer ekstra nødvendige tillegg og avhengigheter. Mer om det i hver moduls respektive **Readme.md**-fil. 
+Videre finner vi modulene våre som er følgende; **core**, **fxui** og **persistens**. Disse håndterer henholdsvis domenelogikk, GUI og filhåndtering, og hver fil har en egen modul-pom-fil;
+[core](core/readme.md)
+[fxui](fxui/readme.md)
+[persistence](persistence/readme.md)
+ som spesifiserer ekstra nødvendige tillegg og avhengigheter. Mer om det i hver moduls respektive **Readme.md**-fil. 
 
 **Core**-modulen er grunnsteinen i prosjektet og både **fxui**- og **persistens**-modulen er avhengig av den for å kunne kjøre. **Fxui**-modulen er også avhengig av **persistens**-modulen, mens **persistens**-modulen, kun er avhengig av **core**-modulen, ikke **fxui**-modulen.
 
@@ -25,6 +29,8 @@ For å endre til korrekt java-versjon kan man kjøre kommandoen:
 `sdk install java 20.0.2-oracle`
 
 Dette skjer i den integrerte terminalen og bør, i tillegg til å oppdatere java, oppdatere til den nyeste versjonen av maven.
+
+__PlantUML__ - For å kunne se diagrammet som beskriver avhengighet for prosjektet vår trenger man *PlantUML by jebbs*
 
 ## Bygging og kjøring av applikasjon
 For å bygge prosjektet, naviger til **bookapp**-mappen, hvor prosjektet ligger, og kjør følgende kommandoer:
