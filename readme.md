@@ -61,7 +61,7 @@ I tillegg bruker vi også en rekke plugins for å oppnå all funksjonaliteten vi
 
 Konfigurasjon for verktøyene som sikrer kodekvalitet eksisterer i [config](bookapp\config) mappen, og innholdet er basert et standardformat for respektive filer.
 
-Koden blir testet i henhold til Googles offisielle Java-kodeoppsett og stilretningslinjer, kjent som "Google Java Style Guide" for checkstyle. Videre for spotbugs brukes exclude.xml. Her sjekkes det blant annet etter når variabeler sammenlignes med seg selv og objekt-eksponering. 
+Koden blir testet i henhold til Googles offisielle Java-kodeoppsett og stilretningslinjer, kjent som "Google Java Style Guide" for checkstyle. Videre for spotbugs brukes exclude.xml. Her sjekkes det blant annet etter når variabeler sammenlignes med seg selv og objekt-eksponering.
 
 ## Arbeidsvaner, arbeidsflyt og kodekvalitet
 
