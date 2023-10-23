@@ -24,6 +24,10 @@ public class User implements Serializable{
         new BookReview(book, this, rating);
     }
 
+    public void deleteReview(BookReview review){
+        review.getBook().deleteReview(review);
+    }
+
     @Override
     public String toString() {
         return this.name;

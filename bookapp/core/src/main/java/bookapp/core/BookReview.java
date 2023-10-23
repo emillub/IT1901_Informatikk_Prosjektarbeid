@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class BookReview implements Serializable{
     private User reviewer; 
     private int rating;
+    private Book book;
 
     @JsonIgnore
     public final static Integer[] RATING_RANGE = {1,2,3,4,5}; 
@@ -16,6 +17,7 @@ public class BookReview implements Serializable{
     public BookReview(Book book, User reviewer, int rating){
         if(reviewer == null) throw new IllegalArgumentException("BookReview-object must be created with a user");
         this.reviewer = reviewer;
+        this.book = book;
         book.addReview(this);
         setRating(rating);
     }
@@ -26,6 +28,10 @@ public class BookReview implements Serializable{
     }
     public int getRating(){
         return rating;
+    }
+    @JsonIgnore
+    public Book getBook(){
+        return book;
     }
 
     //Setters
