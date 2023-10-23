@@ -32,7 +32,7 @@ import javafx.scene.control.ListView;
 public class AppController {
 
     @FXML
-    private Button loginbutton, vurderButton;
+    private Button loginbutton, vurderButton, deleteReviewButton;
 
     @FXML
     private Label mainwindow;
@@ -65,6 +65,7 @@ public class AppController {
 
 
     private Book selectedBook;
+    private BookReview selectedBookReview;
 
     @FXML public void initialize(){
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
@@ -90,7 +91,15 @@ public class AppController {
             updateReviewListView();
         }
     }
-
+    @FXML private void reviewListViewClicked(){
+        Object selectedItem = reviewListView.getSelectionModel().getSelectedItem();
+        if (selectedItem != null && selectedItem != selectedBookReview){
+            selectedBookReview = (BookReview) selectedItem;
+            updateVurderHbox();
+            updateReviewListView();
+        }
+    }
+    
     @FXML private void vurderButtonClicked(){
         if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
@@ -99,6 +108,13 @@ public class AppController {
         updateReviewListView();
         updateBookListView();
         saveLibrary();
+    }
+
+    @FXML private void deleteReviewButtonClick(){
+        selectedBook.deleteReview(selectedBookReview);
+        updateReviewListView();
+        selectedBookReview = null;
+        updateVurderHbox();
     }
 
    
@@ -136,6 +152,11 @@ public class AppController {
             vurderHBox.setDisable(true);
         } else {
             vurderHBox.setDisable(false);
+        }
+        if (selectedBookReview == null || !selectedBookReview.getReviewer().getName().equals(user.getName())){
+            deleteReviewButton.setDisable(true);
+        } else {
+            deleteReviewButton.setDisable(false);
         }
     }
     

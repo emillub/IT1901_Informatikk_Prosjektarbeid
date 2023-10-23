@@ -61,7 +61,7 @@
                                           <Button fx:id="vurderButton" mnemonicParsing="false" onAction="#vurderButtonClicked" text="Vurder" />
                                        </children>
                                     </HBox>
-                                    <Button mnemonicParsing="false" onAction="#deleteReview" text="Slett vurdering" />
+                                    <Button fx:id="deleteReviewButton" mnemonicParsing="false" onAction="#deleteReviewButtonClick" text="Slett vurdering" />
                                  </children>
                               </HBox>
                               <HBox spacing="230.0">
@@ -79,7 +79,7 @@
                                     </ScrollPane>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
-                                          <ListView fx:id="reviewListView" prefHeight="320.0" prefWidth="240.0" />
+                                          <ListView fx:id="reviewListView" onMouseClicked="#reviewListViewClicked" prefHeight="320.0" prefWidth="240.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>

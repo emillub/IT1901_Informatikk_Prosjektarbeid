@@ -21,6 +21,10 @@ public class BookReview implements Serializable{
         book.addReview(this);
         setRating(rating);
     }
+
+    public void deleteReview(){
+        this.book.deleteReview(this);
+    }
     
     //Getters
     public User getReviewer(){
