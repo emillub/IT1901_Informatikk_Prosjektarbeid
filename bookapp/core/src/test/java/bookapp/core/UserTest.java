@@ -45,6 +45,15 @@ public class UserTest {
         assertEquals("John", user.toString());
     }
     
+    @Test 
+    void testDeleteReview(){
+        user.writeReview(book1, 4);
+        Book book2 = new Book("book", "author");
+        user.writeReview(book2, 2);
+        user.deleteReview(book1.getReviews().get(0));
+        assertTrue(book1.getReviews().isEmpty());
+    }
+    
     // Add other tests as needed...
 
 }
