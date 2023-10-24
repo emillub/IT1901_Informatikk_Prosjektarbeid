@@ -63,6 +63,13 @@ public class Book implements Serializable{
         reviewsOfBook.add(review);
     }
 
+    public void deleteReview(BookReview review){
+        if(!reviewsOfBook.contains(review)){
+            throw new IllegalArgumentException("Review not found in this books reviews");
+        }
+        reviewsOfBook.remove(review);
+    }
+
     protected void setReviews(List<BookReview> reviews) {
         if (reviews == null) return;
         this.reviewsOfBook = new ArrayList<>(reviews);

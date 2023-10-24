@@ -48,15 +48,20 @@
                                     <Font size="21.0" />
                                  </font>
                               </Text>
-                              <HBox fx:id="vurderHBox" prefHeight="26.0" prefWidth="268.0">
+                              <HBox fx:id="vurderHBox" prefHeight="26.0" prefWidth="268.0" spacing="140.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Legg inn en vurdering:" wrappingWidth="151.07861328125">
-                                       <font>
-                                          <Font size="15.0" />
-                                       </font>
-                                    </Text>
-                                    <ChoiceBox fx:id="rateChoiceBox" prefHeight="26.0" prefWidth="57.0" />
-                                    <Button fx:id="vurderButton" mnemonicParsing="false" onAction="#vurderButtonClicked" text="Vurder" />
+                                    <HBox>
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Legg inn en vurdering:" wrappingWidth="151.07861328125">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                          <ChoiceBox fx:id="rateChoiceBox" prefHeight="26.0" prefWidth="57.0" />
+                                          <Button fx:id="vurderButton" mnemonicParsing="false" onAction="#vurderButtonClicked" text="Vurder" />
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="deleteReviewButton" mnemonicParsing="false" onAction="#deleteReviewButtonClick" text="Slett vurdering" />
                                  </children>
                               </HBox>
                               <HBox spacing="230.0">
@@ -65,7 +70,7 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vurderinger" />
                                  </children>
                               </HBox>
-                              <HBox>
+                              <HBox prefHeight="251.0" prefWidth="500.0">
                                  <children>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
@@ -74,7 +79,7 @@
                                     </ScrollPane>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
-                                          <ListView fx:id="reviewListView" prefHeight="320.0" prefWidth="240.0" />
+                                          <ListView fx:id="reviewListView" onMouseClicked="#reviewListViewClicked" prefHeight="320.0" prefWidth="240.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>
