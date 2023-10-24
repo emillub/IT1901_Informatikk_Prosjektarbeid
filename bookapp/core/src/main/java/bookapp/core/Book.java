@@ -52,7 +52,7 @@ public class Book implements Serializable{
     private void validateReview(BookReview review){
         if (reviewsOfBook.contains(review)) throw new IllegalArgumentException("Review already exists");
         
-        if (reviewsOfBook.stream().anyMatch(r -> r.getReviewer().equals(review.getReviewer()))){
+        if (reviewsOfBook.stream().anyMatch(r -> r.getReviewer().getName().equals(review.getReviewer().getName()))){
             throw new IllegalArgumentException("Users cannot write more than one review per book");
         }
 
