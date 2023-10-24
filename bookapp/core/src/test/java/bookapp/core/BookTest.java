@@ -66,6 +66,7 @@ class BookTest {
         book.deleteReview(rev2);
         assertTrue(book.getReviews().get(0).getReviewer().equals(user1));
         assertThrows(IllegalArgumentException.class, () -> book.deleteReview(rev2));
+        assertThrows(IllegalArgumentException.class, () -> rev2.deleteReview());
     } 
 }
 
