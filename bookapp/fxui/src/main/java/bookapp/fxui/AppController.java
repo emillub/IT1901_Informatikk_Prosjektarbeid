@@ -113,8 +113,10 @@ public class AppController {
     @FXML private void deleteReviewButtonClick(){
         selectedBook.deleteReview(selectedBookReview);
         updateReviewListView();
+        updateBookListView();
         selectedBookReview = null;
         updateVurderHbox();
+        saveLibrary();
     }
 
    
