@@ -19,6 +19,7 @@ public class UserTest {
     @Test
     void testConstructor() {
         assertNotNull(user);
+        assertThrows(IllegalArgumentException.class, () -> new User(""));
         assertEquals("John", user.getName());
     }
 

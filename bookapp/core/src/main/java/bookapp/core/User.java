@@ -13,7 +13,14 @@ public class User implements Serializable{
     
     @JsonCreator
     public User(@JsonProperty("name") String name){
+        validateName(name);
         this.name = name;
+    }
+
+    private void validateName(String name){
+        if(name.isBlank()){
+            throw new IllegalArgumentException("User name cannot be blank");
+        }
     }
 
     public String getName(){
