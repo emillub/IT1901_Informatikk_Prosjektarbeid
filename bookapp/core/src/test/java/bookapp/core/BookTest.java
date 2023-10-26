@@ -56,5 +56,17 @@ class BookTest {
         String expectedMessage = "Rating needs to be between 1 and 5";
         assertTrue(exception.getMessage().contains(expectedMessage));
     }
+
+    @Test
+    void testDeleteReview(){
+        BookReview rev1 = new BookReview(book, user1, 4);
+        BookReview rev2 = new BookReview(book, user2, 3);
+        
+        assertEquals(book.getReviews().size(),2);
+        book.deleteReview(rev2);
+        assertTrue(book.getReviews().get(0).getReviewer().equals(user1));
+        assertThrows(IllegalArgumentException.class, () -> book.deleteReview(rev2));
+        assertThrows(IllegalArgumentException.class, () -> rev2.deleteReview());
+    } 
 }
 

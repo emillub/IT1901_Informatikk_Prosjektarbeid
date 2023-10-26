@@ -57,11 +57,14 @@ public class FileHandlerTest {
         User user1 = new User("User1");
         Book updatedBook = books.get(0);
         user1.writeReview(updatedBook, BookReview.RATING_RANGE[2]);
-        System.out.println(updatedBook);
         assertFalse(updatedBook.toString().equals(FileHandler.getBookFromLibrary(updatedBook,null).toString()));
         
         FileHandler.updateBookInLibrary(updatedBook);
         assertTrue(updatedBook.toString().equals(FileHandler.getBookFromLibrary(updatedBook,null).toString()));
+        
+        updatedBook.deleteReview(updatedBook.getReviews().get(0));
+        FileHandler.updateBookInLibrary(updatedBook);
+        assertTrue(updatedBook.getReviews().size() == 0);
     }
 
     

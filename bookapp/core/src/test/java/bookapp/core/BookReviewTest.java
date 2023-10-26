@@ -1,14 +1,12 @@
 package bookapp.core;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BookReviewTest {
-    Book book1;
+Book book1;
     Book book2;
     User user1;
     User user2;
@@ -24,19 +22,28 @@ public class BookReviewTest {
     @Test
     void testConstructor(){
         BookReview review = new BookReview(book1, user1, 1);
-        Assertions.assertNotNull(book1.getReviews().get(0));
-        Assertions.assertEquals(book1.getReviews().get(0).getReviewer(),review.getReviewer());
+        assertNotNull(book1.getReviews().get(0));
+        assertEquals(book1.getReviews().get(0).getReviewer(),review.getReviewer());
     }
 
     @Test
     void testDuplicateReview(){
         BookReview review = new BookReview(book1, user1, 1);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new BookReview(book1, user1,2));
+        assertThrows(IllegalArgumentException.class, () -> new BookReview(book1, user1,2));
     }
 
     @Test
     void testRatingOutOfRange(){
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new BookReview(book1, user1,0));
+        assertThrows(IllegalArgumentException.class, () -> new BookReview(book1, user1,0));
+    }
+
+    @Test
+    void testDeleteReview(){
+        
+        BookReview review = new BookReview(book1, user1, 5);
+        assertEquals(book1.getReviews().size(), 1);
+        review.deleteReview();
+        assertEquals(book1.getReviews().size(), 0);
     }
 
 }
