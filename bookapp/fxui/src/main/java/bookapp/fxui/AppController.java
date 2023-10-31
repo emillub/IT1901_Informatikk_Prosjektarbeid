@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
-import bookapp.persistence.FileHandler;
+import bookapp.restapi.FileHandler;
 import bookapp.core.Book;
 import java.util.List;
 

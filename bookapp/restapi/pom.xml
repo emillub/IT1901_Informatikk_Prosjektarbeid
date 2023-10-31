@@ -10,7 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>    
   </parent>
 
-    <artifactId>persistence</artifactId>
+    <artifactId>restapi</artifactId>
 
     <dependencies>
 
@@ -25,6 +25,20 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.13.0</version>
           </dependency>
+
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.1.5</version>
+          </dependency>
+
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <version>3.1.5</version>
+          </dependency>
+
     </dependencies>
 
     <build>
@@ -37,6 +51,14 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <mainClass>bookapp.restapi.BookappModelApplication</mainClass>
+          </configuration>
+          <version>3.1.5</version>
+        </plugin>
       </plugins>
     </build>
-</project>  
+</project>

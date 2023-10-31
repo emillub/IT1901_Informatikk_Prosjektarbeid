@@ -1,11 +1,11 @@
-package bookapp.persistance;
+package bookapp.restapi;
 
 import org.junit.jupiter.api.Test;
 
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 import bookapp.core.User;
-import bookapp.persistence.FileHandler;
+import bookapp.restapi.FileHandler;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
