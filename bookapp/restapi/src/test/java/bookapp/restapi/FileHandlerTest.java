@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 import bookapp.core.User;
-import bookapp.restapi.FileHandler;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class FileHandlerTest {
 
 
     @Test void testGetFilePath(){
-        String expectedEndOFPath = "bookapp/persistance/Library.json";
+        String expectedEndOFPath = "bookapp/restapi/Library.json";
         assertTrue(FileHandler.getDefaultFilePath().endsWith(expectedEndOFPath));
     }
 
