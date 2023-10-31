@@ -21,7 +21,7 @@ import bookapp.core.Book;
 public class FileHandler {
 
     private final static String FILE_NAME = "Library.json";
-    public static String DIR_PATH = "bookapp/restapi/src/main/resources/bookapp/persistance";
+    public static String DIR_PATH = "bookapp/restapi/src/main/resources/bookapp/restapi";
     public static final Book[] LIBRARY = 
     {new Book("Til musikken", "author"), 
     new Book("Maskiner som tenker", "Inga Stromke"),
@@ -43,7 +43,7 @@ public class FileHandler {
             CheckIfMoreBooksInLibrary(books);
             ObjectMapper mapper = new ObjectMapper();
             String filePath = getDefaultFilePath();
-            mapper.writeValue(Paths.get(filePath).toFile(), books);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get(filePath).toFile(), books);
         } catch (IOException ex) {
             System.out.println("Error writing to file");
             ex.printStackTrace();
@@ -117,14 +117,14 @@ public class FileHandler {
             Path path = Path.of(new File("").getAbsolutePath());
             String pathString = path.toString();
             if(pathString.endsWith("gr2349")) {
-                pathString = pathString + "/bookapp/restapi/src/main/resources/bookapp/persistance";
+                pathString = pathString + "/bookapp/restapi/src/main/resources/bookapp/restapi";
             }
             else if (path.toString().endsWith("fxui") || path.toString().endsWith("restapi")){   
                 //Removes string until at /bookapp
                 while (!pathString.endsWith("bookapp")){ 
                     pathString = pathString.substring(0, pathString.length()-1);
                 }
-                pathString += "/restapi/src/main/resources/bookapp/persistance";
+                pathString += "/restapi/src/main/resources/bookapp/restapi";
             }
 
             Files.createDirectories(Paths.get(pathString)); //Creates the directory if it doesn't exist
