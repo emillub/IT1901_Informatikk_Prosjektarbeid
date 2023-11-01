@@ -121,12 +121,12 @@ public class AppController {
 
    
     private void loadLibrary(){
-        //For R3 this list of books needs to be loaded through a http request, not a local file.
-        List<Book> loadedBooks = FileHandler.readBooksFromFile();
+        //Loading the library locally 
+        //List<Book> loadedBooks = FileHandler.readBooksFromFile();
 
-        //Attempt to load library through HTTP request 
-        // RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
-        // List<Book> loadedBooks = controller.fetchlibrary();
+        //Loading the library through a HTTP method
+        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
+        List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 

@@ -1,6 +1,8 @@
 package bookapp.fxui;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
@@ -31,21 +33,20 @@ public class RemoteBookappModelAccess{
     
     private static final String FETCH = "/fetchList";
     
-    private static ObjectMapper mapper;
+    private static ObjectMapper mapper = new ObjectMapper();
 
-
+    //Returns a List<Book> object that contains all information to load the library.
     public List<Book> fetchlibrary(){
-    //Need this to return either a list of books or raw jsonobjects dependent on how AppController works
         try{
             List<Book> booklist;
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080"+ADDRESS+FETCH)).build();
+            .uri(URI.create("http://localhost:8080"+ADDRESS+FETCH)).
+            header("Content-type", APPLICATION_JSON).build();
             
-            //How to write correct HTTP response and how to map that from HTTPresponse<List<Book>> to List<Book>
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
-            
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
             int responseStatus = response.statusCode();
+            System.out.println(response.body());
             if (responseStatus>=200 && responseStatus<=300){
                 booklist = mapper.readValue(response.body(), new TypeReference<List<Book>>() {});
                 return booklist;
