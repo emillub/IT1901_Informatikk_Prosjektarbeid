@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 public class BookappModelController{
 
-    //GET for the entire list of entities in the JSON file. IKKEFULLSTENDIG
+    //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
             List<Book> booklist = FileHandler.readBooksFromFile();
