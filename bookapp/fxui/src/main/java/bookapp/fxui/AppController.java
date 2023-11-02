@@ -104,14 +104,23 @@ public class AppController {
         if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
         if(rating == null) return;
-        user.writeReview(selectedBook, (int) rating);
+
+        //Adding a review locally
+        //user.writeReview(selectedBook, (int) rating);
+
+        //Adding a review through a HTTP method
+        add(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
     }
 
     @FXML private void deleteReviewButtonClick(){
-        selectedBook.deleteReview(selectedBookReview);
+        //Deleting a review locally
+        //selectedBook.deleteReview(selectedBookReview);
+
+        //Deleting a review through a HTTP method 
+        delete(selectedBook, selectedBookReview);
         updateReviewListView();
         updateBookListView();
         selectedBookReview = null;
@@ -130,6 +139,20 @@ public class AppController {
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
+
+    private void delete(Book book, BookReview bookreviewer){
+        String bookname = book.getTitle();
+        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
+        controller.deleteReview(bookname, bookreviewer); 
+        updateBookListView();
+    }
+    
+    private void add(User user, Book book, int rating){
+        BookReview review = new BookReview(book, user, rating);
+        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
+        controller.addReview(book.getTitle(), review);
+        updateBookListView();
+    }
 
     private void saveLibrary(){
         for (Book book : bookList){

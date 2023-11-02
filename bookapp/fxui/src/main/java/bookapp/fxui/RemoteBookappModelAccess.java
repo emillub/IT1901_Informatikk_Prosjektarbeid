@@ -25,8 +25,6 @@ import bookapp.restapi.BookappModelController;
 //This class handles communication between the UI and the HTTP methods defined in BookappModelController
 public class RemoteBookappModelAccess{
     
-    private static URI address;
-    
     private static final String APPLICATION_JSON = "application/json";
     
     private static final String ACCEPT_HEADER = "Accept";
@@ -61,16 +59,17 @@ public class RemoteBookappModelAccess{
         }
     }
 
-    public static void deleteReview(String BookName, BookReview review){
+    public void deleteReview(String BookName, BookReview review){
         //Need this to remove a review in the "database" (in our case the json file)
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + BookName + "/"+review))                .header("Content-Type", APPLICATION_JSON)
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + BookName + "/"+review.getReviewer().getName()))                .header("Content-Type", APPLICATION_JSON)
             .DELETE()
             .build();
             
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
             int responseStatus = response.statusCode();
             if (responseStatus>=200 && responseStatus<=300) {
             //Succesfully deleted the review
@@ -84,15 +83,16 @@ public class RemoteBookappModelAccess{
     }
     
 
-    public static void addReview(String reviewName){
+    public void addReview(String BookName, BookReview review){
     //Need this function to add a review to our database (JSON-file)
         try {
+            String reviewerjson = mapper.writeValueAsString(review);
+            
             HttpClient client = HttpClient.newHttpClient();
-            String reviewJson = "{\"reviewName\": \"" + reviewName + "\"}";
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/addReview"))
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/post/"+BookName+"/"+review.getReviewer().getName()))
             .header("Content-Type", APPLICATION_JSON)
-            .POST(BodyPublishers.ofString(reviewJson))
+            .POST(BodyPublishers.ofString(reviewerjson))
             .build();
 
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

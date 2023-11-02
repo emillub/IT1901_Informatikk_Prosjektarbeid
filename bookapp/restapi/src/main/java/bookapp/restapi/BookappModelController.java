@@ -30,37 +30,45 @@ public class BookappModelController{
 
 
     // POST a new review for a book
-    @PostMapping("/post/{bookName}/{review}")
+    //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
+    @GetMapping("/post/{bookName}/{review}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
         List<Book> booklist = FileHandler.readBooksFromFile();
         for (Book book : booklist){
-            if (book.getTitle().equals(bookName)){
-                book.getReviews().add(review); 
-                return ResponseEntity.ok("Review posted successfully."); // Return success message
-            } 
+            if(book.getTitle().equals(bookName)){
+                book.addReview(review);
+                return ResponseEntity.ok("Review sucessfully added");
+            }
         }
-        return ResponseEntity.notFound().build(); // Book not found
+        return ResponseEntity.notFound().build();
     }
 
     // DELETE a review for a book
-    @DeleteMapping("/delete/{bookName}/{reviewer}")
-    public ResponseEntity<String> deleteReview(@PathVariable String bookName, @PathVariable String reviewer) {
+    //Hvorfor fungerer dette med @GetMapping, men ikke med @DeleteMapping?? 
+    @DeleteMapping("/delete/{bookName}/{reviewName}")
+    public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName,@PathVariable("reviewName") String reviewName ) {
         List<Book> booklist = FileHandler.readBooksFromFile();
         for (Book book : booklist){
             if (book.getTitle().equals(bookName)){
-                for (BookReview rev : book.getReviews()){
-                    if (rev.getReviewer().getName().equals((reviewer))){
-                        book.getReviews().remove(rev);
-                        return ResponseEntity.ok("Review deleted successfully."); // Return success message
+                for (BookReview reviewer : book.getReviews()){
+                    if(reviewer.getReviewer().getName().equals(reviewName)){
+                        book.deleteReview(reviewer);
+                        FileHandler.updateBookInLibrary(book);
+                        return ResponseEntity.ok("Bookreview sucessfully deleted.");
+                    }else{
+                        return ResponseEntity.notFound().build();
                     }
                 }
-                // Break iteration, if the book has been found by name and reviewer is not found we don't need to iterate through the rest
-            } 
+            }
         }
-        return ResponseEntity.notFound().build(); 
+        return ResponseEntity.notFound().build();
+        }
+
+    //Nødvendig med PutMapping????    
+    // @PutMapping("/updatelibrary")
+    // public void updateLibrary(){
+
+    // }
     }
 
-}
-//Må ha mapping mellom back-end funksjoner og uri (portaddresse e.g. 8080/domene/new?).
-//Første man bør gjøre; lage en funksjon som returnerer noe. Sjekke at man klarer å teste en funksjon fra UIet
 
