@@ -78,7 +78,7 @@
                                        </font>
                                     </Text>
                                     <Text layoutX="86.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorter:" />
-                                    <ChoiceBox fx:id="sortChoiceBox" layoutX="140.0" layoutY="37.0" prefHeight="26.0" prefWidth="94.0" />
+                                    <ChoiceBox fx:id="sortChoiceBox" layoutX="140.0" layoutY="37.0" onAction="#sortChoiceBoxClick" prefHeight="26.0" prefWidth="94.0" />
                                  </children>
                               </AnchorPane>
                               <HBox prefHeight="297.0" prefWidth="500.0">

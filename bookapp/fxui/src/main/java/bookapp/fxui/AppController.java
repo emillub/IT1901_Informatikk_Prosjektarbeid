@@ -125,6 +125,10 @@ public class AppController {
         saveLibrary();
     }
 
+    @FXML private void sortChoiceBoxClick(){
+        updateBookListView();
+    }
+
    
     private void loadLibrary(){
         List<Book> loadedBooks = FileHandler.readBooksFromFile();
@@ -144,6 +148,7 @@ public class AppController {
     }
 
     private void updateBookListView(){
+        bookList.sort(new BookComparator(sortChoiceBox.getValue()));
         bookListView.setItems(FXCollections.observableArrayList(bookList));    
     }
 

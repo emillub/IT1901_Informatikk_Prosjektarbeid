@@ -19,7 +19,6 @@ public class BookComparator implements Comparator<Book>{
         if (sortBy.equals(RATING)) {
             return Float.compare(o2.getAverageRating(), o1.getAverageRating());
         } else if (sortBy.equals(AUTHOR_NAME)) {
-            System.out.println("Sorting by author");
             return o1.getAuthor().compareTo(o2.getAuthor());
         } 
         return o1.getTitle().compareTo(o2.getTitle());
