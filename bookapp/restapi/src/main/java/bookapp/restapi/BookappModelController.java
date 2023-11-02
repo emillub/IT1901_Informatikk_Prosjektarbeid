@@ -30,7 +30,7 @@ public class BookappModelController{
 
 
     // POST a new review for a book
-    @PostMapping("/{bookName}/reviews")
+    @PostMapping("/post/{bookName}/{review}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
         List<Book> booklist = FileHandler.readBooksFromFile();
         for (Book book : booklist){
@@ -43,13 +43,13 @@ public class BookappModelController{
     }
 
     // DELETE a review for a book
-    @DeleteMapping("/{bookName}/reviews")
-    public ResponseEntity<String> deleteReview(@PathVariable String bookName, @RequestParam String reviewerName) {
+    @DeleteMapping("/delete/{bookName}/{reviewer}")
+    public ResponseEntity<String> deleteReview(@PathVariable String bookName, @PathVariable String reviewer) {
         List<Book> booklist = FileHandler.readBooksFromFile();
         for (Book book : booklist){
             if (book.getTitle().equals(bookName)){
                 for (BookReview rev : book.getReviews()){
-                    if (rev.getReviewer().getName().equals((reviewerName))){
+                    if (rev.getReviewer().getName().equals((reviewer))){
                         book.getReviews().remove(rev);
                         return ResponseEntity.ok("Review deleted successfully."); // Return success message
                     }
