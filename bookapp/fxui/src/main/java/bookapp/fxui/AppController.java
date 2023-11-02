@@ -166,5 +166,4 @@ public class AppController {
             deleteReviewButton.setDisable(false);
         }
     }
-    
 }

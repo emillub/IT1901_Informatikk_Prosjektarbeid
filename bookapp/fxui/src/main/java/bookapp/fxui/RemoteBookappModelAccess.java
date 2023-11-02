@@ -47,7 +47,7 @@ public class RemoteBookappModelAccess{
             
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
             int responseStatus = response.statusCode();
-            System.out.println(response.body());
+            
             if (responseStatus>=200 && responseStatus<=300){
                 booklist = mapper.readValue(response.body(), new TypeReference<List<Book>>() {});
                 return booklist;
@@ -61,26 +61,28 @@ public class RemoteBookappModelAccess{
     }
 
     public static void deleteReview(String reviewName){
-        //Need this to remove a review in the "database" (in our case the json file)
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/deleteReview"))
-            .header("Content-Type", APPLICATION_JSON)
-            .DELETE()
-            .build();
-            
-            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            int responseStatus = response.statusCode();
-            if (responseStatus>=200 && responseStatus<=300) {
-                //Succesfully deleted the review
-            } else {
-                throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
+    //Need this to remove a review in the "database" (in our case the json file)
+            //Need this to remove a review in the "database" (in our case the json file)
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080" + ADDRESS + "/deleteReview"))
+                .header("Content-Type", APPLICATION_JSON)
+                .DELETE()
+                .build();
+                
+                final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                int responseStatus = response.statusCode();
+                if (responseStatus>=200 && responseStatus<=300) {
+                    //Succesfully deleted the review
+                } else {
+                    throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
+                }
+            }catch (IOException|InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        }catch (IOException|InterruptedException e) {
-            throw new RuntimeException(e);
         }
-    }
+    
 
     public static void addReview(String reviewName){
     //Need this function to add a review to our database (JSON-file)
