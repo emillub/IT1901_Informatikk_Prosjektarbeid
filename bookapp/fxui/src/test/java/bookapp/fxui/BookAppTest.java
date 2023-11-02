@@ -8,10 +8,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -25,7 +29,9 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import bookapp.core.Book;
+import bookapp.core.BookComparator;
 import bookapp.core.BookReview;
+import bookapp.core.User;
 
 
 public class BookAppTest extends ApplicationTest {
@@ -57,7 +63,7 @@ public class BookAppTest extends ApplicationTest {
         click("Log in");
         bookListView = from(scene.getRoot()).lookup("#bookListView").queryListView();
         reviewListView = from(scene.getRoot()).lookup("#reviewListView").queryListView();
-        book = bookListView.getItems().get(0);
+        book = bookListView.getItems().get(bookListView.getItems().size()-1);
     }
 
     @Test 
@@ -74,6 +80,15 @@ public class BookAppTest extends ApplicationTest {
         click("Vurder");
         assertTrue(!book.getReviews().isEmpty());
     }
+    
+    @Test
+    void testSortReviews(){
+        new BookReview(book, new User("user"),5);
+        assertNotEquals(bookListView.getItems().get(0), book);
+        clickOn("#sortChoiceBox");
+        click(BookComparator.RATING);
+        assertEquals(bookListView.getItems().get(0),book);
+    }
 
     @Test
     void testDeleteReview(){
@@ -83,4 +98,5 @@ public class BookAppTest extends ApplicationTest {
         clickOn("#deleteReviewButton");
         assertTrue(book.getReviews().isEmpty());
     }
+
 }
