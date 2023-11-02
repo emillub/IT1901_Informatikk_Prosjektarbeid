@@ -3,9 +3,9 @@ package bookapp.core;
 import java.util.Comparator;
 
 public class BookComparator implements Comparator<Book>{
-    protected static final String RATING = "rating";
-    protected static final String AUTHOR_NAME = "authorName";
-    protected static final String BOOK_TITLE = "ttile";
+    public static final String RATING = "Rating";
+    public static final String AUTHOR_NAME = "Author name";
+    public static final String BOOK_TITLE = "Title";
     private String sortBy = RATING;
 
     public BookComparator(){}

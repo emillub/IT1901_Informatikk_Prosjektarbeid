@@ -8,6 +8,8 @@ import bookapp.core.User;
 import bookapp.core.BookReview;
 import bookapp.restapi.FileHandler;
 import bookapp.core.Book;
+import bookapp.core.BookComparator;
+
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -45,6 +47,8 @@ public class AppController {
 
     @FXML
     private ChoiceBox<Integer> rateChoiceBox;
+    @FXML
+    private ChoiceBox<String> sortChoiceBox;
 
     @FXML
     private ListView<BookReview> reviewListView;
@@ -69,6 +73,8 @@ public class AppController {
 
     @FXML public void initialize(){
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
+        sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
         loginPane.setVisible(true);
         mainPane.setVisible(false);
     }
