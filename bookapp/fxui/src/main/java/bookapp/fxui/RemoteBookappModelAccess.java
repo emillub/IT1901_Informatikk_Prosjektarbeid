@@ -62,9 +62,13 @@ public class RemoteBookappModelAccess{
     public void deleteReview(String BookName, BookReview review){
         //Need this to remove a review in the "database" (in our case the json file)
         try {
+            String updatedName = BookName.replace(" ","%20");
+            System.out.println("http://localhost:8080" + ADDRESS + "/delete/" + updatedName+"/" + review.getReviewer().getName());
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + BookName + "/"+review.getReviewer().getName()))                .header("Content-Type", APPLICATION_JSON)
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + updatedName + "/" + review.getReviewer().getName()))
+            .header("Content-Type", APPLICATION_JSON).header(review.getReviewer().getName(), APPLICATION_JSON)
             .DELETE()
             .build();
             
@@ -87,10 +91,11 @@ public class RemoteBookappModelAccess{
     //Need this function to add a review to our database (JSON-file)
         try {
             String reviewerjson = mapper.writeValueAsString(review);
-            
+            String updatedName = BookName.replace(" ","%20");
+
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/post/"+BookName+"/"+review.getReviewer().getName()))
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/post/" + updatedName))
             .header("Content-Type", APPLICATION_JSON)
             .POST(BodyPublishers.ofString(reviewerjson))
             .build();
@@ -99,6 +104,7 @@ public class RemoteBookappModelAccess{
             int responseStatus = response.statusCode();
             if (responseStatus>=200 && responseStatus<=300) {
                 //Successfully added a review
+                System.out.println("Successfully added review");
             } else {
                 throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
             }
@@ -107,4 +113,29 @@ public class RemoteBookappModelAccess{
             throw new RuntimeException(e);
         }
     }
+
+    public void update(List<Book> lib){
+        try {
+            String library = mapper.writeValueAsString(lib);
+            
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/updatelibrary"))
+            .header("Content-Type", APPLICATION_JSON)
+            .PUT(BodyPublishers.ofString(library))
+            .build();
+
+            final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            int responseStatus = response.statusCode();
+            if (responseStatus>=200 && responseStatus<=300) {
+                System.out.println("Succsessfully updated the booklist");
+            } else {
+                throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
+            }
+
+        }catch(IOException|InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    } 
+
 }

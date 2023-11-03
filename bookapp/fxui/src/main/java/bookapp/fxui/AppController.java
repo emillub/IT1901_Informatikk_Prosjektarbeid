@@ -140,6 +140,7 @@ public class AppController {
         updateBookListView();
     } 
 
+    //Deleteing a review through a HTTP request
     private void delete(Book book, BookReview bookreviewer){
         String bookname = book.getTitle();
         RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
@@ -147,6 +148,7 @@ public class AppController {
         updateBookListView();
     }
     
+    //Adding a review through a HTTP request
     private void add(User user, Book book, int rating){
         BookReview review = new BookReview(book, user, rating);
         RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
@@ -155,9 +157,18 @@ public class AppController {
     }
 
     private void saveLibrary(){
+        //Saving a library locally
+        // for (Book book : bookList){
+        //     FileHandler.updateBookInLibrary(book);
+        // }
+
+        //Saving a library through a HTTP method
+        List<Book> listofbooks = new ArrayList<Book>();
+        RemoteBookappModelAccess controller = new RemoteBookappModelAccess();
         for (Book book : bookList){
-            FileHandler.updateBookInLibrary(book);
+            listofbooks.add(book);
         }
+        controller.update(listofbooks);
     }
 
     private User getUser(){ 

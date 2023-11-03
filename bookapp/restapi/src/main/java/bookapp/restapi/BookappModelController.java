@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,15 +29,17 @@ public class BookappModelController{
             return booklist;
     }
 
-
     // POST a new review for a book
     //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
-    @GetMapping("/post/{bookName}/{review}")
+    @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
         List<Book> booklist = FileHandler.readBooksFromFile();
+        String updatedName = bookName.replace("%20", " ");
+
         for (Book book : booklist){
-            if(book.getTitle().equals(bookName)){
+            if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
+                FileHandler.updateBookInLibrary(book);
                 return ResponseEntity.ok("Review sucessfully added");
             }
         }
@@ -44,15 +47,17 @@ public class BookappModelController{
     }
 
     // DELETE a review for a book
-    //Hvorfor fungerer dette med @GetMapping, men ikke med @DeleteMapping?? 
-    @DeleteMapping("/delete/{bookName}/{reviewName}")
-    public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName,@PathVariable("reviewName") String reviewName ) {
+    @DeleteMapping("/delete/{bookName}/{reviewer}")
+    public ResponseEntity<String> deleteReview(@PathVariable String bookName,@PathVariable String reviewer) {
         List<Book> booklist = FileHandler.readBooksFromFile();
+        String updatedName = bookName.replace("%20", " ");
+        System.out.println(updatedName);
+
         for (Book book : booklist){
-            if (book.getTitle().equals(bookName)){
-                for (BookReview reviewer : book.getReviews()){
-                    if(reviewer.getReviewer().getName().equals(reviewName)){
-                        book.deleteReview(reviewer);
+            if (book.getTitle().equals(updatedName)){
+                for (BookReview reviews : book.getReviews()){
+                    if(reviews.getReviewer().getName().equals(reviewer)){
+                        book.deleteReview(reviews);
                         FileHandler.updateBookInLibrary(book);
                         return ResponseEntity.ok("Bookreview sucessfully deleted.");
                     }else{
@@ -63,12 +68,17 @@ public class BookappModelController{
         }
         return ResponseEntity.notFound().build();
         }
+    
+    @PutMapping("/updatelibrary")
+    public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
+        //Assuming I can use booklist as a list of book objects
+        for (Book book:booklist){
+                FileHandler.updateBookInLibrary(book);
+            }
+        return ResponseEntity.ok("Sucessfully updated library");
+    }
 
-    //Nødvendig med PutMapping????    
-    // @PutMapping("/updatelibrary")
-    // public void updateLibrary(){
-
-    // }
+    //Add checks and functionality later
     }
 
 
