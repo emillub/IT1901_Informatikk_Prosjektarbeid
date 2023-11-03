@@ -63,11 +63,12 @@ public class AppController {
     
     private ArrayList<Book> bookList = new ArrayList<Book>();
 
-
+    private RemoteBookappModelAccess controller;
     private Book selectedBook;
     private BookReview selectedBookReview;
 
     @FXML public void initialize(){
+        controller = new RemoteBookappModelAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
         loginPane.setVisible(true);
         mainPane.setVisible(false);
@@ -134,24 +135,22 @@ public class AppController {
         // List<Book> loadedBooks = FileHandler.readBooksFromFile();
 
         //Loading the library through a HTTP method
-        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
         List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
 
     //Deleteing a review through a HTTP request
-    private void delete(Book book, BookReview bookreviewer){
+    private void delete(Book book, BookReview bookreview){
         String bookname = book.getTitle();
-        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
-        controller.deleteReview(bookname, bookreviewer); 
+        book.deleteReview(bookreview);
+        controller.deleteReview(bookname, bookreview); 
         updateBookListView();
     }
     
     //Adding a review through a HTTP request
     private void add(User user, Book book, int rating){
         BookReview review = new BookReview(book, user, rating);
-        RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
         controller.addReview(book.getTitle(), review);
         updateBookListView();
     }
@@ -164,7 +163,6 @@ public class AppController {
 
         //Saving a library through a HTTP method
         List<Book> listofbooks = new ArrayList<Book>();
-        RemoteBookappModelAccess controller = new RemoteBookappModelAccess();
         for (Book book : bookList){
             listofbooks.add(book);
         }

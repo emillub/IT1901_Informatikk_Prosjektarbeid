@@ -52,35 +52,15 @@ public class BookappModelController{
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
         List<Book> booklist = FileHandler.readBooksFromFile();
-        String updatedName = bookName.replace("%20", " ");
-        String updatedReviewer = reviewer.replace("%20", " ");
-        Book wantedbook = null;
-        BookReview wantedReviewer = null;
-
-        for (Book book : booklist){
-            if (book.getTitle().equals(updatedName)){
-                wantedbook = FileHandler.getBookFromLibrary(book, booklist);
-                System.out.println("Got the book");
-            }
+        Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookName)).findFirst();
+        if (wantedBook.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
-        if (wantedbook!=null){
-        for (BookReview i : wantedbook.getReviews()){
-            if (i.getReviewer().getName().equals(updatedReviewer)){
-                wantedReviewer = i;
-                System.out.println("Got the reviewer");
-            }
-        }
-        }
-        if (wantedbook!=null && wantedReviewer!=null){
-            wantedbook.deleteReview(wantedReviewer);
-            for (Book i : booklist){
-                FileHandler.updateBookInLibrary(i);
-            }
-            System.out.println("Updated library");
-            return ResponseEntity.ok("We good now");
-        }else
-        {
-        return ResponseEntity.notFound().build();}
+        Book book = wantedBook.get();
+        BookReview bookReview = book.getReviews().stream().filter(r -> r.getReviewer().getName().equals(reviewer)).findFirst().get();
+        book.deleteReview(bookReview);
+        FileHandler.updateBookInLibrary(book);
+        return ResponseEntity.ok("review by " + reviewer + " deleted");
         }
     
     @PutMapping("/updatelibrary")
