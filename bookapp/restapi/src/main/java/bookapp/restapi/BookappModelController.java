@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,25 +50,37 @@ public class BookappModelController{
 
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
-    public ResponseEntity<String> deleteReview(@PathVariable String bookName,@PathVariable String reviewer) {
+    public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
         List<Book> booklist = FileHandler.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
-        System.out.println(updatedName);
+        String updatedReviewer = reviewer.replace("%20", " ");
+        Book wantedbook = null;
+        BookReview wantedReviewer = null;
 
         for (Book book : booklist){
             if (book.getTitle().equals(updatedName)){
-                for (BookReview reviews : book.getReviews()){
-                    if(reviews.getReviewer().getName().equals(reviewer)){
-                        book.deleteReview(reviews);
-                        FileHandler.updateBookInLibrary(book);
-                        return ResponseEntity.ok("Bookreview sucessfully deleted.");
-                    }else{
-                        return ResponseEntity.notFound().build();
-                    }
-                }
+                wantedbook = FileHandler.getBookFromLibrary(book, booklist);
+                System.out.println("Got the book");
             }
         }
-        return ResponseEntity.notFound().build();
+        if (wantedbook!=null){
+        for (BookReview i : wantedbook.getReviews()){
+            if (i.getReviewer().getName().equals(updatedReviewer)){
+                wantedReviewer = i;
+                System.out.println("Got the reviewer");
+            }
+        }
+        }
+        if (wantedbook!=null && wantedReviewer!=null){
+            wantedbook.deleteReview(wantedReviewer);
+            for (Book i : booklist){
+                FileHandler.updateBookInLibrary(i);
+            }
+            System.out.println("Updated library");
+            return ResponseEntity.ok("We good now");
+        }else
+        {
+        return ResponseEntity.notFound().build();}
         }
     
     @PutMapping("/updatelibrary")

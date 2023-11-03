@@ -63,17 +63,15 @@ public class RemoteBookappModelAccess{
         //Need this to remove a review in the "database" (in our case the json file)
         try {
             String updatedName = BookName.replace(" ","%20");
-            System.out.println("http://localhost:8080" + ADDRESS + "/delete/" + updatedName+"/" + review.getReviewer().getName());
+            String reviewerName = review.getReviewer().getName().replace(" ", "%20");
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + updatedName + "/" + review.getReviewer().getName()))
-            .header("Content-Type", APPLICATION_JSON).header(review.getReviewer().getName(), APPLICATION_JSON)
             .DELETE()
+            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + updatedName + "/" + reviewerName))
             .build();
             
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
             int responseStatus = response.statusCode();
             if (responseStatus>=200 && responseStatus<=300) {
             //Succesfully deleted the review

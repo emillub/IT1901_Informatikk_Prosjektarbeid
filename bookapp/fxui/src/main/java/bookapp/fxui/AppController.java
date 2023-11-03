@@ -106,7 +106,7 @@ public class AppController {
         if(rating == null) return;
 
         //Adding a review locally
-        //user.writeReview(selectedBook, (int) rating);
+        // user.writeReview(selectedBook, (int) rating);
 
         //Adding a review through a HTTP method
         add(user, selectedBook, (int)rating);
@@ -117,7 +117,7 @@ public class AppController {
 
     @FXML private void deleteReviewButtonClick(){
         //Deleting a review locally
-        //selectedBook.deleteReview(selectedBookReview);
+        // selectedBook.deleteReview(selectedBookReview);
 
         //Deleting a review through a HTTP method 
         delete(selectedBook, selectedBookReview);
@@ -131,7 +131,7 @@ public class AppController {
    
     private void loadLibrary(){
         //Loading the library locally 
-        //List<Book> loadedBooks = FileHandler.readBooksFromFile();
+        // List<Book> loadedBooks = FileHandler.readBooksFromFile();
 
         //Loading the library through a HTTP method
         RemoteBookappModelAccess controller = new RemoteBookappModelAccess(); 
