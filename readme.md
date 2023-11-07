@@ -12,9 +12,9 @@ The structure of the project has been updated from release 2. We no longer have 
 
 Furthermore, we have our modules, which are as follows: **core**, **fxui**, and **restapi**. The **core**-module is only visable to the server side of the application through the **restapi** module and hanles all the core logic of the app. The **restapi**-module is responsible for responding to client requests and ensures correct handeling of the logic domain. The **fxui**-module is now updated to not work locally, but remotely through a restful API. This means that it now has restful API logic that allows for HTTP communication with the server holding the back-end functionality. You can read more on the respective modules in the following readme's:
 
-*[core](docs\ReadMecore.md)
-*[fxui](docs\ReadMefxui.md)
-*[persistence](docs\ReadMerestapi.md)
+* [core](docs\ReadMecore.md)
+* [fxui](docs\ReadMefxui.md)
+* [persistence](docs\ReadMerestapi.md)
 
 These module POM files specify additional necessary additions and dependencies. More details can be found in each module's respective **Readme.md** file.
 
