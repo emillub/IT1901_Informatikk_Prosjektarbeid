@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
-import bookapp.restapi.FileHandler;
 import bookapp.core.Book;
 import bookapp.core.BookComparator;
 
@@ -28,7 +27,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-
 
 
 public class AppController {
@@ -67,11 +65,12 @@ public class AppController {
     
     private ArrayList<Book> bookList = new ArrayList<Book>();
 
-
+    private RemoteBookappModelAccess controller;
     private Book selectedBook;
     private BookReview selectedBookReview;
 
     @FXML public void initialize(){
+        controller = new RemoteBookappModelAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
         sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
         sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
@@ -106,19 +105,22 @@ public class AppController {
             updateReviewListView();
         }
     }
-    
+
+    //Adding a review through a HTTP method
     @FXML private void vurderButtonClicked(){
         if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
         if(rating == null) return;
-        user.writeReview(selectedBook, (int) rating);
+
+        add(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
     }
 
+    //Deleting a review through a HTTP method 
     @FXML private void deleteReviewButtonClick(){
-        selectedBook.deleteReview(selectedBookReview);
+        delete(selectedBook, selectedBookReview);
         updateReviewListView();
         updateBookListView();
         selectedBookReview = null;
@@ -132,15 +134,33 @@ public class AppController {
 
    
     private void loadLibrary(){
-        List<Book> loadedBooks = FileHandler.readBooksFromFile();
+        List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
 
+    //Deleteing a review through a HTTP request
+    private void delete(Book book, BookReview bookreview){
+        String bookname = book.getTitle();
+        book.deleteReview(bookreview);
+        controller.deleteReview(bookname, bookreview); 
+        updateBookListView();
+    }
+    
+    //Adding a review through a HTTP request
+    private void add(User user, Book book, int rating){
+        BookReview review = new BookReview(book, user, rating);
+        controller.addReview(book.getTitle(), review);
+        updateBookListView();
+    }
+
+    //Saving a library through a HTTP method
     private void saveLibrary(){
+        List<Book> listofbooks = new ArrayList<Book>();
         for (Book book : bookList){
-            FileHandler.updateBookInLibrary(book);
+            listofbooks.add(book);
         }
+        controller.update(listofbooks);
     }
 
     private User getUser(){ 
@@ -173,5 +193,4 @@ public class AppController {
             deleteReviewButton.setDisable(false);
         }
     }
-    
 }

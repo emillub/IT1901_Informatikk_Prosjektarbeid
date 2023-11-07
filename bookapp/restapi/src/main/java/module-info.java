@@ -8,6 +8,6 @@ module bookapp.restapi {
     requires spring.beans;
     requires spring.core;
     
-    exports bookapp.restapi to com.fasterxml.jackson.databind, bookapp.fxui;
+    exports bookapp.restapi to com.fasterxml.jackson.databind;
 
 }
