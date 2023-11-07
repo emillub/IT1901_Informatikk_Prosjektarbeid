@@ -7,6 +7,8 @@ import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
 import bookapp.core.Book;
+import bookapp.core.BookComparator;
+
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -43,6 +45,8 @@ public class AppController {
 
     @FXML
     private ChoiceBox<Integer> rateChoiceBox;
+    @FXML
+    private ChoiceBox<String> sortChoiceBox;
 
     @FXML
     private ListView<BookReview> reviewListView;
@@ -68,6 +72,8 @@ public class AppController {
     @FXML public void initialize(){
         controller = new RemoteBookappModelAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
+        sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
         loginPane.setVisible(true);
         mainPane.setVisible(false);
     }
@@ -84,6 +90,7 @@ public class AppController {
     @FXML private void bookListViewClicked(){
         Object selectedItem = bookListView.getSelectionModel().getSelectedItem();
         if (selectedItem != null && selectedItem != selectedBook){
+            selectedBookReview = null;
             selectedBook = (Book) selectedItem;
             updateVurderHbox();
             updateMarkedBookText(selectedBook.getTitle());
@@ -121,7 +128,11 @@ public class AppController {
         saveLibrary();
     }
 
-    //Loading the library through a HTTP method
+    @FXML private void sortChoiceBoxClick(){
+        updateBookListView();
+    }
+
+   
     private void loadLibrary(){
         List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
@@ -158,6 +169,7 @@ public class AppController {
     }
 
     private void updateBookListView(){
+        bookList.sort(new BookComparator(sortChoiceBox.getValue()));
         bookListView.setItems(FXCollections.observableArrayList(bookList));    
     }
 
