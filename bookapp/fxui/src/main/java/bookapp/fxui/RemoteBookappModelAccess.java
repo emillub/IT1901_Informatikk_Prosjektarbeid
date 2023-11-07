@@ -24,8 +24,9 @@ import bookapp.core.BookReview;
 public class RemoteBookappModelAccess{
     
     private static final String APPLICATION_JSON = "application/json";
-    
-    private static final String ACCEPT_HEADER = "Accept";
+
+    //Change IP to server running spring-boot
+    private static final String SERVER_IP = "http://localhost:8080";
     
     private static final String ADDRESS = "/api/books";
     
@@ -39,7 +40,7 @@ public class RemoteBookappModelAccess{
             List<Book> booklist;
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080"+ADDRESS+FETCH)).
+            .uri(URI.create(SERVER_IP+ADDRESS+FETCH)).
             header("Content-type", APPLICATION_JSON).build();
             
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); 
@@ -66,7 +67,7 @@ public class RemoteBookappModelAccess{
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .DELETE()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/delete/" + updatedName + "/" + reviewerName))
+            .uri(URI.create(SERVER_IP+ ADDRESS + "/delete/" + updatedName + "/" + reviewerName))
             .build();
             
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -91,7 +92,7 @@ public class RemoteBookappModelAccess{
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/post/" + updatedName))
+            .uri(URI.create(SERVER_IP + ADDRESS + "/post/" + updatedName))
             .header("Content-Type", APPLICATION_JSON)
             .POST(BodyPublishers.ofString(reviewerjson))
             .build();
@@ -116,7 +117,7 @@ public class RemoteBookappModelAccess{
             
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:8080" + ADDRESS + "/updatelibrary"))
+            .uri(URI.create(SERVER_IP + ADDRESS + "/updatelibrary"))
             .header("Content-Type", APPLICATION_JSON)
             .PUT(BodyPublishers.ofString(library))
             .build();
