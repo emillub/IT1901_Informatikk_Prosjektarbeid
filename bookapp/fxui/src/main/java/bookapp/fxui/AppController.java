@@ -91,6 +91,7 @@ public class AppController {
     @FXML private void bookListViewClicked(){
         Object selectedItem = bookListView.getSelectionModel().getSelectedItem();
         if (selectedItem != null && selectedItem != selectedBook){
+            selectedBookReview = null;
             selectedBook = (Book) selectedItem;
             updateVurderHbox();
             updateMarkedBookText(selectedBook.getTitle());
