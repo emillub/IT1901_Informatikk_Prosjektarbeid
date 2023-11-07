@@ -11,6 +11,7 @@
   </parent>
 
     <artifactId>restapi</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
 
@@ -38,7 +39,6 @@
             <scope>test</scope>
             <version>3.1.5</version>
           </dependency>
-
     </dependencies>
 
     <build>
