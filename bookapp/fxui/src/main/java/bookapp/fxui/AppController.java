@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
-import bookapp.restapi.FileHandler;
 import bookapp.core.Book;
 import java.util.List;
 
@@ -26,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-
 
 
 public class AppController {
@@ -100,27 +98,21 @@ public class AppController {
             updateReviewListView();
         }
     }
-    
+
+    //Adding a review through a HTTP method
     @FXML private void vurderButtonClicked(){
         if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
         if(rating == null) return;
 
-        //Adding a review locally
-        // user.writeReview(selectedBook, (int) rating);
-
-        //Adding a review through a HTTP method
         add(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
     }
 
+    //Deleting a review through a HTTP method 
     @FXML private void deleteReviewButtonClick(){
-        //Deleting a review locally
-        // selectedBook.deleteReview(selectedBookReview);
-
-        //Deleting a review through a HTTP method 
         delete(selectedBook, selectedBookReview);
         updateReviewListView();
         updateBookListView();
@@ -129,12 +121,8 @@ public class AppController {
         saveLibrary();
     }
 
-   
+    //Loading the library through a HTTP method
     private void loadLibrary(){
-        //Loading the library locally 
-        // List<Book> loadedBooks = FileHandler.readBooksFromFile();
-
-        //Loading the library through a HTTP method
         List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
         updateBookListView();
@@ -155,13 +143,8 @@ public class AppController {
         updateBookListView();
     }
 
+    //Saving a library through a HTTP method
     private void saveLibrary(){
-        //Saving a library locally
-        // for (Book book : bookList){
-        //     FileHandler.updateBookInLibrary(book);
-        // }
-
-        //Saving a library through a HTTP method
         List<Book> listofbooks = new ArrayList<Book>();
         for (Book book : bookList){
             listofbooks.add(book);

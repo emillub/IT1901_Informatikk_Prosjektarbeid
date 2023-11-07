@@ -19,8 +19,6 @@ import java.util.List;
 
 import bookapp.core.Book;
 import bookapp.core.BookReview;
-import bookapp.restapi.BookappModelController;
-
 
 //This class handles communication between the UI and the HTTP methods defined in BookappModelController
 public class RemoteBookappModelAccess{
