@@ -1,90 +1,107 @@
-# Bokvurderings - prosjekt
+# Bookratingapplication - Project
 
-Prosjektet er ment for å være en bok vurderings applikasjon.
+The project is intended to be a book-rating application.
 
-Som en bruker er du ment til å kunne "logge" inn slik at du kan få tilgang til funksjoner i appen. Ved [release 2](docs\Release2.md) skal man kunne se bøker som er lagt inn i appen, velge en bok og levere en rating på boken, i tillegg til å se en samlet gjennomsnittsscore for boken.Funksjonene til appen er ment til å være enkle og vårt hovedfokus ligger i kvalitet, effektivt samarbeid og gitlab synkronisasjoner.
+As a user you are supposed to be able to logg in so that you can access functions in the app. By [realease 3](docs\Release3.md) we now have expanded our app to not work locally, but remotely. This implies that we need to have a server running for the application to work. The application is now also presented as a "shippable product". See [release 3](docs\Release3.md) for more about how this works. There is also new functionality and as a user we can now sort the books by author, rating or title as well as delete reviews. Our focus has remained as for 
+[release 2](docs\Release2.md) and our focus is still on simple functionality with high code quality, efficient cooperation and gitlab synchronizations.
 
-## Struktur
 
-Prosjektet følger nå en struktur hvor vi har forskjellige moduler for spesifikk funksjonalitet. Det gjør prosjektet mer oversiktelig og navigerbart. Hele prosjektet eksisterer i **bookapp**-mappen og inni denne finnes "parent"-pom-filen vår [pom.xml](bookapp\pom.xml). Det er fra denne filen at oppstartskommandoene først må kjøres. Se seksjonen *Bygging/kjøring av applikasjon*. 
+## Structure
 
-Videre finner vi modulene våre som er følgende; **core**, **fxui** og **persistens**. Disse håndterer henholdsvis domenelogikk, GUI og filhåndtering, og hver fil har en egen modul-pom-fil;
-[core](docs\ReadMeCore.md)
-[fxui](docs\ReadMeFxui.md)
-[persistence](docs\ReadMePersistence.md)
- som spesifiserer ekstra nødvendige tillegg og avhengigheter. Mer om det i hver moduls respektive **Readme.md**-fil. 
+The structure of the project has been updated from release 2. We no longer have a module for persistence handeling, but we now have a module called [restAPI](bookapp\restapi) where all of the back-end code is managed. This clearly and cleanly seperates the client side of the application from the server side of the application and allows for an easier implementation of the restful API. The project still resides in the **bookapp**-foler and is run through the parent-pom file. More on this under the section *Building and running the application*. 
 
-**Core**-modulen er grunnsteinen i prosjektet og både **fxui**- og **persistens**-modulen er avhengig av den for å kunne kjøre. **Fxui**-modulen er også avhengig av **persistens**-modulen, mens **persistens**-modulen, kun er avhengig av **core**-modulen, ikke **fxui**-modulen.
+Furthermore, we have our modules, which are as follows: **core**, **fxui**, and **restapi**. The **core**-module is only visable to the server side of the application through the **restapi** module and hanles all the core logic of the app. The **restapi**-module is responsible for responding to client requests and ensures correct handeling of the logic domain. The **fxui**-module is now updated to not work locally, but remotely through a restful API. This means that it now has restful API logic that allows for HTTP communication with the server holding the back-end functionality. You can read more on the respective modules in the following readme's:
 
-## Konfigurasjonsbehov
+[core](docs\ReadMecore.md)
+[fxui](docs\ReadMefxui.md)
+[persistence](docs\ReadMerestapi.md)
 
-Applikasjonen bruker maven til bygging og kjøring, og er konfigurert til å kunne kjøre med [Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2349/gr2349?new). Det er viktig at prosjektet kjører på **java 20.0.2-oracle** og **maven 3.9.4**. For å oppnå dette bruker vi sdk man for å endre java. Versjonene av java og maven er gitt av kommandoene: 
+These module POM files specify additional necessary additions and dependencies. More details can be found in each module's respective **Readme.md** file.
 
-`java --version` 
-og 
-`mvn --version`
+Our **Core**-module is still the cornerstone of the project, but now only the **restapi**-module is dependent on it for the app to run. Since **fxui**-module is now configured to run remotely, there is no need for dependencies to neither the **restapi**- or the **core**-module. The **restapi**-module is responsible for handeling the logic correctly and is naturally dependent on the **core**-module.
 
-For å endre til korrekt java-versjon kan man kjøre kommandoen: 
+
+## Configuration requirements
+
+The application uses Maven for building and running and is configured to run with [Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2349/gr2349?new). It's important that the project runs on **java 20.0.2-oracle** and **Maven 3.9.4**. To achieve this, we use SDKMAN to change the Java version. The Java and Maven versions can be obtained by running the following commands:
+
+To change to the correct Java version, you can run the command:
 
 `sdk install java 20.0.2-oracle`
 
-Dette skjer i den integrerte terminalen og bør, i tillegg til å oppdatere java, oppdatere til den nyeste versjonen av maven.
+This should be done in the integrated terminal and should, in addition to updating Java, update to the latest version of Maven.
 
-__PlantUML__ - For å kunne se diagrammet som beskriver avhengighet for prosjektet vår trenger man *PlantUML by jebbs*
+__PlantUML__ - To view the diagram describing the project's dependencies, you need the extension *PlantUML by jebbs*.
 
-## Bygging og kjøring av applikasjon
-For å bygge prosjektet, naviger til **bookapp**-mappen, hvor prosjektet ligger, og kjør følgende kommandoer:
+## Building and Running the Application
+
+There are now two ways to run the project. It can be run through an IDE like VScode or, as the project is configured as a shipable product, it can be run through an app. The following sections describes the procedure to run both ways respectively.
+
+### Through an IDE 
+
+Once the correct versions of java and maven have been installed, navigate to the **bookapp** folder, where the project is located, and run the following commands:
 
 `mvn clean`
 `mvn install`
-  
-For å kjøre prosjektet, naviger til **fxui**-modulen ved hjelp av cd-kommandoer. Derfra kan man kjøre kommandoen:
+
+This will install the necessary files to the project and can proceed. As the project now runs remotely, we first need to host a server to run. To do this, open a second terminal and navigate to the **bookapp\restapi**-folder and run:
+
+`mvn spring-boot:run`
+
+The server is now hosted on the local network and can be accessed through the IPv4 address. In the current version of the project, the local IPv4 addressed is replaced with *localhost*, but this can be changed to the local IPv4 address and still work.
+Open the unused terminal and navigate to the **fxui**-folder. From there, you can run the following command:
 
 `mvn javafx:run`
 
-for å kjøre applikasjonen. Det er viktig at man har kjørt overnevnte kommandoer med korrekt java-versjon for at dette skal fungere. Kjøres prosjektet gjennom Eclipse Che må man navigere til *ENDPOINTS* -> *6080-tcp-desktop-ui(6080/http)* -> kopiere URL'en -> åpne en ny fane for å se en VM-versjon hvor applikasjonen kan kjøres.
+to run the application. It's important that you have executed the above-mentioned commands with the correct Java version for this to work. When running the project through Eclipse Che, you must navigate to *ENDPOINTS* -> *6080-tcp-desktop-ui(6080/http)* -> copy the URL -> open a new tab to see a VM version where the application can be run in a VM of the environment.
   
+
+### Through the app
+
+Addlater.
+
+<!-- OPPDATERINGER UNDER IKKE GJORT -->
 ## Dependencies og plugins
 
-Prosjektet bruker en rekke dependencies. Disse er:
+The project uses a variety of dependencies. These are:
 
-1. Javafx; GUI
-2. Junit; for tester
-3. TextFX; for testing av javafx
-4. Jackson; for filhåntering
+1. Javafx; for GUI
+2. Junit; for testing
+3. TextFX; for testing JavaFX
+4. Jackson; for file handling
 
-I tillegg bruker vi også en rekke plugins for å oppnå all funksjonaliteten vi ønsker:
+Additionally, we also use several plugins to achieve all the functionality we desire:
 
-1. Nødvendige maven plugins; for kompilering og kjøring
-2. Jacoco; for dekningsgradsrapporter
-3. Checkstyle og spotbugs; for å sikre kodekvalitet
+1. Necessary Maven plugins; for compilation and execution
+2. Jacoco; for coverage reports
+3. Checkstyle and Spotbugs; to ensure code quality
 
-Konfigurasjon for verktøyene som sikrer kodekvalitet eksisterer i [config](bookapp\config) mappen, og innholdet er basert et standardformat for respektive filer.
+Configuration for the tools that ensure code quality exists in the [config](bookapp\config) folder, and the content is based on a standard format for respective files.
 
-Koden blir testet i henhold til Googles offisielle Java-kodeoppsett og stilretningslinjer, kjent som "Google Java Style Guide" for checkstyle. Videre for spotbugs brukes exclude.xml. Her sjekkes det blant annet etter når variabeler sammenlignes med seg selv og objekt-eksponering.
+The code is tested according to Google's official Java code setup and style guidelines, known as the "Google Java Style Guide" for Checkstyle. Furthermore, for Spotbugs, we use exclude.xml. This checks, among other things, for variables being compared to themselves and object exposure.
 
-## Arbeidsvaner, arbeidsflyt og kodekvalitet
+## Work Habits, Workflow, and Code Quality
 
-Dette avsnittet gir en oversikt over viktige valg og tilnærminger som har blitt gjort i løpet av prosjektets utvikling relatert til arbeidsvaner, arbeidsflyt og kodekvalitet i henhold til Release 2.
+This section provides an overview of key choices and approaches that have been made during the project's development related to work habits, workflow, and code quality in accordance with Release 2.
 
-## Arbeidsvaner
+## Work Habits
 
-__Agil utvikling__ - Vi følger en agil utviklingsmetodikk gjennom prosjektet. Dette tillater oss å tilpasse oss endringer og levere jevnlige oppdateringer. Denne metodikken inkluderer regelmessige sprinter for å forbedre prosessen.
+__Agile Development__ - We follow an agile development methodology throughout the project. This allows us to adapt to changes and deliver regular updates. This methodology includes regular sprints to improve the process.
 
-__Kommunikasjon__ - Gruppen benytter seg av regelmessige og faste møter i utviklingen. For å opprettholde god kvalitet og lav redundans er medlemmene i gruppen også forstått med at mer akutte møter kan forekomme. Videre bruker gruppen "Facebook Messenger" som hovedkanal for kommunikasjon mellom de faste møtene. Dette gir oss muligheten til å kommunisere i enkle trekk og samtidig avtale møter og arbeidstimer mer hyppig da prosjektet kan by på forskjellige utfordringer som krever møter utenfor de faste.
+__Communication__ - The team uses regular and scheduled meetings during development. To maintain good quality and low redundancy, team members also understand that more urgent meetings may occur. Additionally, the group uses "Facebook Messenger" as the main channel for communication between the scheduled meetings. This allows us to communicate in brief and schedule meetings and work hours more frequently, as the project may present different challenges that require meetings outside the regular ones.
 
-## Arbeidsflyt
+## Workflow
 
-__GitLab__ - Vi bruker GitLab for versjonskontroll, og alle endringer blir gjort i egne branches. Vi utnytter funksjonene til pull og push for å samle endringene i master branchen. Dette gir en oversiktlig tilnærming til kodeendringer og muliggjør nødvendige kodeanmeldelser.
+__GitLab__ - We use GitLab for version control, and all changes are made in separate branches. We utilize the pull and push features to consolidate changes into the master branch. This provides a clear approach to code changes and enables necessary code reviews.
 
-__Oppgavestyring__ - I GitLab bruker vi "Issues" og "Tasks" for oppgavestrying. Disse blir opprettet til et "Label" og en "Milestone". Labelene angir hvilken del av prosjektet issuet tilhører. For eksempel, opprettes det et issue angående Readme.md - arbeid blir dette knyttet til labelet "Dokumentasjon/Prosjektstruktur". Milestone´s angir til hvilken del av prosjektet issuet jobbes mot. For eksempel, innlevering 1, 2, 3 eller 4. På møter avtales hvilke arbeidsoppgaver hvert medlem skal gjennomføre til neste gang og issues (med tilhørende informasjon) opprettes på disse møtene. I et resultat, gir dette oss en oversiktlig fremdrift og vi kan enkelt gå tilbake i prosjektet hvis det skulle vært nødvendig. Dette støtter den agile utviklingsmetodikken vår.  
+__Task Management__ - In GitLab, we use "Issues" and "Tasks" for task management. These are created with a "Label" and a "Milestone." Labels indicate which part of the project the issue belongs to. For example, an issue regarding Readme.md work is linked to the "Documentation/Project Structure" label. Milestones specify which part of the project the issue is being worked on. For example, assignment 1, 2, 3, or 4. During meetings, we agree on the tasks each member should complete by the next meeting, and issues (with relevant information) are created during these meetings. As a result, this gives us a clear overview of progress, and we can easily backtrack in the project if necessary. This supports our agile development methodology.
 
-## Kodekvalitet
+## Code Quality
 
-__Testing__ - Vi har vedtatt en tilnærming der hovedfunksjonene i appen blir testet.
+__Testing__ - We have adopted an approach where the main functions of the app are tested.
 
-__Testdekningsgrad__ - Gruppen bruker Jacoco som middel for testdekningsgrad av kode. I tillegg har vi nå lagt til checkstyle og spotbugs for å bedre kunne beholde kodekvalitet.
+__Test Coverage__ - The group uses Jacoco as a means to measure test coverage of the code. Additionally, we have now added Checkstyle and Spotbugs to better maintain code quality.
 
-__Checkstyle__ - Vi bruker checkstyle for å sjekke kodestil. Dette gjør det enklere å holde koden strukturert rent stilmessig.
+__Checkstyle__ - We use Checkstyle to check code style. This makes it easier to keep the code structured in terms of style.
 
-__Spotbugs__ - Spotbugs brukes for å lettere identifisere hvor vi har bugs i programmet. Dette gjør naturligvis dekoding enklere.
+__Spotbugs__ - Spotbugs is used to identify where we have bugs in the program more easily. This, of course, makes debugging easier.
