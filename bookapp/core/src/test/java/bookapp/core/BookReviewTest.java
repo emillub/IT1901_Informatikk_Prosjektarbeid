@@ -28,7 +28,7 @@ Book book1;
 
     @Test
     void testDuplicateReview(){
-        BookReview review = new BookReview(book1, user1, 1);
+        new BookReview(book1, user1, 1);
         assertThrows(IllegalArgumentException.class, () -> new BookReview(book1, user1,2));
     }
 

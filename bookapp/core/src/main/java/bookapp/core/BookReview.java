@@ -2,7 +2,6 @@ package bookapp.core;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class BookReview implements Serializable{
