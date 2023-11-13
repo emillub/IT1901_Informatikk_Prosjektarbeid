@@ -19,6 +19,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -79,7 +81,12 @@ public class AppController {
     }
     
     @FXML private void loginButtonClick(){ 
-        user = getUser();
+        try{
+            user = getUser();
+        }
+        catch(Exception e){
+            displayError("Invalid username",e);
+        }
         loadLibrary();
         userNameText.setText("Innlogget som: " + user.getName());
         updateVurderHbox();
@@ -163,7 +170,7 @@ public class AppController {
         controller.update(listofbooks);
     }
 
-    private User getUser(){ 
+    private User getUser() throws Exception{ 
         String name = nameTextField.getText();
         return new User(name);
     }
@@ -192,5 +199,13 @@ public class AppController {
         } else {
             deleteReviewButton.setDisable(false);
         }
+    }
+
+    private void displayError(String errorName,Exception e){
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText(errorName);
+        alert.setContentText(e.getMessage());             
+        alert.showAndWait();
     }
 }
