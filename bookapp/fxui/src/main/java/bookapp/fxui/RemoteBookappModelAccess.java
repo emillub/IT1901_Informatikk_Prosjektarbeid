@@ -51,8 +51,8 @@ public class RemoteBookappModelAccess{
         }
     }
 
+    //Remove a review in "database" (in our case the json file)
     public void deleteReview(String BookName, BookReview review){
-        //Need this to remove a review in the "database" (in our case the json file)
         try {
             String updatedName = BookName.replace(" ","%20");
             String reviewerName = review.getReviewer().getName().replace(" ", "%20");
@@ -77,8 +77,8 @@ public class RemoteBookappModelAccess{
     }
     
 
+    //Add a review to database (JSON-file)
     public void addReview(String BookName, BookReview review){
-    //Need this function to add a review to our database (JSON-file)
         try {
             String reviewerjson = mapper.writeValueAsString(review);
             String updatedName = BookName.replace(" ","%20");
@@ -93,7 +93,6 @@ public class RemoteBookappModelAccess{
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             int responseStatus = response.statusCode();
             if (responseStatus>=200 && responseStatus<=300) {
-                //Successfully added a review
                 System.out.println("Successfully added review");
             } else {
                 throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
@@ -104,6 +103,7 @@ public class RemoteBookappModelAccess{
         }
     }
 
+    //Update books in library
     public void update(List<Book> lib){
         try {
             String library = mapper.writeValueAsString(lib);

@@ -14,6 +14,7 @@ import bookapp.core.BookReview;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api/books")
@@ -22,18 +23,17 @@ public class BookappModelController{
     //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
-            List<Book> booklist = FileHandler.readBooksFromFile();
-            return booklist;
+            List<Book> bookList = FileHandler.readBooksFromFile();
+            return bookList;
     }
 
     // POST a new review for a book
-    //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> booklist = FileHandler.readBooksFromFile();
+        List<Book> bookList = FileHandler.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
-        for (Book book : booklist){
+        for (Book book : bookList){
             if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
                 FileHandler.updateBookInLibrary(book);
@@ -46,28 +46,36 @@ public class BookappModelController{
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
-        List<Book> booklist = FileHandler.readBooksFromFile();
-        Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookName)).findFirst();
+        List<Book> bookList = FileHandler.readBooksFromFile();
+        Predicate<Book> matchingName = b -> b.getTitle().equals(bookName);
+        
+        Optional<Book> wantedBook = bookList.stream()
+            .filter(matchingName)
+            .findFirst();
+        
         if (wantedBook.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        
         Book book = wantedBook.get();
-        BookReview bookReview = book.getReviews().stream().filter(r -> r.getReviewer().getName().equals(reviewer)).findFirst().get();
+        
+        Predicate<BookReview> matchingReviewer = r -> r.getReviewer().getName().equals(reviewer);
+        BookReview bookReview = book.getReviews().stream()
+            .filter(matchingReviewer)
+            .findFirst().get();
+        
         book.deleteReview(bookReview);
         FileHandler.updateBookInLibrary(book);
         return ResponseEntity.ok("review by " + reviewer + " deleted");
         }
     
     @PutMapping("/updatelibrary")
-    public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
-        //Assuming I can use booklist as a list of book objects
-        for (Book book:booklist){
+    public ResponseEntity<String> updateLibrary(@RequestBody List<Book> bookList){
+        for (Book book:bookList){
                 FileHandler.updateBookInLibrary(book);
-            }
+        }
         return ResponseEntity.ok("Sucessfully updated library");
     }
-
-    //Add checks and functionality later
     }
 
 

@@ -77,7 +77,7 @@ public class AppController {
         try{
             user = getUser();
         }
-        catch(Exception e){
+        catch(IllegalArgumentException e){
             displayError("Invalid username",e);
         }
         loadLibrary();
@@ -106,7 +106,6 @@ public class AppController {
         }
     }
 
-    //Adding a review through a HTTP method
     @FXML private void vurderButtonClicked(){
         if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
@@ -118,7 +117,6 @@ public class AppController {
         saveLibrary();
     }
 
-    //Deleting a review through a HTTP method 
     @FXML private void deleteReviewButtonClick(){
         delete(selectedBook, selectedBookReview);
         updateReviewListView();
@@ -139,7 +137,7 @@ public class AppController {
         updateBookListView();
     } 
 
-    //Deleteing a review through a HTTP request
+    //Delete review through HTTP request
     private void delete(Book book, BookReview bookreview){
         String bookname = book.getTitle();
         book.deleteReview(bookreview);
@@ -147,18 +145,18 @@ public class AppController {
         updateBookListView();
     }
     
-    //Adding a review through a HTTP request
+    //Add review through HTTP request
     private void addReview(User user, Book book, int rating){
         try {
             BookReview review = new BookReview(book, user, rating);
             controller.addReview(book.getTitle(), review);
             updateBookListView();
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             displayError("Already reviewed book", e);
         }
     }
 
-    //Saving a library through a HTTP method
+    //Save library through HTTP method
     private void saveLibrary(){
         List<Book> listofbooks = new ArrayList<Book>();
         for (Book book : bookList){
@@ -167,7 +165,7 @@ public class AppController {
         controller.update(listofbooks);
     }
 
-    private User getUser() throws Exception{ 
+    private User getUser() throws IllegalArgumentException{ 
         String name = nameTextField.getText();
         return new User(name);
     }
