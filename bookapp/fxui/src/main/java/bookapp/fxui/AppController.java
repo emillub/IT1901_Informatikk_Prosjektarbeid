@@ -74,6 +74,7 @@ public class AppController {
     @FXML public void initialize(){
         controller = new RemoteBookappModelAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        rateChoiceBox.setValue(BookReview.RATING_RANGE[0]);
         sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
         sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
         loginPane.setVisible(true);
@@ -119,7 +120,7 @@ public class AppController {
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
         if(rating == null) return;
 
-        add(user, selectedBook, (int)rating);
+        addReview(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
@@ -155,10 +156,14 @@ public class AppController {
     }
     
     //Adding a review through a HTTP request
-    private void add(User user, Book book, int rating){
-        BookReview review = new BookReview(book, user, rating);
-        controller.addReview(book.getTitle(), review);
-        updateBookListView();
+    private void addReview(User user, Book book, int rating){
+        try {
+            BookReview review = new BookReview(book, user, rating);
+            controller.addReview(book.getTitle(), review);
+            updateBookListView();
+        } catch (Exception e) {
+            displayError("Already reviewed book", e);
+        }
     }
 
     //Saving a library through a HTTP method
