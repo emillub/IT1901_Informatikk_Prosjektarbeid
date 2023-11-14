@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
@@ -46,42 +47,58 @@ public class BookAppTest extends ApplicationTest {
         }
     }
 
-   @BeforeEach
-    void setUp(){
+    void logIn(){
         clickOn("#nameTextField").write("Donald Trump");
         click("Log in");
         bookListView = from(scene.getRoot()).lookup("#bookListView").queryListView();
         reviewListView = from(scene.getRoot()).lookup("#reviewListView").queryListView();
-        bookToReview = bookListView.getItems().get(1);
+        bookToReview = bookListView.getItems().get(0);
     }
 
-    @Test 
+    @Test @Order(1)
+    void testBlankName(){
+        click("Log in");
+        click("OK");
+    }
+    @Test @Order(2)
     void testLogIn(){
+        logIn();
         Text userNameText = from(scene.getRoot()).lookup("#userNameText").queryText();
         assertTrue(userNameText.getText().contains("Donald Trump"));
     }
-
-    @Test
-    void testddReview(){
+    
+    @Test @Order(3)
+    void testAddReview(){
+        logIn();
+        click(bookToReview.toString());
         click(bookToReview.toString());
         clickOn("#rateChoiceBox");
-        click("5");
+        click("3");
         click("Vurder");
         assertTrue(!bookToReview.getReviews().isEmpty());
+        clickOn("#rateChoiceBox");
+        click("3");
+        click("Vurder");
+        click("OK");
     }
     
-    @Test
+    @Test @Order(4)
     void testSortReviews(){
-        new BookReview(bookToReview, new User("user"),5);
-        assertNotEquals(bookListView.getItems().get(0), bookToReview);
+        logIn();
+        Book highestRatedBook = bookListView.getItems().get(1);
+        new BookReview(highestRatedBook, new User("user"),5);
+        assertNotEquals(bookListView.getItems().get(0), highestRatedBook);
         clickOn("#sortChoiceBox");
         click(BookComparator.RATING);
-        assertEquals(bookListView.getItems().get(0),bookToReview);
+        assertEquals(bookListView.getItems().get(0),highestRatedBook);
     }
-
-    @Test
+    
+    @Test @Order(5)
     void testDeleteReview(){
+        logIn();
+        assertTrue(from(scene.getRoot()).lookup("#deleteReviewButton").queryButton().disableProperty().get());
         click(bookToReview.toString());
+        click(reviewListView.getItems().get(0).toString());
         click(reviewListView.getItems().get(0).toString());
         clickOn("#deleteReviewButton");
         assertTrue(bookToReview.getReviews().isEmpty());

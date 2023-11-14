@@ -76,15 +76,15 @@ public class AppController {
     @FXML private void loginButtonClick(){ 
         try{
             user = getUser();
+            userNameText.setText("Innlogget som: " + user.getName());
+            loadLibrary();
+            updateVurderHbox();
+            loginPane.setVisible(false);
+            mainPane.setVisible(true);
         }
         catch(IllegalArgumentException e){
             displayError("Invalid username",e);
         }
-        loadLibrary();
-        userNameText.setText("Innlogget som: " + user.getName());
-        updateVurderHbox();
-        loginPane.setVisible(false);
-        mainPane.setVisible(true);
     }
 
     @FXML private void bookListViewClicked(){
@@ -107,10 +107,7 @@ public class AppController {
     }
 
     @FXML private void vurderButtonClicked(){
-        if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
-        if(rating == null) return;
-
         addReview(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
