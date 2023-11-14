@@ -28,7 +28,7 @@ public class BookAppTest extends ApplicationTest {
     Stage stage;
     ListView<Book> bookListView;
     ListView<BookReview> reviewListView;
-    Book book;
+    Book bookToReview;
     
     @Override
     public void start(Stage stage) throws IOException{
@@ -52,7 +52,7 @@ public class BookAppTest extends ApplicationTest {
         click("Log in");
         bookListView = from(scene.getRoot()).lookup("#bookListView").queryListView();
         reviewListView = from(scene.getRoot()).lookup("#reviewListView").queryListView();
-        book = bookListView.getItems().get(bookListView.getItems().size()-1);
+        bookToReview = bookListView.getItems().get(1);
     }
 
     @Test 
@@ -63,29 +63,28 @@ public class BookAppTest extends ApplicationTest {
 
     @Test
     void testddReview(){
-        click(book.toString());
+        click(bookToReview.toString());
         clickOn("#rateChoiceBox");
         click("5");
         click("Vurder");
-        assertTrue(!book.getReviews().isEmpty());
+        assertTrue(!bookToReview.getReviews().isEmpty());
     }
     
     @Test
     void testSortReviews(){
-        new BookReview(book, new User("user"),5);
-        assertNotEquals(bookListView.getItems().get(0), book);
+        new BookReview(bookToReview, new User("user"),5);
+        assertNotEquals(bookListView.getItems().get(0), bookToReview);
         clickOn("#sortChoiceBox");
         click(BookComparator.RATING);
-        assertEquals(bookListView.getItems().get(0),book);
+        assertEquals(bookListView.getItems().get(0),bookToReview);
     }
 
     @Test
     void testDeleteReview(){
-        click(book.toString());
+        click(bookToReview.toString());
         click(reviewListView.getItems().get(0).toString());
-        //click("Donald Trump");
         clickOn("#deleteReviewButton");
-        assertTrue(book.getReviews().isEmpty());
+        assertTrue(bookToReview.getReviews().isEmpty());
     }
 
 }
