@@ -29,14 +29,14 @@ public class BookappModelController{
     //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
-            List<Book> bookList = FileHandler.readBooksFromFile();
+            List<Book> bookList = fhs.readBooksFromFile();
             return bookList;
     }
 
     // POST a new review for a book
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> bookList = FileHandler.readBooksFromFile();
+        List<Book> bookList = fhs.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
         for (Book book : bookList){
@@ -56,7 +56,7 @@ public class BookappModelController{
         String userString = reviewer.replace("%20", " ");
         String bookString = bookName.replace("%20", " ");
 
-        List<Book> bookList = FileHandler.readBooksFromFile();
+        List<Book> bookList = fhs.readBooksFromFile();
         
         Predicate<Book> matchingName = b -> b.getTitle().equals(bookString);
         Optional<Book> wantedBook = bookList.stream()
