@@ -23,9 +23,4 @@ public class FileHandlerService {
     public Book getBookFromLibrary(Book book, List<Book> booksInLibrary) {
         return FileHandler.getBookFromLibrary(book, booksInLibrary);
     }
-
-    // Wraps the removeReview static method
-    public void removeReview(Book book, BookReview review) {
-        FileHandler.removeReview(book, review);
-    }
 }
