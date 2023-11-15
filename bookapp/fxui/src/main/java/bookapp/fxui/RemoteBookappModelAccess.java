@@ -27,11 +27,22 @@ public class RemoteBookappModelAccess{
     
     private static ObjectMapper mapper = new ObjectMapper();
 
+    private final HttpClient client;
+
+    // Default constructor for normal usage
+    public RemoteBookappModelAccess() {
+        this(HttpClient.newHttpClient());
+    }
+
+    // Constructor for testing, accepts HttpClient as a parameter
+    public RemoteBookappModelAccess(HttpClient client) {
+        this.client = client;
+    }
+
     //Returns a List<Book> object that contains all information to load the library.
     public List<Book> fetchlibrary(){
         try{
             List<Book> booklist;
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP+ADDRESS+FETCH)).
             header("Content-type", APPLICATION_JSON).build();
@@ -57,7 +68,6 @@ public class RemoteBookappModelAccess{
             String updatedName = BookName.replace(" ","%20");
             String reviewerName = review.getReviewer().getName().replace(" ", "%20");
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .DELETE()
             .uri(URI.create(SERVER_IP+ ADDRESS + "/delete/" + updatedName + "/" + reviewerName))
@@ -83,7 +93,6 @@ public class RemoteBookappModelAccess{
             String reviewerjson = mapper.writeValueAsString(review);
             String updatedName = BookName.replace(" ","%20");
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP + ADDRESS + "/post/" + updatedName))
             .header("Content-Type", APPLICATION_JSON)
@@ -108,7 +117,6 @@ public class RemoteBookappModelAccess{
         try {
             String library = mapper.writeValueAsString(lib);
             
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP + ADDRESS + "/updatelibrary"))
             .header("Content-Type", APPLICATION_JSON)
