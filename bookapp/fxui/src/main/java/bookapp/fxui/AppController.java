@@ -1,7 +1,5 @@
 package bookapp.fxui;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import bookapp.core.User;
@@ -12,13 +10,9 @@ import bookapp.core.BookComparator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -72,6 +66,7 @@ public class AppController {
     @FXML public void initialize(){
         controller = new RemoteBookappModelAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        rateChoiceBox.setValue(BookReview.RATING_RANGE[0]);
         sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
         sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
         loginPane.setVisible(true);
@@ -79,12 +74,17 @@ public class AppController {
     }
     
     @FXML private void loginButtonClick(){ 
-        user = getUser();
-        loadLibrary();
-        userNameText.setText("Innlogget som: " + user.getName());
-        updateVurderHbox();
-        loginPane.setVisible(false);
-        mainPane.setVisible(true);
+        try{
+            user = getUser();
+            userNameText.setText("Innlogget som: " + user.getName());
+            loadLibrary();
+            updateVurderHbox();
+            loginPane.setVisible(false);
+            mainPane.setVisible(true);
+        }
+        catch(IllegalArgumentException e){
+            displayError("Invalid username",e);
+        }
     }
 
     @FXML private void bookListViewClicked(){
@@ -106,19 +106,14 @@ public class AppController {
         }
     }
 
-    //Adding a review through a HTTP method
     @FXML private void vurderButtonClicked(){
-        if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
-        if(rating == null) return;
-
-        add(user, selectedBook, (int)rating);
+        addReview(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
     }
 
-    //Deleting a review through a HTTP method 
     @FXML private void deleteReviewButtonClick(){
         delete(selectedBook, selectedBookReview);
         updateReviewListView();
@@ -139,7 +134,7 @@ public class AppController {
         updateBookListView();
     } 
 
-    //Deleteing a review through a HTTP request
+    //Delete review through HTTP request
     private void delete(Book book, BookReview bookreview){
         String bookname = book.getTitle();
         book.deleteReview(bookreview);
@@ -147,14 +142,18 @@ public class AppController {
         updateBookListView();
     }
     
-    //Adding a review through a HTTP request
-    private void add(User user, Book book, int rating){
-        BookReview review = new BookReview(book, user, rating);
-        controller.addReview(book.getTitle(), review);
-        updateBookListView();
+    //Add review through HTTP request
+    private void addReview(User user, Book book, int rating){
+        try {
+            BookReview review = new BookReview(book, user, rating);
+            controller.addReview(book.getTitle(), review);
+            updateBookListView();
+        } catch (IllegalArgumentException e) {
+            displayError("Already reviewed book", e);
+        }
     }
 
-    //Saving a library through a HTTP method
+    //Save library through HTTP method
     private void saveLibrary(){
         List<Book> listofbooks = new ArrayList<Book>();
         for (Book book : bookList){
@@ -163,7 +162,7 @@ public class AppController {
         controller.update(listofbooks);
     }
 
-    private User getUser(){ 
+    private User getUser() throws IllegalArgumentException{ 
         String name = nameTextField.getText();
         return new User(name);
     }
@@ -192,5 +191,13 @@ public class AppController {
         } else {
             deleteReviewButton.setDisable(false);
         }
+    }
+
+    private void displayError(String errorName,Exception e){
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText(errorName);
+        alert.setContentText(e.getMessage());             
+        alert.showAndWait();
     }
 }
