@@ -15,6 +15,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
@@ -23,7 +25,7 @@ import bookapp.core.BookComparator;
 import bookapp.core.BookReview;
 import bookapp.core.User;
 
-
+@TestMethodOrder(OrderAnnotation.class)
 public class BookAppTest extends ApplicationTest {
     Scene scene;
     Stage stage;

@@ -89,13 +89,13 @@ public class FileHandler {
     }
 
     
-    public static void removeReview(Book book, BookReview reviewer){
+    public static void removeReview(Book book, BookReview reviewToDelete){
         List<Book> books = readBooksFromFile();
         for (Book i : books){
             if (i.equals(book)){
                 for (BookReview j : i.getReviews()){
-                    if (j.equals(reviewer)){
-                        getBookFromLibrary(i, books).deleteReview(reviewer);
+                    if (j.equals(reviewToDelete)){
+                        getBookFromLibrary(i, books).deleteReview(reviewToDelete);
                         updateBookInLibrary(j.getBook());
                     }
                 }
