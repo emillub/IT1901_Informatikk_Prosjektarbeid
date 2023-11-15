@@ -24,10 +24,13 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 public class BookappModelController{
 
+    @Autowired
+    FileHandlerService fhs;
+
     //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
-            List<Book> booklist = FileHandler.readBooksFromFile();
+            List<Book> booklist = fhs.readBooksFromFile();
             return booklist;
     }
 
@@ -35,13 +38,13 @@ public class BookappModelController{
     //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> booklist = FileHandler.readBooksFromFile();
+        List<Book> booklist = fhs.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
         for (Book book : booklist){
             if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
-                FileHandler.updateBookInLibrary(book);
+                fhs.updateBookInLibrary(book);
                 return ResponseEntity.ok("Review sucessfully added");
             }
         }
@@ -51,7 +54,7 @@ public class BookappModelController{
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
-        List<Book> booklist = FileHandler.readBooksFromFile();
+        List<Book> booklist = fhs.readBooksFromFile();
         Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookName)).findFirst();
         if (wantedBook.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -59,7 +62,7 @@ public class BookappModelController{
         Book book = wantedBook.get();
         BookReview bookReview = book.getReviews().stream().filter(r -> r.getReviewer().getName().equals(reviewer)).findFirst().get();
         book.deleteReview(bookReview);
-        FileHandler.updateBookInLibrary(book);
+        fhs.updateBookInLibrary(book);
         return ResponseEntity.ok("review by " + reviewer + " deleted");
         }
     
@@ -67,7 +70,7 @@ public class BookappModelController{
     public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
         //Assuming I can use booklist as a list of book objects
         for (Book book:booklist){
-                FileHandler.updateBookInLibrary(book);
+                fhs.updateBookInLibrary(book);
             }
         return ResponseEntity.ok("Sucessfully updated library");
     }
