@@ -76,21 +76,6 @@ public class FileHandler {
         writeBooksToFile(books);
     }
 
-    
-    public static void removeReview(Book book, BookReview reviewer){
-        List<Book> books = readBooksFromFile();
-        for (Book i : books){
-            if (i.equals(book)){
-                for (BookReview j : i.getReviews()){
-                    if (j.equals(reviewer)){
-                        getBookFromLibrary(i, books).deleteReview(reviewer);
-                        updateBookInLibrary(j.getBook());
-                    }
-                }
-            }
-        }
-    }
-
     //Reads books and reviews related to them from file and creates instances of them 
     public static List<Book> readBooksFromFile() {
         try {
