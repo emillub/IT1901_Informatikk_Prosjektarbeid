@@ -20,16 +20,16 @@ class BookTest {
 
     @Test
     void testAddReview() {
-        BookReview review1 = new BookReview(book, user1, 4);
-        BookReview review2 = new BookReview(book, user2, 5);
+        new BookReview(book, user1, 4);
+        new BookReview(book, user2, 5);
 
         assertEquals(2, book.getReviews().size());
     }
 
     @Test
     void testAverageRating() {
-        BookReview review1 = new BookReview(book, user1, 4);
-        BookReview review2 = new BookReview(book, user2, 4);
+        new BookReview(book, user1, 4);
+        new BookReview(book, user2, 4);
 
         float expected = 4.0f;
         assertEquals(expected, book.getAverageRating());
@@ -37,10 +37,10 @@ class BookTest {
 
     @Test
     void testAddMultipleReviewsFromSameUser() {
-        BookReview review1 = new BookReview(book, user1, 4);
+        new BookReview(book, user1, 4);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            BookReview review2 = new BookReview(book, user1, 5);
+            new BookReview(book, user1, 5);
         });
 
         String expectedMessage = "Users cannot write more than one review per book";
@@ -50,7 +50,7 @@ class BookTest {
     @Test
     void testValidRating() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            BookReview review = new BookReview(book, user1, 6);
+            new BookReview(book, user1, 6);
         });
 
         String expectedMessage = "Rating needs to be between 1 and 5";
@@ -59,7 +59,7 @@ class BookTest {
 
     @Test
     void testDeleteReview(){
-        BookReview rev1 = new BookReview(book, user1, 4);
+        new BookReview(book, user1, 4);
         BookReview rev2 = new BookReview(book, user2, 3);
         
         assertEquals(book.getReviews().size(),2);

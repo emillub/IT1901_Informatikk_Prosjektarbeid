@@ -1,6 +1,5 @@
 package bookapp.restapi;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -16,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -33,15 +28,14 @@ public class BookappModelController{
     //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
-            List<Book> booklist = fhs.readBooksFromFile();
-            return booklist;
+            List<Book> bookList = FileHandler.readBooksFromFile();
+            return bookList;
     }
 
     // POST a new review for a book
-    //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> bookList = fhs.readBooksFromFile();
+        List<Book> bookList = FileHandler.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
         for (Book book : bookList){
@@ -58,15 +52,17 @@ public class BookappModelController{
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
+        List<Book> bookList = FileHandler.readBooksFromFile();
+        Predicate<Book> matchingName = b -> b.getTitle().equals(bookName);
         
-        String bookString = bookName.replace("%20"," ");
-        String userString = reviewer.replace("%20"," ");
-
-        List<Book> booklist = fhs.readBooksFromFile();
-        Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookString)).findFirst();
+        Optional<Book> wantedBook = bookList.stream()
+            .filter(matchingName)
+            .findFirst();
+        
         if (wantedBook.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        
         Book book = wantedBook.get();
         
         Predicate<BookReview> matchingReviewer = r -> r.getReviewer().getName().equals(userString);
@@ -92,8 +88,6 @@ public class BookappModelController{
             }
         return ResponseEntity.ok("Sucessfully updated library");
     }
-
-    //Add checks and functionality later
     }
 
 

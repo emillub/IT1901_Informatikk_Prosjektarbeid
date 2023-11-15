@@ -1,0 +1,120 @@
+@startuml
+
+class Book {
+    implements Serializable
+    -String title
+    -String author
+    -ArrayList<BookReview> reviewsOfBook
+
+    +String getTitle()
+    +String getAuthor()
+    +Book getBook()
+    +float getAverageRating()
+    -void validateReview(BookReview)
+    +void addReview(BookReview)
+    +void deleteReview(BookReview)
+    #void setReviews(List<BookReview>)
+    +ArrayList<BookReview> getReviews()
+}
+
+class BookComparator {
+    implements Comparator<Book>
+    +String RATING 
+    +String AUTHOR_NAME
+    +String BOOK_TITLE
+    -String sortBy
+
+    +BookComparator(String sortBy)
+    +int compare(Book o1, Book o2)
+}
+
+class BookReview {
+    -User reviewer
+    -int rating 
+    -Book Book
+
+    +BookReview(Book b, User r, int rating)
+    +User getReviewer()
+    +int getRating()
+    +void setRating()
+    -boolean validRating(int r)
+}
+
+class User {
+    implements Serializable
+    -String name
+    -void validateName(String name) 
+    +String getName()
+    +void writeReview(Book b, int rating)
+}
+
+class AppController {
+    -User user 
+    -ArrayList<Book> bookList
+    -RemoteBookappModelAccess controller 
+    -Book selectedBook 
+    -BookReview selectedBookReview
+
+    +void initialize()
+    -void loginButtonClick()
+    -void bookListViewClicked()
+    -void reviewListViewClicked()
+    -void vurderButtonClicked()
+    -void deleteReviewButtonClick()
+    -void sortChoiceBoxClick()
+    -void loadLibrary()
+    -void delete(Book book, BookReview bookreview)
+    -void add(User user, Book book, int rating)
+    -void saveLibrary()
+    -User getUser()
+    -void updateBookListView()
+    -void updateReviewListViw()
+    -void updateMarkedBookText()
+    -void updateVurderHBox()
+}
+
+class RemoteBookappModelAccess {
+    -String APPLICATION_JSON
+    -String SERVER_IP
+    -String ADDRESS
+    -String FETCH 
+    -ObjectMapper mapper
+    +List<Book> fetchLibrary()
+    +void deleteReview(String bookName, BookReview review)
+    +void addReview(String bookName, BookReview review)
+    +void update(List<Book> lib)
+}
+
+class BookappModelController {
+    +List<Book> getBook()
+    +ResponseEntity<String> postReview(String bookName, BookReview review)
+    +ResponseEntity<String> deleteReview(String bookName, BookReview review)
+    +ResponseEntity<String> updateLibrary(List<Book> bookList)
+}
+
+class FileHandler {
+    -String FILE_NAME
+    +String DIR_PATH
+    +Book[] LIBRARY 
+
+    -void CheckIfMoreBooksInLibrary(List<Book> oldBooks)
+    -void writeBooksToFile(List<Book> books)
+}
+
+'Relationships'
+Book "1" -- "*" BookReview : Has review
+User "1" -- "*" BookReview : Write review
+BookComparator --> Book
+User --> Book
+RemoteBookappModelAccess --> Book
+BookappModelController --> Book
+BookappModelController --> BookReview
+AppController --> Book
+AppController --> User
+AppController --> BookComparator
+AppController --> BookReview
+FileHandler --> Book
+FileHandler --> BookReview
+RemoteBookappModelAccess --> BookReview
+
+@enduml

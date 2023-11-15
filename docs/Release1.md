@@ -1,26 +1,25 @@
-# Dokumentasjon for Bok Vurderings App
+# Documentation for Book rating app
 
-## Innholdsfortegnelse
+## Table of Contents
 
-1.	Introduksjon
-2.	Funksjoner
-3.	Brukergrensesnitt
-4.	Endringer og forbedringer
+1.	Introduction
+2.	Features
+3.	User Interface
+4.	Changes and Improvements
 
+### 1. Introduction
+The Book Rate App is a simple yet effective application designed to allow users to rate books based on their reading experience. Instead of requiring complex login procedures, the app focuses on simplicity and immediate feedback.
 
-### 1. Introduksjon
-Bok Rate App er en enkel, men effektiv applikasjon designet for å tillate brukere å vurdere bøker basert på deres leseopplevelse. I stedet for å kreve kompliserte innloggingsprosedyrer, fokuserer appen på enkelhet og umiddelbar tilbakemelding.
+### 2. Features
+User Registration: When a user opens the app, they will first be prompted to enter their name. This name is later used to sign their reviews.
+Book Selection: After registration, the user is directed to a menu where they can browse and select a book they want to rate.
+Book Rating: Once a book is chosen, the user has the option to give a rating from 1 to 5, where 1 is the lowest and 5 is the highest.
 
-### 2. Funksjoner
-Brukerregistrering: Når en bruker åpner appen, vil de først bli bedt om å skrive inn sitt navn. Dette navnet brukes senere til å signere deres vurderinger.
-Bokvalg: Etter registrering blir brukeren ført til en meny hvor de kan bla gjennom og velge en bok de ønsker å vurdere.
-Bokvurdering: Når en bok er valgt, vil brukeren ha muligheten til å gi en vurdering fra 1 til 5, der 1 er lavest og 5 er høyest.
+### 3. User Interface
+The application is divided into three main parts:
+Name Registration: A simple field where the user can enter their name.
+Book Menu: A clear menu with available books. Here, the user can easily navigate and choose the book they want to rate.
+Rating Scale: After selecting a book, the user is presented with a simple scale from 1 to 5, where they can click or tap on the rating they want to give.
 
-### 3. Brukergrensesnitt
-Applikasjonen er delt opp i tre hoveddeler:
-Navneregistrering: Et enkelt felt der brukeren kan legge inn sitt navn.
-Bokmeny: En oversiktlig meny med tilgjengelige bøker. Her kan brukeren enkelt navigere og velge den boken de ønsker å vurdere.
-Vurderingsskala: Etter å ha valgt en bok, presenteres brukeren for en enkel skala fra 1 til 5, hvor de kan klikke eller trykke på den vurderingen de ønsker å gi.
-
-### 4. Endringer og forbedringer
-Overgang til enklere system: Den første versjonen av applikasjonen la grunnlaget for at brukere skulle kunne opprette en bruker slik at de kunne logge seg inn igjen og signere vurderinger med denne bruker instansen. For enkelhetens skyld gikk vi vekk fra dette, nå opprettes det en ny brukerinstans når man skriver inn navn, denne brukes til å signere eventuelle vurderinger. 
+### 4. Changes and Improvements
+Transition to a simpler system: The initial version of the application laid the groundwork for users to create an account so they could log in again and sign reviews with this user instance. For the sake of simplicity, we moved away from this; now, a new user instance is created when entering a name, which is used to sign any reviews.

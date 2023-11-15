@@ -1,20 +1,13 @@
 package bookapp.fxui;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import bookapp.core.Book;
@@ -34,11 +27,22 @@ public class RemoteBookappModelAccess{
     
     private static ObjectMapper mapper = new ObjectMapper();
 
+    private final HttpClient client;
+
+    // Default constructor for normal usage
+    public RemoteBookappModelAccess() {
+        this(HttpClient.newHttpClient());
+    }
+
+    // Constructor for testing, accepts HttpClient as a parameter
+    public RemoteBookappModelAccess(HttpClient client) {
+        this.client = client;
+    }
+
     //Returns a List<Book> object that contains all information to load the library.
     public List<Book> fetchlibrary(){
         try{
             List<Book> booklist;
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP+ADDRESS+FETCH)).
             header("Content-type", APPLICATION_JSON).build();
@@ -58,13 +62,12 @@ public class RemoteBookappModelAccess{
         }
     }
 
+    //Remove a review in "database" (in our case the json file)
     public void deleteReview(String BookName, BookReview review){
-        //Need this to remove a review in the "database" (in our case the json file)
         try {
             String updatedName = BookName.replace(" ","%20");
             String reviewerName = review.getReviewer().getName().replace(" ", "%20");
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .DELETE()
             .uri(URI.create(SERVER_IP+ ADDRESS + "/delete/" + updatedName + "/" + reviewerName))
@@ -84,13 +87,12 @@ public class RemoteBookappModelAccess{
     }
     
 
+    //Add a review to database (JSON-file)
     public void addReview(String BookName, BookReview review){
-    //Need this function to add a review to our database (JSON-file)
         try {
             String reviewerjson = mapper.writeValueAsString(review);
             String updatedName = BookName.replace(" ","%20");
 
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP + ADDRESS + "/post/" + updatedName))
             .header("Content-Type", APPLICATION_JSON)
@@ -100,7 +102,6 @@ public class RemoteBookappModelAccess{
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             int responseStatus = response.statusCode();
             if (responseStatus>=200 && responseStatus<=300) {
-                //Successfully added a review
                 System.out.println("Successfully added review");
             } else {
                 throw new RuntimeException("HTTP request failed with status code: " + responseStatus);
@@ -111,11 +112,11 @@ public class RemoteBookappModelAccess{
         }
     }
 
+    //Update books in library
     public void update(List<Book> lib){
         try {
             String library = mapper.writeValueAsString(lib);
             
-            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(SERVER_IP + ADDRESS + "/updatelibrary"))
             .header("Content-Type", APPLICATION_JSON)

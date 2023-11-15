@@ -1,26 +1,27 @@
 # README - Core
 
-## Introduksjon
+## Introduction
 
-* Core modulen består av tre klasser, Book, BookReview og User, og er å håndtere kjernelogikken i appen.
+* The Core module consists of three classes: Book, BookReview, and User, and is responsible for handling the core logic of the app.
 
-## Teknologier brukt
+## Technologies used
 
-* Jackson bibloteket
-  * Jackson-bibloteket konverterer objekter fra core-modulen om til JSON format som skrives til fil.
+* Jackson library
+  * The Jackson library converts objects from the core module into JSON format, which is then written to a file.
 
-## Funksjonalitet
+## Functionality
 
-* Book-klassen holder informasjon om en bok og referanser til BookReview-objekter. Den representerer en bok med vurderinger og har en enkel ```toString()```-funksjon som brukes i grensesnittet.
+* The Book class holds information about a book and references to BookReview objects. It represents a book with reviews and has a simple ```toString()```-function used in the interface.
   * ```getAvarageRating()```
-    * Itererer over BookReview-objektene og regner ut gjennomsnittet av alle rating-ene
-  * ```validateReview(BookReview review)```
-    * Sjekker at en review ikke finnes fra før, og om en bruker allerede har skrevet en review av boka. Gir i så fall ```IllegalArgumentException```
-* BookReview-klassen representerer en vurdering av en bok. Den har refereanser til User-objektet som opprettet det og Book-objektet det tilhører. Den har også en statisk int-array som bestemmer verdiene man kan gi som rating.
+    * Iterates over the BookReview objects and calculates the average of all ratings.
+  * ```validateReview(BookReview review)``` 
+    * Checks that a review does not already exist and if a user has already written a review for the book. Throws an ```IllegalArgumentException``` if so. 
+* The BookReview class represents a review of a book. It has references to the User object that created it and the Book object it belongs to. It also has a static int array that determines the values one can give as a rating.
   * ```BookReview(Book book, User reviewer, int rating)```
-    * Oppretter et BookReview-objekt. Sjekker at den blir opprettet gjennom en bruker og gir error hvis ikke.
+    * Creates a BookReview object. Checks that it is created by a user and throws an error if not.
   * ```Validrating(int r)```
-    * Sjekker om ratingen som er gitt er lovling og gir error om ikke
-* User-klassen håndterer alt som har med bruker å gjøre. Den inneholder lite logikk, men holder informasjon om brukereren, og det er fra den BookReview-objekter opprettes.
+    * Checks if the given rating is valid and throws an error if not.
+* The User class handles everything related to users. It contains minimal logic but holds information about the user, and it is from this class that BookReview objects are created.
   * ```writeReview(Book bok, in rating)```
-    * Oppretter et BookReview-objekt med en rating og knytter det til en bok.
+    * Creates a BookReview object with a rating and associates it with a book.
+
