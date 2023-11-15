@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +53,12 @@ public class BookappModelController{
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
+        String userString = reviewer.replace("%20", " ");
+        String bookString = bookName.replace("%20", " ");
+
         List<Book> bookList = FileHandler.readBooksFromFile();
-        Predicate<Book> matchingName = b -> b.getTitle().equals(bookName);
         
+        Predicate<Book> matchingName = b -> b.getTitle().equals(bookString);
         Optional<Book> wantedBook = bookList.stream()
             .filter(matchingName)
             .findFirst();
