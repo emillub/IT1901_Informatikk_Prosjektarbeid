@@ -1,0 +1,65 @@
+@startuml Sequence Diagram for creating a Book Review
+
+'the user
+actor User as U
+
+'user interface, should it be interpreted as the AppController or separate logical layer?
+participant "User Interface" as UI
+participant "AppController" as AC
+
+'RemoteBookappModelAccess
+participant "DataAccess UI" as DA
+
+'BookappModelController
+participant "RestServer" as RS
+
+'Unsure if I should implement this? And where it should be implemented in that case
+participant "Core (Book/BookReview/User)" as Core
+
+participant "Persistence (FileHandler)" as FH
+
+
+U -> UI : Input name 
+'Should I include the initialization of the user object here?
+
+'log in-button causes program to send HTTP req. for the library
+UI -> AC : *Click log in*
+
+'AppController calls upon DataAccess UI, that requests the library from backend
+AC -> DA : loadLibrary()
+
+'loadLibrary() calls upon fetchLibrary() method from RemoteBookappModelAccess'
+DA -> RS : HTTP Get "/fetchList" / fetchLibrary()
+
+'RestController calls upon FileHandler to recreate objects based on library, calls upon FileHandler.readBooksFromLibrary()'
+RS -> FH : readBooksFromLibrary()
+
+'FileHandler creates objects through ObjectMapper
+'Should the pointer go through the RestServer or straight to the UI? Thoughts?
+FH --> AC : List of books and reviews from Library
+
+AC -> UI : Display books in UI
+
+UI -> AC : *Choose book and rating, click "Vurder"*
+
+AC -> AC : fetch users name, chosen book and rating
+
+'Creating BookReview object and stores variable for next method call
+AC -> Core : add()
+
+'Send HTTP Post request to save in library
+AC -> DA : add()
+
+DA -> RS : HTTP Post "/post/{bookName}" / addReview()
+
+'Adds review to given book-object
+RS -> Core : book.addReview(review)
+
+RS -> FH : updateBookInLibrary(book)
+
+'Backend now up to date
+FH -> FH : writeBooksToFile()
+
+RS --> DA : returns HTTP message: "Review successfully added"
+
+@enduml
