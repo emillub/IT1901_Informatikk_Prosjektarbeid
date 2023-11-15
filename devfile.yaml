@@ -5,24 +5,12 @@ components:
   - name: bookapp
     container:
       image: adrianstoica/it1901:latest
-      memoryLimit: 3Gi
+            memoryLimit: 3Gi
       endpoints:
         - exposure: public
           name: 6080-tcp-desktop-ui
           protocol: http
           targetPort: 6080
-        - exposure: public
-          name: 3000-tcp
-          protocol: http
-          targetPort: 3000
-        - exposure: public
-          name: 5900-tcp
-          protocol: http
-          targetPort: 5900
-        - exposure: public
-          name: 5901-tcp
-          protocol: http
-          targetPort: 5901
         - exposure: public
           name: 8080-tcp
           protocol: http
@@ -37,4 +25,5 @@ commands:
       component: bookapp
       commandLine: cd bookapp
       label: change directory
+
 
