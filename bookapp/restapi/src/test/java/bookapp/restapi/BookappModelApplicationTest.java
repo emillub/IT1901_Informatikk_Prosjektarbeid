@@ -8,10 +8,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
 
@@ -31,6 +34,8 @@ public class BookappModelApplicationTest {
 
     @MockBean
     private FileHandlerService fileHandlerService; // Mock the FileHandlerService
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     // Test for GET request
     @Test
@@ -53,25 +58,28 @@ public class BookappModelApplicationTest {
     @Test
     public void postReviewTest() throws Exception {
         // // Sample data
-        // String sampleTitle = "Sample Book";
-        // User sampleUser = new User("Sample User");
-        // String jsonPayload = "{\"book\":{\"title\":\"" + sampleTitle + "\",\"author\":\"Sample Author\"},\"reviewer\":{\"name\":\"Sample User\"},\"rating\":5}";
-    
-        // List<Book> mockBookList = Collections.singletonList(new Book(sampleTitle, sampleUser.getName()));
-
-        // // Setup mock behavior
-        // given(fileHandlerService.readBooksFromFile()).willReturn(mockBookList);
+        Book book = new Book("Sample book", "Author");
+        List<Book> bookList = Arrays.asList(book);
+        // // Setup mock behavior of FileHandlerService
+        given(fileHandlerService.readBooksFromFile()).willReturn(bookList);
+        String jsonPayload = "{\"reviewer\":{\"name\":\"User\"},\"rating\":2}";
         // // No need to mock 'updateBookInLibrary' if it returns void, just verify it's called later
-    
+        
         // // Perform POST request and verify outcome
-        // mockMvc.perform(post("/api/books/post/{bookName}", sampleTitle)
-        //         .contentType(MediaType.APPLICATION_JSON)
-        //         .content(jsonPayload))
-        //         .andExpect(status().isOk())
-        //         .andExpect(content().string("Review successfully added"));
-    
-        // // Verify interactions with mock
-        // verify(fileHandlerService).updateBookInLibrary(any(Book.class));
+        mockMvc.perform(post("/api/books/post/"+book.getTitle().replace(" ", "%20"))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonPayload))
+            .andExpect(status().isOk())
+            .andExpect(content().string("Review sucessfully added"));
+        
+        //If review was added, cannot create another
+        assertThrows(IllegalArgumentException.class, ()-> new BookReview(book, new User("User"), 2));
+        
+        //Test book not found
+        mockMvc.perform(post("/api/books/post/none")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonPayload))
+            .andExpect(status().isNotFound());
     }
 
 }
