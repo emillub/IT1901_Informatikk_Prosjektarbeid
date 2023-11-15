@@ -94,14 +94,27 @@ public class BookappModelApplicationTest {
         String bookString = book.getTitle().replace(" ", "%20");
         String userString = user.getName().replace(" ", "%20");
         
+        //Test review not found
         mockMvc.perform(delete("/api/books/delete/{bookName}/{reviewer}",bookString,userString))
         .andExpect(status().isNotFound());
+        //Test book not found
         mockMvc.perform(delete("/api/books/delete/{bookName}/{reviewer}","wrongbook",userString))
         .andExpect(status().isNotFound());
         
+        //Test review found
         new BookReview(book,user,2);
         mockMvc.perform(delete("/api/books/delete/{bookName}/{reviewer}",bookString,userString))
         .andExpect(status().isOk());
     }
     
+    @Test
+    public void testUpdateLibrary() throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonPayload = mapper.writeValueAsString(bookList);
+
+        mockMvc.perform(put("/api/books/updatelibrary")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(jsonPayload))
+        .andExpect(status().isOk());
+    }
 }
