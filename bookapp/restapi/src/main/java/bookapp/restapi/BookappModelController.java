@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api/books")
@@ -38,10 +41,10 @@ public class BookappModelController{
     //Hvordan kan jeg sende et bookreviewobjekt gjennom en HTTP request?
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> booklist = fhs.readBooksFromFile();
+        List<Book> bookList = fhs.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
-        for (Book book : booklist){
+        for (Book book : bookList){
             if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
                 fhs.updateBookInLibrary(book);
@@ -51,16 +54,30 @@ public class BookappModelController{
         return ResponseEntity.notFound().build();
     }
 
+
     // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
+        
+        String bookString = bookName.replace("%20"," ");
+        String userString = reviewer.replace("%20"," ");
+
         List<Book> booklist = fhs.readBooksFromFile();
-        Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookName)).findFirst();
+        Optional<Book> wantedBook = booklist.stream().filter(b -> b.getTitle().equals(bookString)).findFirst();
         if (wantedBook.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Book book = wantedBook.get();
-        BookReview bookReview = book.getReviews().stream().filter(r -> r.getReviewer().getName().equals(reviewer)).findFirst().get();
+        
+        Predicate<BookReview> matchingReviewer = r -> r.getReviewer().getName().equals(userString);
+        Optional<BookReview> optionalReview = book.getReviews().stream().filter(matchingReviewer).findFirst();
+        // System.out.println("Looking for review: " +booklist.get(0).getReviews().toString());
+
+        if (optionalReview.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        BookReview bookReview = optionalReview.get();
         book.deleteReview(bookReview);
         fhs.updateBookInLibrary(book);
         return ResponseEntity.ok("review by " + reviewer + " deleted");
@@ -69,6 +86,7 @@ public class BookappModelController{
     @PutMapping("/updatelibrary")
     public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
         //Assuming I can use booklist as a list of book objects
+        System.out.println(booklist);
         for (Book book:booklist){
                 fhs.updateBookInLibrary(book);
             }
