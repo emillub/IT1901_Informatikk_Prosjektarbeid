@@ -5,7 +5,7 @@ components:
   - name: bookapp
     container:
       image: adrianstoica/it1901:latest
-            memoryLimit: 3Gi
+      memoryLimit: 3Gi
       endpoints:
         - exposure: public
           name: 6080-tcp-desktop-ui
