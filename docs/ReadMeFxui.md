@@ -2,25 +2,30 @@
 
 ## Introduction
 
-* The Fxui module is responsible for the visual interface of the application and utilizes both the Core and Persistence modules.
-* The "Mainwindow.fxml" located in the "bookapp/fxui/src/main/resources" directory is opened and read using JavaFX, controlled by the AppController class.
+For release 3 the **fxui**-module has been changed to no longer work locally. It now works remotely, requiring a server for in and output to read from and to.  
 
-## Technologies used
+* The Fxui module is responsible for the visual interface of the application and utilizes both the **core**-module for objects referenced.
+* "Mainwindow.fxml," located in the [resources](bookapp/fxui/src/main/resources) directory, is opened and read using JavaFX and is controlled by the AppController class.
+* The [appcontroller](bookapp\fxui\src\main\java\bookapp\fxui\RemoteBookappModelAccess.java) class is now used to communicate with the restful API implemented, which is responsible for HTTP messages. More on that in [ReadMerestAPI](bookapp\fxui\src\main\java\bookapp\fxui\RemoteBookappModelAccess.java).
+
+## Technologies Used
 
 * JavaFX
-  * JavaFX is part of the Java Development Kit and is a library that allows you to create graphical interfaces for both desktop and mobile applications using Java.
+  * JavaFX is a part of the Java Development Kit and is a library that allows you to create graphical interfaces for both desktop and mobile applications using Java.
 * Scene Builder
-  * Scene Builder is an application that facilitates the creation of the graphical interface for a JavaFX app. It is used to write "Mainwindow.fxml" but is not required to run BookApp.
+  * Scene Builder is an application that makes it easier to create the graphical user interface of a JavaFX app. It was used to create "Mainwindow.fxml," but it is not required to run Bookapp.
+* Restful API
+  * We have introduced a Restful API implementation to allow the application to work remotely. 
 
 ## Functionality
 
-* The module is executed from the BookApp class, which reads and opens "Mainwindow.fxml" as a graphical interface.
+* The module is launched from the BookApp class, which reads and opens "Mainwindow.fxml" as a graphical interface.
   * ```start(Stage stage)```
     * Locates "Mainwindow.fxml" in the resources directory and opens it with JavaFX.
-* The AppController class is linked to Mainwindow.fxml and is responsible for all functionality in the user interface. It contains references to all objects. Most of the logic resides in the Core module, but the controller connects user input to functions in the Core and Persistence modules, ensuring that the graphical interface reflects what happens in the core logic.
+* The AppController class is associated with Mainwindow.fxml and is responsible for all user interface functionality. It contains references to all objects. Most of the logic is in the Core module, but the controller links user input to functions in the Core module, handles HTTP messages and ensures that the graphical interface reflects what comes in through the HTTP messages and what happens in the **core**-module.
 
 ## Screenshots
 
-![Viser innloggingsside](/docs/imgs/loginpage.png)
-![Viser hovedside før review](/docs/imgs/mainpagePreReviewR2.png)
-![Viser hovedside etter review](/docs/imgs/mainpagePostReviewR2.png)
+![Showing the login page](/docs/imgs/loginpage.png)
+![Showing the main page before review](/docs/imgs/mainpagePreReviewR2.png)
+![Showing the main page after review](/docs/imgs/mainpagePostReviewR2.png)
