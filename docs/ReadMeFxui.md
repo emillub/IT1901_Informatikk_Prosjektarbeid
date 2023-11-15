@@ -1,25 +1,25 @@
 # README - Fxui
 
-## Introduksjon
+## Introduction
 
-* Fxui-modulen står for det visuelle grensesnittet til applikasjonen og benytter både Core- og persistance-modulene
-* "Mainwindow.fxml" som ligger i "bookapp/fxui/src/main/resources"-mappen åpnes og leses ved hjelp av JavaFx, og kontrolleres ved hjelp av AppController-klassen
+* The Fxui module is responsible for the visual interface of the application and utilizes both the Core and Persistence modules.
+* The "Mainwindow.fxml" located in the "bookapp/fxui/src/main/resources" directory is opened and read using JavaFX, controlled by the AppController class.
 
-## Teknologier brukt
+## Technologies used
 
 * JavaFX
-  * JavaFX er del av Java Development Kit, og er et bibliotek som lar deg opprette grafiske grensesnitt for både desktop og mobil med java
+  * JavaFX is part of the Java Development Kit and is a library that allows you to create graphical interfaces for both desktop and mobile applications using Java.
 * Scene Builder
-  * Scene Buider er applikasjon som gjør det lettere å lage det grafiske grensesnittet til en javafx-app. Det er brukt til å skrive "Mainwindow.fxml", men kreves ikke for å kjøre Bookapp.
+  * Scene Builder is an application that facilitates the creation of the graphical interface for a JavaFX app. It is used to write "Mainwindow.fxml" but is not required to run BookApp.
 
-## Funksjonalitet
+## Functionality
 
-* Modulen kjøres fra BookApp-klassen som leser og åpner "Mainwindow.fxml" som et grafisk grensesnitt.
+* The module is executed from the BookApp class, which reads and opens "Mainwindow.fxml" as a graphical interface.
   * ```start(Stage stage)```
-    * Finner "Mainwindow.fxml" i resources-mappen og åpner det med javafx
-* AppController-klassen er knyttet til Mainwindow.fxml og er ansvarlig for all funksjonalitet i brukergrensesnittet. Den inneholder referanser til alle objektetene Det meste av logikken ligger i Core-modulen, men kontrolleren knytter bruker-input til funksjoner i core- og persistance-modulene og passer på at det grafiske gejnspeiler det som skjer i kjernelogikken.
+    * Locates "Mainwindow.fxml" in the resources directory and opens it with JavaFX.
+* The AppController class is linked to Mainwindow.fxml and is responsible for all functionality in the user interface. It contains references to all objects. Most of the logic resides in the Core module, but the controller connects user input to functions in the Core and Persistence modules, ensuring that the graphical interface reflects what happens in the core logic.
 
-## Skjermbilder
+## Screenshots
 
 ![Viser innloggingsside](/docs/imgs/loginpage.png)
 ![Viser hovedside før review](/docs/imgs/mainpagePreReviewR2.png)
