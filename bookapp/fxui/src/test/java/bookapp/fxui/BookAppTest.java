@@ -51,7 +51,7 @@ public class BookAppTest extends ApplicationTest {
 
     void logIn(){
         clickOn("#nameTextField").write("Donald Trump");
-        click("Log in");
+        click("Logg inn");
         bookListView = from(scene.getRoot()).lookup("#bookListView").queryListView();
         reviewListView = from(scene.getRoot()).lookup("#reviewListView").queryListView();
         bookToReview = bookListView.getItems().get(0);
@@ -59,7 +59,7 @@ public class BookAppTest extends ApplicationTest {
 
     @Test @Order(1)
     void testBlankName(){
-        click("Log in");
+        click("Logg inn");
         click("OK");
     }
     @Test @Order(2)

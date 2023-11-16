@@ -26,7 +26,7 @@ This is done through the spring framework and an instance of a new server is cre
 
 ### HTTP Handeling
 We have implemented our own restAPI which handles HTTP messages. This is done through four functions in the "ApiController":
-* ```getBook()```
+* ```getLibrary()```
   * This function does not take parameters but upon receiving a HTTP Get request message, it returns a List<Book>-object through a HTTP response.
 * ```postReview()```
   * This function lets users post a review to the "database"/Library.json-file through a HTTP Post message. It extracts the bookname and reviewer before it posts it to the data storage.
@@ -60,14 +60,32 @@ a new client that sends the request. The body of the HTTP messages determine the
 ##### Example
 
 ```
-{ "books": [ { "title": "Example Book 1", "reviews": [ { "user": "Username 1", "rating": 4 }, { "user": "Username 2", "rating": 3 } ] }, ... ] }
+[{
+  "title" : "1984",
+  "author" : "George Orwell",
+  "reviews" : [ {
+    "reviewer" : {
+      "name" : "Emil"
+    },
+    "rating" : 5
+  }, {
+    "reviewer" : {
+      "name" : "Mauritz"
+    },
+    "rating" : 3
+  }  ]
+}, {
+  "title" : "The Kite Runner",
+  "author" : "Khaled Hosseini",
+  "reviews" : [ ]
+}, ...]
 ```
 
 ##### Explanation
 
-* Here, we have a main key "books" that contains a list of books. Each book has a "title" and a list of "reviews."
-
-* Each "review" contains a "user" and a "rating."
+* File consists of list of books
+* Each book has title, author and reviews-key
+* The reviews-key contains a list of reviews. Each "review" contains a "user" and a "rating."
 
 #### 2. Choice and Reflection between Implicit Storage and Document Metaphor
 
