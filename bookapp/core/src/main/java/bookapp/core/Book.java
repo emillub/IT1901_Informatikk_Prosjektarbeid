@@ -28,11 +28,6 @@ public class Book implements Serializable{
     }
 
     @JsonIgnore
-    public Book getBook() {
-        return this;
-    }
-
-    @JsonIgnore
     public float getAverageRating(){
         if (this.reviewsOfBook == null || this. reviewsOfBook.size() == 0) {
             return 0;
@@ -65,11 +60,6 @@ public class Book implements Serializable{
             throw new IllegalArgumentException("Review not found in this books reviews");
         }
         reviewsOfBook.remove(review);
-    }
-
-    protected void setReviews(List<BookReview> reviews) {
-        if (reviews == null) return;
-        this.reviewsOfBook = new ArrayList<>(reviews);
     }
 
     public ArrayList<BookReview> getReviews(){
