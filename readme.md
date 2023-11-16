@@ -13,7 +13,7 @@ Furthermore, we have our modules, which are as follows: **core**, **fxui**, and 
 
 * [core](docs\ReadMecore.md)
 * [fxui](docs\ReadMefxui.md)
-* [persistence](docs\ReadMerestapi.md)
+* [restAPI](docs\ReadMerestapi.md)
 
 These module POM files specify additional necessary additions and dependencies. More details can be found in each module's respective **Readme.md** file.
 
