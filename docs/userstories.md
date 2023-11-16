@@ -13,7 +13,7 @@ Story: "As a (Who/Role), I want to...(What/Goal) so that...(Why/Benefit)"
 ### Interface (US 1)
 As a user, I want to have an overview of books and the ability to see reviews of them so that I can decide if they are worth reading.
 
-### Hva må til:
+### Requirements:
 * GUI page for displaying books
 * GUI page for displaying reviews per book
 
