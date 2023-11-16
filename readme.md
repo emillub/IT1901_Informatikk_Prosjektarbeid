@@ -2,8 +2,7 @@
 
 The project is intended to be a book-rating application.
 
-As a user you are supposed to be able to logg in so that you can access functions in the app. By [realease 3](docs\Release3.md) we now have expanded our app to not work locally, but remotely. This implies that we need to have a server running for the application to work. The application is now also presented as a "shippable product". See [release 3](docs\Release3.md) for more about how this works. There is also new functionality and as a user we can now sort the books by author, rating or title as well as delete reviews. Our focus has remained as for 
-[release 2](docs\Release2.md) and our focus is still on simple functionality with high code quality, efficient cooperation and gitlab synchronizations.
+As a user you are supposed to be able to logg in so that you can access functions in the app. By [realease 3](docs\Release3.md) we now have expanded our app to not work locally, but remotely. This implies that we need to have a server running for the application to work. The application is now also presented as a "shippable product". See [release 3](docs\Release3.md) for more about how this works. There is also new functionality and as a user we can now sort the books by author, rating or title as well as delete reviews. Our focus remains the same as for release 2 which is still on simple functionality with high code quality, efficient cooperation and gitlab synchronizations.
 
 
 ## Structure

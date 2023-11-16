@@ -15,16 +15,16 @@ Release 2 introduces several changes to the project compared to Release 1. We ha
 
 The project for release 1 had a single-module configuration where file handling, GUI, and domain logic coexisted. We had a pom.xml file that handled all configurations. For release 2, we have introduced a three-module structure. We have now separated domain logic, GUI, and file handling into three different modules that communicate; core, fxui, and persistence. A parent pom.xml file defines "rules" for the entire project, while more specific configurations exist within each module's pom.xml file.
 
-We have added additional functionality that now forces users to enter a name if they want to rate a book, along with more sophisticated file handling through a Jackson library with JSON format. This allows us to store input from the program more efficiently. For more detailed information on this, please see [Readme-persistens](ReadMePersistence.md).
+We have added additional functionality that now forces users to enter a name if they want to rate a book, along with more sophisticated file handling through a Jackson library with JSON format. This allows us to store input from the program more efficiently. For more detailed information on this, please see [ReadMeRestAPI](ReadMeRestAPI.md).
 
 The project is also configured for Eclipse Che.
 
 #### User Stories
-We have also included several user stories to further describe the purpose of the application and illustrate functionality. These can be found in [brukerhistorier](brukerhistorier.md). For release 2, these are US2 and US3.
+We have also included several user stories to further describe the purpose of the application and illustrate functionality. These can be found in [userstories](userstories.md). For release 2, these are US2 and US3.
   
 ### 3. Reflections
 
-The freedom around the choices we made for this release lies primarily in work habits and file handling systems. To start with the simplest, we have chosen a document metaphor storage method. This is largely about making it clear to users when their input is saved. More about this in [Readme-persistens](ReadMePersistence.md). 
+The freedom around the choices we made for this release lies primarily in work habits and file handling systems. To start with the simplest, we have chosen a document metaphor storage method. This is largely about making it clear to users when their input is saved. More about this in [ReadMeRestAPI](ReadMeRestAPI.md). 
 
 Through the work done, we have found a structure based on the Scrum technique with some modifications. We started with weekly meetings, where we worked on individual tasks between meetings. However, towards the end of the submission, there was a need for more collaboration on issues, and we started pair programming. As the project is configured to work on our individual computers, we have not utilized Eclipse Che through cloud development. Should we wish to do so, the project is set up to work in Eclipse Che.
 
