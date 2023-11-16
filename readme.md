@@ -44,7 +44,7 @@ The first thing we need to do is host the server on our local network. To do thi
 `mvn install`
 `mvn spring-boot:run`
 
-The server is now hosted on the local network and can be accessed through the IPv4 address. In the current version of the project, the local IPv4 addressed is set to *localhost*, but this can be changed to the local IPv4 address and still work. This is done on line 29 in [BookappModelController](bookapp\fxui\src\main\java\bookapp\fxui\RemoteBookappModelAccess.java).
+The server is now hosted on the local network and can be accessed through the IPv4 address. In the current version of the project, the local IPv4 addressed is set to *localhost*, but this can be changed to the local IPv4 address and still work. This is done on line 29 in [ApiController](bookapp\fxui\src\main\java\bookapp\fxui\RemoteApiAccess.java).
 
 Now you can open a new terminal and navigate back to the **bookapp**-folder where the entire project resides and enter the following commands:
 

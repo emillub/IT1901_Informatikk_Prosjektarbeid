@@ -2,14 +2,14 @@
 
 ## Introduction
 
-By release 3 the intentions of this module has changed and now revolves around hosting a server, handeling HTTP messages and managing the storage of user data. Data is stored in "Library.json," located in the "bookapp/restAPI/src/main/resources" directory while our server is hosted using springboot from the BookappModelApplication-file.  
+By release 3 the intentions of this module has changed and now revolves around hosting a server, handeling HTTP messages and managing the storage of user data. Data is stored in "Library.json," located in the "bookapp/restAPI/src/main/resources" directory while our server is hosted using springboot from the ApiApplication-file.  
 
 ## Technologies Used
 
 We have implemented our own restAPI to handle incomming client HTTP messages. We use the following:
 * Jackson Library; the Jackson library converts objects from the core module into JSON format, which is then written to a file.
 * Spring; this module has a dependency to org.springframework.boot which allows us to host a server on our local network. This is necessary to transmitt HTTP messages and essential if we want our application to work remotely.
-* HTTP message responses; we have made HTTP responses for Get, Put, Post and Delete methods. All are defined in [BookappModelController](bookapp\restapi\src\main\java\bookapp\restapi\BookappModelController.java)
+* HTTP message responses; we have made HTTP responses for Get, Put, Post and Delete methods. All are defined in [ApiController](bookapp\restapi\src\main\java\bookapp\restapi\ApiController.java)
 
 ## Functionality
 
@@ -22,10 +22,10 @@ The storage of user data is done through the jackson library and this is mainly 
   * This function does not take any parameters because the necessary information is in "Library.json." The function accesses this file and creates instances of core classes based on the information in the JSON file.
 
 ### Hosting the server
-This is done through the spring framework and an instance of a new server is created through the "BookappModelApplication"-file. This is a single method object that initialaizes and opens the server on the local network. 
+This is done through the spring framework and an instance of a new server is created through the "ApiApplication"-file. This is a single method object that initialaizes and opens the server on the local network. 
 
 ### HTTP Handeling
-We have implemented our own restAPI which handles HTTP messages. This is done through four functions in the "BookappModelController":
+We have implemented our own restAPI which handles HTTP messages. This is done through four functions in the "ApiController":
 * ```getBook()```
   * This function does not take parameters but upon receiving a HTTP Get request message, it returns a List<Book>-object through a HTTP response.
 * ```postReview()```

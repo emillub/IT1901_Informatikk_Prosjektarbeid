@@ -51,7 +51,7 @@ class User {
 class AppController {
     -User user 
     -ArrayList<Book> bookList
-    -RemoteBookappModelAccess controller 
+    -RemoteApiAccess controller 
     -Book selectedBook 
     -BookReview selectedBookReview
 
@@ -73,7 +73,7 @@ class AppController {
     -void updateVurderHBox()
 }
 
-class RemoteBookappModelAccess {
+class RemoteApiAccess {
     -String APPLICATION_JSON
     -String SERVER_IP
     -String ADDRESS
@@ -85,7 +85,7 @@ class RemoteBookappModelAccess {
     +void update(List<Book> lib)
 }
 
-class BookappModelController {
+class ApiController {
     +List<Book> getBook()
     +ResponseEntity<String> postReview(String bookName, BookReview review)
     +ResponseEntity<String> deleteReview(String bookName, BookReview review)
@@ -106,15 +106,15 @@ Book "1" -- "*" BookReview : Has review
 User "1" -- "*" BookReview : Write review
 BookComparator --> Book
 User --> Book
-RemoteBookappModelAccess --> Book
-BookappModelController --> Book
-BookappModelController --> BookReview
+RemoteApiAccess --> Book
+ApiController --> Book
+ApiController --> BookReview
 AppController --> Book
 AppController --> User
 AppController --> BookComparator
 AppController --> BookReview
 FileHandler --> Book
 FileHandler --> BookReview
-RemoteBookappModelAccess --> BookReview
+RemoteApiAccess --> BookReview
 
 @enduml

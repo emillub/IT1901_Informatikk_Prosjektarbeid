@@ -13,8 +13,8 @@ import java.util.List;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
 
-//This class handles communication between the UI and the HTTP methods defined in BookappModelController
-public class RemoteBookappModelAccess{
+//This class handles communication between the UI and the HTTP methods defined in ApiController
+public class RemoteApiAccess{
     
     private static final String APPLICATION_JSON = "application/json";
 
@@ -32,12 +32,12 @@ public class RemoteBookappModelAccess{
     private final HttpClient client;
 
     // Default constructor for normal usage
-    public RemoteBookappModelAccess() {
+    public RemoteApiAccess() {
         this(HttpClient.newHttpClient());
     }
 
     // Constructor for testing, accepts HttpClient as a parameter
-    public RemoteBookappModelAccess(HttpClient client) {
+    public RemoteApiAccess(HttpClient client) {
         this.client = client;
     }
 

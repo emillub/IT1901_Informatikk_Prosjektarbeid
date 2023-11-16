@@ -19,7 +19,7 @@ import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api/books")
-public class BookappModelController{
+public class ApiController{
 
     @Autowired
     FileHandlerService fhs;
