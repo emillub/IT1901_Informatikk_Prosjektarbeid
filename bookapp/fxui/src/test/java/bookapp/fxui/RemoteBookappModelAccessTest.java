@@ -26,7 +26,7 @@ public class RemoteBookappModelAccessTest {
     }
 
     @Test
-    public void testFetchLibraryErrorResponse() throws IOException, InterruptedException {
+    public void testRemoteBookappModelAccess() throws IOException, InterruptedException {
 
         HttpClient mockClient = Mockito.mock(HttpClient.class);
         HttpResponse<String> mockResponse = createMockResponse();
@@ -59,49 +59,15 @@ public class RemoteBookappModelAccessTest {
         //Response is already configured, only to make method to function
         String book = "Sample Book";
         BookReview review = new BookReview( new Book("Example Book Title", "Example Author"), new User("John Dough"), 5); 
-
-        assertThrows(RuntimeException.class, () -> access.deleteReview(book, review));
-    }
-
-    @Test
-    public void testAddReviewErrorResponse() throws IOException, InterruptedException {
-
-        HttpClient mockClient = Mockito.mock(HttpClient.class);
-        HttpResponse<String> mockResponse = createMockResponse();
-
-        when(mockResponse.statusCode()).thenReturn(400);  
-        when(mockResponse.body()).thenReturn("Error response body");
-
-        when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
-            .thenReturn(mockResponse);
-
-        RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
-
-        //Response is already configured, only to make method to function
-        String book = "Sample Book";
-        BookReview review = new BookReview( new Book("Example Book Title", "Example Author"), new User("John Dough"), 5); 
-
-        assertThrows(RuntimeException.class, () -> access.addReview(book, review));
-    }
-
-    @Test
-    public void testUpdateErrorResponse() throws IOException, InterruptedException {
-
-        HttpClient mockClient = Mockito.mock(HttpClient.class);
-        HttpResponse<String> mockResponse = createMockResponse();
-
-        when(mockResponse.statusCode()).thenReturn(400);  
-        when(mockResponse.body()).thenReturn("Error response body");
-
-        when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
-            .thenReturn(mockResponse);
-
-        RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
-
-        //Response is already configured, only to make method to function
         List<Book> bookList = List.of(new Book("Book Title 1", "Author 1"), new Book("Book Title 2", "Author 2"));
 
-        assertThrows(RuntimeException.class, () -> access.update(bookList));
-    }
 
+
+        assertThrows(RuntimeException.class, () -> access.fetchlibrary());
+        assertThrows(RuntimeException.class, () -> access.deleteReview(book, review));
+        assertThrows(RuntimeException.class, () -> access.update(bookList));
+        assertThrows(RuntimeException.class, () -> access.addReview(book, review));
+
+
+    }
 }

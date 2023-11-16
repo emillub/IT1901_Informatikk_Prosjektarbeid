@@ -5,8 +5,8 @@
 For release 3 the **fxui**-module has been changed to no longer work locally. It now works remotely, requiring a server for in and output to read from and to.  
 
 * The Fxui module is responsible for the visual interface of the application and utilizes both the **core**-module for objects referenced.
-* "Mainwindow.fxml," located in the [resources](bookapp/fxui/src/main/resources) directory, is opened and read using JavaFX and is controlled by the AppController class.
-* The [appcontroller](bookapp\fxui\src\main\java\bookapp\fxui\RemoteBookappModelAccess.java) class is now used to communicate with the restful API implemented, which is responsible for HTTP messages. More on that in [ReadMerestAPI](bookapp\fxui\src\main\java\bookapp\fxui\RemoteBookappModelAccess.java).
+* "Mainwindow.fxml," located in the [resources](../bookapp/fxui/src/main/resources/bookapp/fxui/Mainwindow.fxml) directory, is opened and read using JavaFX and is controlled by the AppController class.
+* The [appcontroller](../bookapp\fxui\src\main\java\bookapp\fxui\AppController.java) class is now used to communicate with the restful API implemented, which is responsible for HTTP messages. More on that in [ReadMerestAPI](ReadMeRestapi.md).
 
 ## Technologies Used
 
