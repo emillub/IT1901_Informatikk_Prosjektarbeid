@@ -70,7 +70,7 @@ public class BookappModelApplicationTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonPayload))
         .andExpect(status().isOk())
-        .andExpect(content().string("Review sucessfully added"));
+        .andExpect(content().string(BookappModelController.POST_OK_STATUS));
         
         //If review was added, cannot create another
         assertThrows(Exception.class, ()-> mockMvc.perform(post(POST_ADRESS,bookString)

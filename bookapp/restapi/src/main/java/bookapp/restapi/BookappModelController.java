@@ -27,6 +27,10 @@ public class BookappModelController{
     protected final static String POST_ADRESS = "/post/{bookName}";
     protected final static String DELETE_ADRESS = "/delete/{bookName}/{reviewer}";
     protected final static String PUT_ADRESS = "/updatelibrary";
+
+    protected final static String POST_OK_STATUS = "Review successfully added";
+    protected final static String DELETE_OK_STATUS = "Review deleted";
+    protected final static String PUT_OK_STATUS = "Successfully updated library";
     
     //GET for the entire list of entities in the JSON file
     @GetMapping(GET_ADRESS)
@@ -45,7 +49,7 @@ public class BookappModelController{
             if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
                 fhs.updateBookInLibrary(book);
-                return ResponseEntity.ok("Review sucessfully added");
+                return ResponseEntity.ok(POST_OK_STATUS);
             }
         }
         return ResponseEntity.notFound().build();
@@ -81,7 +85,7 @@ public class BookappModelController{
         BookReview bookReview = optionalReview.get();
         book.deleteReview(bookReview);
         fhs.updateBookInLibrary(book);
-        return ResponseEntity.ok("review by " + reviewer + " deleted");
+        return ResponseEntity.ok(DELETE_OK_STATUS);
         }
     
     @PutMapping(PUT_ADRESS)
@@ -89,7 +93,7 @@ public class BookappModelController{
         for (Book book:bookList){
                 fhs.updateBookInLibrary(book);
             }
-        return ResponseEntity.ok("Sucessfully updated library");
+        return ResponseEntity.ok(PUT_OK_STATUS);
     }
     }
 
