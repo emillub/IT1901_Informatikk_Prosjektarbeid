@@ -1,0 +1,42 @@
+@startuml Architecture
+''Package diagram showing the architecture in regards to release 2. 
+
+[core] as bookapp_core
+[fxui] as bookapp_fxui
+[javafx] as javafx
+
+component bookapp_core {
+    package bookapp.core #FFFFCC
+}
+
+component bookapp_fxui {
+    package bookapp.fxui #FFFFCC
+}
+
+component javafx {
+    component fxml #FF9999
+}
+
+component jackson #FF9999 {
+}
+
+component bookapp_persistence {
+    package bookapp.persistence #FFFFCC
+}
+
+component Library.json #FF9999 {
+}
+
+
+'''Relationships'''
+bookapp_fxui ..> javafx
+bookapp_fxui ..> fxml
+Library.json ..> jackson
+bookapp.fxui ..> bookapp.core
+bookapp.persistence ..> Library.json
+bookapp.core ..> Library.json
+bookapp.fxui ..> bookapp.persistence
+bookapp.persistence ..> bookapp.core
+
+@enduml
+
