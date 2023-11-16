@@ -1,4 +1,0 @@
---patch-module
-bookapp.restapi=_
---add-reads
-bookapp.restapi=ALL-UNNAMED
