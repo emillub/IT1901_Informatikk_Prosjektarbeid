@@ -8,13 +8,13 @@ class Book {
 
     +String getTitle()
     +String getAuthor()
-    +Book getBook()
     +float getAverageRating()
     -void validateReview(BookReview)
     +void addReview(BookReview)
     +void deleteReview(BookReview)
-    #void setReviews(List<BookReview>)
+    #void setReviews(List<BookReview> reviews)
     +ArrayList<BookReview> getReviews()
+    +String toString()
 }
 
 class BookComparator {
@@ -32,12 +32,15 @@ class BookReview {
     -User reviewer
     -int rating 
     -Book Book
+    +Integer[] RATING_RANGE
 
     +BookReview(Book b, User r, int rating)
     +User getReviewer()
     +int getRating()
+    +Book getBook()
     +void setRating()
     -boolean validRating(int r)
+    +String toString()
 }
 
 class User {
@@ -46,6 +49,8 @@ class User {
     -void validateName(String name) 
     +String getName()
     +void writeReview(Book b, int rating)
+    +void deleteReview(BookReview review)
+    +String toString()
 }
 
 class AppController {
@@ -63,14 +68,15 @@ class AppController {
     -void deleteReviewButtonClick()
     -void sortChoiceBoxClick()
     -void loadLibrary()
-    -void delete(Book book, BookReview bookreview)
-    -void add(User user, Book book, int rating)
+    -void deleteReview(Book book, BookReview bookreview)
+    -void addReview(User user, Book book, int rating)
     -void saveLibrary()
     -User getUser()
     -void updateBookListView()
     -void updateReviewListViw()
     -void updateMarkedBookText()
     -void updateVurderHBox()
+    -void displayError(String errorName,Exception e)
 }
 
 class RemoteApiAccess {
@@ -79,6 +85,9 @@ class RemoteApiAccess {
     -String ADDRESS
     -String FETCH 
     -ObjectMapper mapper
+    -HttpClient client
+    +RemoteApiAccess()
+    +RemoteApiAccess(HttpClient client)
     +List<Book> fetchLibrary()
     +void deleteReview(String bookName, BookReview review)
     +void addReview(String bookName, BookReview review)
@@ -86,7 +95,14 @@ class RemoteApiAccess {
 }
 
 class ApiController {
-    +List<Book> getBook()
+    #String GET_ADRESS
+    #String POST_ADDRESS
+    #String DELETE_ADRESS
+    #String PUT_ADDRESS
+    #String POST_OK_STATUS
+    #String DELETE_OK_STATUS
+    #String PUT_OK_STATUS
+    +List<Book> getLibrary()
     +ResponseEntity<String> postReview(String bookName, BookReview review)
     +ResponseEntity<String> deleteReview(String bookName, BookReview review)
     +ResponseEntity<String> updateLibrary(List<Book> bookList)
@@ -99,6 +115,17 @@ class FileHandler {
 
     -void CheckIfMoreBooksInLibrary(List<Book> oldBooks)
     -void writeBooksToFile(List<Book> books)
+    +Book getBookFromLibrary(Book book, List<Book> booksInLibrary)
+    +void updateBookInLibrary(Book book)
+    +List<Book> readBooksFromFile()
+    -Boolean fileCreated()
+    +String getDefaultFilePath()
+}
+
+class FileHandlerService {
+    +List<Book> readBooksFromFile()
+    +void updateBookInLibrary(Book book)
+    +Book getBookFromLibrary(Book book, List<Book> booksInLibrary)
 }
 
 'Relationships'
@@ -116,5 +143,7 @@ AppController --> BookReview
 FileHandler --> Book
 FileHandler --> BookReview
 RemoteApiAccess --> BookReview
+FileHandlerService --> Book
+FileHandlerService --> BookReview
 
 @enduml
