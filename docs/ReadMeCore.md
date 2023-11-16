@@ -19,7 +19,7 @@
 * The BookReview class represents a review of a book. It has references to the User object that created it and the Book object it belongs to. It also has a static int array that determines the values one can give as a rating.
   * ```BookReview(Book book, User reviewer, int rating)```
     * Creates a BookReview object. Checks that it is created by a user and throws an error if not.
-  * ```Validrating(int r)```
+  * ```validRating(int r)```
     * Checks if the given rating is valid and throws an error if not.
 * The User class handles everything related to users. It contains minimal logic but holds information about the user, and it is from this class that BookReview objects are created.
   * ```writeReview(Book bok, in rating)```
