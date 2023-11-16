@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -73,13 +76,10 @@ public class BookAppTest extends ApplicationTest {
     void testAddReview(){
         logIn();
         click(bookToReview.toString());
-        click(bookToReview.toString());
         clickOn("#rateChoiceBox");
         click("3");
         click("Vurder");
         assertTrue(!bookToReview.getReviews().isEmpty());
-        clickOn("#rateChoiceBox");
-        click("3");
         click("Vurder");
         click("OK");
     }
@@ -100,10 +100,21 @@ public class BookAppTest extends ApplicationTest {
         logIn();
         assertTrue(from(scene.getRoot()).lookup("#deleteReviewButton").queryButton().disableProperty().get());
         click(bookToReview.toString());
-        click(reviewListView.getItems().get(0).toString());
-        click(reviewListView.getItems().get(0).toString());
+        click(getReviewToDelete().toString());
         clickOn("#deleteReviewButton");
-        assertTrue(bookToReview.getReviews().isEmpty());
+        assertTrue(getReviewToDelete() == null);
+    }
+
+    //Will make test run even is Donald Trump review already exists
+    private BookReview getReviewToDelete(){
+        List<BookReview> reviews = bookToReview.getReviews();
+        Predicate<BookReview> reviewByDonaldTrump = r -> r.getReviewer().getName().equals("Donald Trump");
+        Optional<BookReview> reviewToDeleteOptional = reviews.stream().filter(reviewByDonaldTrump).findFirst();
+        if(reviewToDeleteOptional.isEmpty()){
+            return null;
+        }
+        BookReview reviewToDelete = reviewToDeleteOptional.get();
+        return reviewToDelete;
     }
 
 }
