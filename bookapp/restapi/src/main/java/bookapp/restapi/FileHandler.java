@@ -1,4 +1,4 @@
-package bookapp.persistence;
+package bookapp.restapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,49 +12,58 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import bookapp.core.Book;
+import bookapp.core.BookReview;
 
 
 
 public class FileHandler {
 
     private final static String FILE_NAME = "Library.json";
-    public static String DIR_PATH = "bookapp/persistence/src/main/resources/bookapp/persistance";
+    public static String DIR_PATH = "bookapp/restapi/src/main/resources/bookapp/restapi";
     public static final Book[] LIBRARY = 
-    {new Book("Til musikken", "author"), 
-    new Book("Maskiner som tenker", "Inga Stromke"),
-    new Book("To kill a mockingbird", "Ukjent")};
-
-    //Checks if Library has new books since last time
+        {new Book("The Hunger Games", "Suzanne Collins"), 
+        new Book("Catching Fire", "Suzanne Collins"),
+        new Book("Mockingjay", "Suzanne Collins"),
+        new Book("To Kill a Mockingbird", "Harper Lee"),
+        new Book("The Book Thief", "Markus Zusak"),
+        new Book("New Moon", "Stephanie Meyer"),
+        new Book("1984", "George Orwell"),
+        new Book("The Kite Runner", "Khaled Hosseini"),
+        new Book("Maskiner som tenker", "Inga Stromke")};
+    
     private static void CheckIfMoreBooksInLibrary(List<Book> oldBooks){
         if (oldBooks.size() < LIBRARY.length){
-            List<String> bookTitles = oldBooks.stream().map(b -> b.getTitle()).collect(Collectors.toList());
+            List<String> bookTitles = oldBooks.stream()
+                .map(b -> b.getTitle())
+                .collect(Collectors.toList());
+
+            Predicate<Book> matchingName = b -> !bookTitles.contains(b.getTitle());
             List<Book> newBooksInLibrary = Arrays.asList(LIBRARY).stream()
-                .parallel().filter(b -> !bookTitles.contains(b.getTitle())).collect(Collectors.toList());
+                .parallel()
+                .filter(matchingName)
+                .collect(Collectors.toList());
             oldBooks.addAll(newBooksInLibrary);
         }
     }
 
-    //Writes books to JSON
     private static void writeBooksToFile(List<Book> books){
         try {
             CheckIfMoreBooksInLibrary(books);
             ObjectMapper mapper = new ObjectMapper();
             String filePath = getDefaultFilePath();
-            mapper.writeValue(Paths.get(filePath).toFile(), books);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get(filePath).toFile(), books);
         } catch (IOException ex) {
             System.out.println("Error writing to file");
             ex.printStackTrace();
         }
     }
 
-
-    //Gets book from list of books. Meant to be used on books from file, but can be used on all lists of books
     public static Book getBookFromLibrary(Book book, List<Book> booksInLibrary){
         if(booksInLibrary == null) booksInLibrary = readBooksFromFile();
-        //Gets book by checking if matching author and name
         Optional<Book> bookInLibraryOptional = booksInLibrary.stream()
                 .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
                 .findFirst(); 
@@ -65,18 +74,14 @@ public class FileHandler {
         return bookInLibrary;
     }
 
-    //Updates book in list of books read from file and rewrites all the books to file
+    //Update book and rewrite all books to file
     public static void updateBookInLibrary(Book book){ 
         List<Book> books = readBooksFromFile();
-        //Replaces book object in list of books and writes list of books to file
         int index = books.indexOf(getBookFromLibrary(book, books));
         books.remove(index);
         books.add(index, book);
         writeBooksToFile(books);
     }
-
-    
-
 
     //Reads books and reviews related to them from file and creates instances of them 
     public static List<Book> readBooksFromFile() {
@@ -98,8 +103,6 @@ public class FileHandler {
         return null;
     }
 
-
-    //Creates file if it doesnt exist
     private static Boolean fileCreated(){
         File file = new File(getDefaultFilePath());
         try {
@@ -111,23 +114,23 @@ public class FileHandler {
 
     }
 
+    //Check what directory app is running from and finds the correct filepath
     public static String getDefaultFilePath(){
         try {
-            //Checks what directory is the app is running from and finds the correct path from there
             Path path = Path.of(new File("").getAbsolutePath());
             String pathString = path.toString();
             if(pathString.endsWith("gr2349")) {
-                pathString = pathString + "/bookapp/persistence/src/main/resources/bookapp/persistance";
+                pathString = pathString + "/bookapp/restapi/src/main/resources/bookapp/restapi";
             }
-            else if (path.toString().endsWith("fxui") || path.toString().endsWith("persistence")){   
-                //Removes string until at /bookapp
+            else if (path.toString().endsWith("fxui") || path.toString().endsWith("restapi")){   
+                //Remove string until at /bookapp
                 while (!pathString.endsWith("bookapp")){ 
                     pathString = pathString.substring(0, pathString.length()-1);
                 }
-                pathString += "/persistence/src/main/resources/bookapp/persistance";
+                pathString += "/restapi/src/main/resources/bookapp/restapi";
             }
 
-            Files.createDirectories(Paths.get(pathString)); //Creates the directory if it doesn't exist
+            Files.createDirectories(Paths.get(pathString));
             String filePath = pathString + "/" + FILE_NAME;
             return filePath;
         } catch (IOException e) {

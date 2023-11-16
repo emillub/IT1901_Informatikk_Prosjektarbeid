@@ -1,0 +1,149 @@
+@startuml
+
+class Book {
+    implements Serializable
+    -String title
+    -String author
+    -ArrayList<BookReview> reviewsOfBook
+
+    +String getTitle()
+    +String getAuthor()
+    +float getAverageRating()
+    -void validateReview(BookReview)
+    +void addReview(BookReview)
+    +void deleteReview(BookReview)
+    #void setReviews(List<BookReview> reviews)
+    +ArrayList<BookReview> getReviews()
+    +String toString()
+}
+
+class BookComparator {
+    implements Comparator<Book>
+    +String RATING 
+    +String AUTHOR_NAME
+    +String BOOK_TITLE
+    -String sortBy
+
+    +BookComparator(String sortBy)
+    +int compare(Book o1, Book o2)
+}
+
+class BookReview {
+    -User reviewer
+    -int rating 
+    -Book Book
+    +Integer[] RATING_RANGE
+
+    +BookReview(Book b, User r, int rating)
+    +User getReviewer()
+    +int getRating()
+    +Book getBook()
+    +void setRating()
+    -boolean validRating(int r)
+    +String toString()
+}
+
+class User {
+    implements Serializable
+    -String name
+    -void validateName(String name) 
+    +String getName()
+    +void writeReview(Book b, int rating)
+    +void deleteReview(BookReview review)
+    +String toString()
+}
+
+class AppController {
+    -User user 
+    -ArrayList<Book> bookList
+    -RemoteApiAccess controller 
+    -Book selectedBook 
+    -BookReview selectedBookReview
+
+    +void initialize()
+    -void loginButtonClick()
+    -void bookListViewClicked()
+    -void reviewListViewClicked()
+    -void vurderButtonClicked()
+    -void deleteReviewButtonClick()
+    -void sortChoiceBoxClick()
+    -void loadLibrary()
+    -void deleteReview(Book book, BookReview bookreview)
+    -void addReview(User user, Book book, int rating)
+    -void saveLibrary()
+    -User getUser()
+    -void updateBookListView()
+    -void updateReviewListViw()
+    -void updateMarkedBookText()
+    -void updateVurderHBox()
+    -void displayError(String errorName,Exception e)
+}
+
+class RemoteApiAccess {
+    -String APPLICATION_JSON
+    -String SERVER_IP
+    -String ADDRESS
+    -String FETCH 
+    -ObjectMapper mapper
+    -HttpClient client
+    +RemoteApiAccess()
+    +RemoteApiAccess(HttpClient client)
+    +List<Book> fetchLibrary()
+    +void deleteReview(String bookName, BookReview review)
+    +void addReview(String bookName, BookReview review)
+    +void update(List<Book> lib)
+}
+
+class ApiController {
+    #String GET_ADRESS
+    #String POST_ADDRESS
+    #String DELETE_ADRESS
+    #String PUT_ADDRESS
+    #String POST_OK_STATUS
+    #String DELETE_OK_STATUS
+    #String PUT_OK_STATUS
+    +List<Book> getLibrary()
+    +ResponseEntity<String> postReview(String bookName, BookReview review)
+    +ResponseEntity<String> deleteReview(String bookName, BookReview review)
+    +ResponseEntity<String> updateLibrary(List<Book> bookList)
+}
+
+class FileHandler {
+    -String FILE_NAME
+    +String DIR_PATH
+    +Book[] LIBRARY 
+
+    -void CheckIfMoreBooksInLibrary(List<Book> oldBooks)
+    -void writeBooksToFile(List<Book> books)
+    +Book getBookFromLibrary(Book book, List<Book> booksInLibrary)
+    +void updateBookInLibrary(Book book)
+    +List<Book> readBooksFromFile()
+    -Boolean fileCreated()
+    +String getDefaultFilePath()
+}
+
+class FileHandlerService {
+    +List<Book> readBooksFromFile()
+    +void updateBookInLibrary(Book book)
+    +Book getBookFromLibrary(Book book, List<Book> booksInLibrary)
+}
+
+'Relationships'
+Book "1" -- "*" BookReview : Has review
+User "1" -- "*" BookReview : Write review
+BookComparator --> Book
+User --> Book
+RemoteApiAccess --> Book
+ApiController --> Book
+ApiController --> BookReview
+AppController --> Book
+AppController --> User
+AppController --> BookComparator
+AppController --> BookReview
+FileHandler --> Book
+FileHandler --> BookReview
+RemoteApiAccess --> BookReview
+FileHandlerService --> Book
+FileHandlerService --> BookReview
+
+@enduml

@@ -41,7 +41,7 @@
                   </HBox>
                   <AnchorPane prefHeight="484.0" prefWidth="500.0">
                      <children>
-                        <VBox layoutY="-4.0" prefHeight="389.0" prefWidth="500.0" spacing="10.0">
+                        <VBox layoutY="-37.0" prefHeight="422.0" prefWidth="500.0" spacing="10.0">
                            <children>
                               <Text fx:id="markedBookText" strokeType="OUTSIDE" strokeWidth="0.0" text="Markert bok:" wrappingWidth="499.21630859375">
                                  <font>
@@ -64,22 +64,33 @@
                                     <Button fx:id="deleteReviewButton" mnemonicParsing="false" onAction="#deleteReviewButtonClick" text="Slett vurdering" />
                                  </children>
                               </HBox>
-                              <HBox spacing="230.0">
+                              <AnchorPane prefWidth="500.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bøker" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vurderinger" />
+                                    <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bøker">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <HBox alignment="CENTER_LEFT" layoutY="25.5" spacing="20.0" />
+                                    <Text layoutX="250.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vurderinger">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <Text layoutX="86.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorter:" />
+                                    <ChoiceBox fx:id="sortChoiceBox" layoutX="140.0" layoutY="37.0" onAction="#sortChoiceBoxClick" prefHeight="26.0" prefWidth="94.0" />
                                  </children>
-                              </HBox>
-                              <HBox prefHeight="251.0" prefWidth="500.0">
+                              </AnchorPane>
+                              <HBox prefHeight="297.0" prefWidth="500.0">
                                  <children>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
-                                          <ListView fx:id="bookListView" onMouseClicked="#bookListViewClicked" prefHeight="320.0" prefWidth="240.0" />
+                                          <ListView fx:id="bookListView" onMouseClicked="#bookListViewClicked" prefHeight="295.0" prefWidth="240.0" />
                                        </content>
                                     </ScrollPane>
                                     <ScrollPane hbarPolicy="NEVER" prefHeight="402.0" prefWidth="250.0" vbarPolicy="ALWAYS">
                                        <content>
-                                          <ListView fx:id="reviewListView" onMouseClicked="#reviewListViewClicked" prefHeight="320.0" prefWidth="240.0" />
+                                          <ListView fx:id="reviewListView" onMouseClicked="#reviewListViewClicked" prefHeight="293.0" prefWidth="240.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>
@@ -99,9 +110,9 @@
                   <ListView fx:id="operandsView" prefHeight="100.0" />
                   <VBox spacing="10">
                      <children>
-                        <Label text="Name" />
+                        <Label text="Navn" />
                         <TextField fx:id="nameTextField" onAction="#loginButtonClick" />
-                        <Button fx:id="loginbutton" onAction="#loginButtonClick" text="Log in" />
+                        <Button fx:id="loginbutton" onAction="#loginButtonClick" text="Logg inn" />
                      </children>
                   </VBox>
                </children>

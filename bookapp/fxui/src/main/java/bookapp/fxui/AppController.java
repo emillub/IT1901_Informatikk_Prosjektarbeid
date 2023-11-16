@@ -1,23 +1,18 @@
 package bookapp.fxui;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import bookapp.core.User;
 import bookapp.core.BookReview;
-import bookapp.persistence.FileHandler;
 import bookapp.core.Book;
+import bookapp.core.BookComparator;
+
 import java.util.List;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -26,7 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-
 
 
 public class AppController {
@@ -47,6 +41,9 @@ public class AppController {
     private ChoiceBox<Integer> rateChoiceBox;
 
     @FXML
+    private ChoiceBox<String> sortChoiceBox;
+
+    @FXML
     private ListView<BookReview> reviewListView;
 
     @FXML
@@ -58,33 +55,42 @@ public class AppController {
     @FXML
     private HBox vurderHBox;
 
-
     private User user;
     
     private ArrayList<Book> bookList = new ArrayList<Book>();
 
-
+    private RemoteApiAccess controller;
     private Book selectedBook;
     private BookReview selectedBookReview;
 
     @FXML public void initialize(){
+        controller = new RemoteApiAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
+        rateChoiceBox.setValue(BookReview.RATING_RANGE[0]);
+        sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));
+        sortChoiceBox.setValue(BookComparator.BOOK_TITLE);
         loginPane.setVisible(true);
         mainPane.setVisible(false);
     }
     
     @FXML private void loginButtonClick(){ 
-        user = getUser();
-        loadLibrary();
-        userNameText.setText("Innlogget som: " + user.getName());
-        updateVurderHbox();
-        loginPane.setVisible(false);
-        mainPane.setVisible(true);
+        try{
+            user = getUser();
+            userNameText.setText("Innlogget som: " + user.getName());
+            loadLibrary();
+            updateVurderHbox();
+            loginPane.setVisible(false);
+            mainPane.setVisible(true);
+        }
+        catch(IllegalArgumentException e){
+            displayError("Invalid username",e);
+        }
     }
 
     @FXML private void bookListViewClicked(){
         Object selectedItem = bookListView.getSelectionModel().getSelectedItem();
         if (selectedItem != null && selectedItem != selectedBook){
+            selectedBookReview = null;
             selectedBook = (Book) selectedItem;
             updateVurderHbox();
             updateMarkedBookText(selectedBook.getTitle());
@@ -99,19 +105,17 @@ public class AppController {
             updateReviewListView();
         }
     }
-    
+
     @FXML private void vurderButtonClicked(){
-        if (selectedBook == null) return;
         var rating = rateChoiceBox.getSelectionModel().getSelectedItem();
-        if(rating == null) return;
-        user.writeReview(selectedBook, (int) rating);
+        addReview(user, selectedBook, (int)rating);
         updateReviewListView();
         updateBookListView();
         saveLibrary();
     }
 
     @FXML private void deleteReviewButtonClick(){
-        selectedBook.deleteReview(selectedBookReview);
+        deleteReview(selectedBook, selectedBookReview);
         updateReviewListView();
         updateBookListView();
         selectedBookReview = null;
@@ -119,25 +123,52 @@ public class AppController {
         saveLibrary();
     }
 
+    @FXML private void sortChoiceBoxClick(){
+        updateBookListView();
+    }
+
    
     private void loadLibrary(){
-        List<Book> loadedBooks = FileHandler.readBooksFromFile();
+        List<Book> loadedBooks = controller.fetchlibrary();
         bookList.addAll(loadedBooks);
         updateBookListView();
     } 
 
-    private void saveLibrary(){
-        for (Book book : bookList){
-            FileHandler.updateBookInLibrary(book);
+    //Delete review through HTTP request
+    private void deleteReview(Book book, BookReview bookreview){
+        String bookname = book.getTitle();
+        book.deleteReview(bookreview);
+        controller.deleteReview(bookname, bookreview); 
+        updateBookListView();
+    }
+    
+    //Add review through HTTP request
+    private void addReview(User user, Book book, int rating){
+        try {
+            BookReview review = new BookReview(book, user, rating);
+            controller.addReview(book.getTitle(), review);
+            updateBookListView();
+        } catch (IllegalArgumentException e) {
+            displayError("Already reviewed book", e);
         }
     }
 
-    private User getUser(){ 
+    //Save library through HTTP method
+    private void saveLibrary(){
+        List<Book> listofbooks = new ArrayList<Book>();
+        for (Book book : bookList){
+            listofbooks.add(book);
+        }
+        controller.update(listofbooks);
+    }
+
+    private User getUser() throws IllegalArgumentException{ 
         String name = nameTextField.getText();
         return new User(name);
     }
 
     private void updateBookListView(){
+        bookList.sort(new BookComparator(sortChoiceBox.getValue()));
         bookListView.setItems(FXCollections.observableArrayList(bookList));    
     }
 
@@ -161,5 +192,12 @@ public class AppController {
             deleteReviewButton.setDisable(false);
         }
     }
-    
+
+    private void displayError(String errorName,Exception e){
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText(errorName);
+        alert.setContentText(e.getMessage());             
+        alert.showAndWait();
+    }
 }

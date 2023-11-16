@@ -1,4 +1,5 @@
 @startuml Architecture
+''Package diagram showing the architecture in regards to release 2. 
 
 [core] as bookapp_core
 [fxui] as bookapp_fxui

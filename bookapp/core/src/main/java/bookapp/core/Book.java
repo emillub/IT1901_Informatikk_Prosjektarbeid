@@ -1,7 +1,6 @@
 package bookapp.core;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,18 +28,11 @@ public class Book implements Serializable{
     }
 
     @JsonIgnore
-    public Book getBook() {
-        return this;
-    }
-
-    @JsonIgnore
     public float getAverageRating(){
-        //Avoid divisionByZero error og reviewsOfBook is null error
         if (this.reviewsOfBook == null || this. reviewsOfBook.size() == 0) {
             return 0;
         }
         int amountOfRatings = this.reviewsOfBook.size();
-        //Find avarage rating
         float sumOfRatings = 0;
         for (int i = 0; i < amountOfRatings; i++) {
             sumOfRatings += reviewsOfBook.get(i).getRating();
@@ -68,11 +60,6 @@ public class Book implements Serializable{
             throw new IllegalArgumentException("Review not found in this books reviews");
         }
         reviewsOfBook.remove(review);
-    }
-
-    protected void setReviews(List<BookReview> reviews) {
-        if (reviews == null) return;
-        this.reviewsOfBook = new ArrayList<>(reviews);
     }
 
     public ArrayList<BookReview> getReviews(){

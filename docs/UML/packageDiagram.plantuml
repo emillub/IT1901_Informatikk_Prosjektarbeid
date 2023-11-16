@@ -1,0 +1,26 @@
+@startuml
+
+component core {
+    package bookapp.core #FFFCCC
+}
+
+component fxui {
+    package bookapp.fxui #FFFCCC
+}
+
+component restapi {
+    package bookapp.restapi #FFFCCC
+    package bookapp.json #FFFCCC
+}
+
+component jackson {
+}
+
+''Relationships
+bookapp.fxui ..> bookapp.core
+bookapp.restapi ..> bookapp.core
+bookapp.restapi ..> bookapp.json
+bookapp.fxui <..> bookapp.restapi
+bookapp.json ..> jackson
+
+@enduml
