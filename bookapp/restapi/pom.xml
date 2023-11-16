@@ -63,7 +63,7 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <configuration>
-            <mainClass>bookapp.restapi.BookappModelApplication</mainClass>
+            <mainClass>bookapp.restapi.ApiApplication</mainClass>
           </configuration>
           <version>3.1.5</version>
         </plugin>

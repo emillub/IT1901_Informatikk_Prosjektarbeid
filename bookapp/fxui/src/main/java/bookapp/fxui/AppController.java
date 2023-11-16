@@ -59,12 +59,12 @@ public class AppController {
     
     private ArrayList<Book> bookList = new ArrayList<Book>();
 
-    private RemoteBookappModelAccess controller;
+    private RemoteApiAccess controller;
     private Book selectedBook;
     private BookReview selectedBookReview;
 
     @FXML public void initialize(){
-        controller = new RemoteBookappModelAccess();
+        controller = new RemoteApiAccess();
         rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));
         rateChoiceBox.setValue(BookReview.RATING_RANGE[0]);
         sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));

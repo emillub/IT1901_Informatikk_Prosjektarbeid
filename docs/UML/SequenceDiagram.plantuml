@@ -7,10 +7,10 @@ actor User as U
 participant "User Interface" as UI
 participant "AppController" as AC
 
-'RemoteBookappModelAccess
+'RemoteApiAccess
 participant "DataAccess UI" as DA
 
-'BookappModelController
+'ApiController
 participant "RestServer" as RS
 
 'Unsure if I should implement this? And where it should be implemented in that case
@@ -28,7 +28,7 @@ UI -> AC : *Click log in*
 'AppController calls upon DataAccess UI, that requests the library from backend
 AC -> DA : loadLibrary()
 
-'loadLibrary() calls upon fetchLibrary() method from RemoteBookappModelAccess'
+'loadLibrary() calls upon fetchLibrary() method from RemoteApiAccess'
 DA -> RS : HTTP Get "/fetchList" / fetchLibrary()
 
 'RestController calls upon FileHandler to recreate objects based on library, calls upon FileHandler.readBooksFromLibrary()'

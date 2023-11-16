@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@WebMvcTest(BookappModelController.class)
-public class BookappModelApplicationTest {
+@WebMvcTest(ApiController.class)
+public class ApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,10 +32,10 @@ public class BookappModelApplicationTest {
     private FileHandlerService fileHandlerService; 
 
     private final String ADRESS_BASE = "/api/books";
-    private final String GET_ADRESS = ADRESS_BASE+BookappModelController.GET_ADRESS;;
-    private final String POST_ADRESS = ADRESS_BASE+BookappModelController.POST_ADRESS;;
-    private final String DELETE_ADRESS = ADRESS_BASE+BookappModelController.DELETE_ADRESS;
-    private final String PUT_ADRESS = ADRESS_BASE+BookappModelController.PUT_ADRESS;
+    private final String GET_ADRESS = ADRESS_BASE+ApiController.GET_ADRESS;;
+    private final String POST_ADRESS = ADRESS_BASE+ApiController.POST_ADRESS;;
+    private final String DELETE_ADRESS = ADRESS_BASE+ApiController.DELETE_ADRESS;
+    private final String PUT_ADRESS = ADRESS_BASE+ApiController.PUT_ADRESS;
 
     private Book book;
     private List<Book> bookList;
@@ -68,7 +68,7 @@ public class BookappModelApplicationTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonPayload))
         .andExpect(status().isOk())
-        .andExpect(content().string(BookappModelController.POST_OK_STATUS));
+        .andExpect(content().string(ApiController.POST_OK_STATUS));
         
         //If review was added, cannot create another
         assertThrows(Exception.class, ()-> mockMvc.perform(post(POST_ADRESS,bookString)

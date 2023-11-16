@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class RemoteBookappModelAccessTest {
+public class RemoteApiAccessTest {
 
     // Helper method to create a mock HttpResponse<String>
     private static HttpResponse<String> createMockResponse() {
@@ -26,7 +26,7 @@ public class RemoteBookappModelAccessTest {
     }
 
     @Test
-    public void testRemoteBookappModelAccess() throws IOException, InterruptedException {
+    public void testRemoteApiAccess() throws IOException, InterruptedException {
 
         HttpClient mockClient = Mockito.mock(HttpClient.class);
         HttpResponse<String> mockResponse = createMockResponse();
@@ -37,7 +37,7 @@ public class RemoteBookappModelAccessTest {
         when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
             .thenReturn(mockResponse);
 
-        RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
+        RemoteApiAccess access = new RemoteApiAccess(mockClient);
 
         assertThrows(RuntimeException.class, () -> access.fetchlibrary());
     }
@@ -54,7 +54,7 @@ public class RemoteBookappModelAccessTest {
         when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
             .thenReturn(mockResponse);
 
-        RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
+        RemoteApiAccess access = new RemoteApiAccess(mockClient);
 
         //Response is already configured, only to make method to function
         String book = "Sample Book";
