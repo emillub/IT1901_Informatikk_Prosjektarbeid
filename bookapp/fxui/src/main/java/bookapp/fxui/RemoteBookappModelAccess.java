@@ -21,8 +21,10 @@ public class RemoteBookappModelAccess{
     //Change IP to server running spring-boot
     private static final String SERVER_IP = "http://localhost:8080";
     
+    //Endpoint for api of books
     private static final String ADDRESS = "/api/books";
     
+    //Endpoint api for fetching library
     private static final String FETCH = "/fetchList";
     
     private static ObjectMapper mapper = new ObjectMapper();

@@ -39,7 +39,8 @@ As a user, I want to be able to sort the books in the library based on their rat
 
 ### Requirements:
 *   Comparator class for comparing the books that needs to be sorted. 
-*   A friendly user interface so its intuitive how to sort the books, a dropdown menu which presents the sorting factors. 
+*   A friendly user interface so its intuitive how to sort the books, a dropdown menu which presents the sorting factors.
+*   Sort on the general ASCII table, meaning upper case letter comes before small letter. 
 
 ### Delete review (US 5)
 As a user, I want to be able to delete a review so that I can give a new rating if I change my mind about the book.
