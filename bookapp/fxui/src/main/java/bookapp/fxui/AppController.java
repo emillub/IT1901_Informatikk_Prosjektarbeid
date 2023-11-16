@@ -39,6 +39,7 @@ public class AppController {
 
     @FXML
     private ChoiceBox<Integer> rateChoiceBox;
+
     @FXML
     private ChoiceBox<String> sortChoiceBox;
 
@@ -53,7 +54,6 @@ public class AppController {
 
     @FXML
     private HBox vurderHBox;
-
 
     private User user;
     

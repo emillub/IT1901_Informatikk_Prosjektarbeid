@@ -1,0 +1,6 @@
+module-info.class
+bookapp/restapi/BookappModelController.class
+bookapp/restapi/BookappModelApplication.class
+bookapp/restapi/FileHandlerService.class
+bookapp/restapi/FileHandler$1.class
+bookapp/restapi/FileHandler.class

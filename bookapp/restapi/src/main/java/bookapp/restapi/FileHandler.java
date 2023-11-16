@@ -35,7 +35,6 @@ public class FileHandler {
         new Book("The Kite Runner", "Khaled Hosseini"),
         new Book("Maskiner som tenker", "Inga Stromke")};
     
-    //Check if Library has new books
     private static void CheckIfMoreBooksInLibrary(List<Book> oldBooks){
         if (oldBooks.size() < LIBRARY.length){
             List<String> bookTitles = oldBooks.stream()
@@ -51,7 +50,6 @@ public class FileHandler {
         }
     }
 
-    //Writes books to JSON
     private static void writeBooksToFile(List<Book> books){
         try {
             CheckIfMoreBooksInLibrary(books);
@@ -64,11 +62,8 @@ public class FileHandler {
         }
     }
 
-
-    //Get book from list of books
     public static Book getBookFromLibrary(Book book, List<Book> booksInLibrary){
         if(booksInLibrary == null) booksInLibrary = readBooksFromFile();
-        //Get book by checking if matching author and name
         Optional<Book> bookInLibraryOptional = booksInLibrary.stream()
                 .filter(b -> b.getTitle().equals(book.getTitle()) && b.getAuthor().equals(book.getAuthor()))
                 .findFirst(); 
@@ -108,8 +103,6 @@ public class FileHandler {
         return null;
     }
 
-
-    //Create file if it doesnt exist
     private static Boolean fileCreated(){
         File file = new File(getDefaultFilePath());
         try {

@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 
 public class RemoteBookappModelAccessTest {
 
-
     // Helper method to create a mock HttpResponse<String>
     private static HttpResponse<String> createMockResponse() {
         @SuppressWarnings("unchecked")  // Suppress the unchecked warning
@@ -49,7 +48,7 @@ public class RemoteBookappModelAccessTest {
         HttpClient mockClient = Mockito.mock(HttpClient.class);
         HttpResponse<String> mockResponse = createMockResponse();
 
-        when(mockResponse.statusCode()).thenReturn(400);  // Simulate a client error response
+        when(mockResponse.statusCode()).thenReturn(400);
         when(mockResponse.body()).thenReturn("Error response body");
 
         when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
