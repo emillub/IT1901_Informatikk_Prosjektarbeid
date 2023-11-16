@@ -1,0 +1,5 @@
+bookapp/core/BookComparator.class
+bookapp/core/User.class
+module-info.class
+bookapp/core/Book.class
+bookapp/core/BookReview.class

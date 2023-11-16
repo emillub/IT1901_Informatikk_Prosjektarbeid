@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 
 public class RemoteBookappModelAccessTest {
 
-
     // Helper method to create a mock HttpResponse<String>
     private static HttpResponse<String> createMockResponse() {
         @SuppressWarnings("unchecked")  // Suppress the unchecked warning
@@ -39,6 +38,25 @@ public class RemoteBookappModelAccessTest {
             .thenReturn(mockResponse);
 
         RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
+
+        assertThrows(RuntimeException.class, () -> access.fetchlibrary());
+    }
+
+    @Test
+    public void testDeleteReviewErrorResponse() throws IOException, InterruptedException {
+
+        HttpClient mockClient = Mockito.mock(HttpClient.class);
+        HttpResponse<String> mockResponse = createMockResponse();
+
+        when(mockResponse.statusCode()).thenReturn(400);
+        when(mockResponse.body()).thenReturn("Error response body");
+
+        when(mockClient.send(any(HttpRequest.class), Mockito.<HttpResponse.BodyHandler<String>>any()))
+            .thenReturn(mockResponse);
+
+        RemoteBookappModelAccess access = new RemoteBookappModelAccess(mockClient);
+
+        //Response is already configured, only to make method to function
         String book = "Sample Book";
         BookReview review = new BookReview( new Book("Example Book Title", "Example Author"), new User("John Dough"), 5); 
         List<Book> bookList = List.of(new Book("Book Title 1", "Author 1"), new Book("Book Title 2", "Author 2"));

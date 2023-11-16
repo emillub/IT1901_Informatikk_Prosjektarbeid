@@ -26,14 +26,12 @@ public class BookappModelController{
     @Autowired
     FileHandlerService fhs;
 
-    //GET for the entire list of entities in the JSON file
     @GetMapping("/fetchList")
     public List<Book> getBook(){
             List<Book> bookList = FileHandler.readBooksFromFile();
             return bookList;
     }
 
-    // POST a new review for a book
     @PostMapping("/post/{bookName}")
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
         List<Book> bookList = FileHandler.readBooksFromFile();
@@ -49,8 +47,6 @@ public class BookappModelController{
         return ResponseEntity.notFound().build();
     }
 
-
-    // DELETE a review for a book
     @DeleteMapping("/delete/{bookName}/{reviewer}")
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
         String userString = reviewer.replace("%20", " ");
@@ -71,7 +67,6 @@ public class BookappModelController{
         
         Predicate<BookReview> matchingReviewer = r -> r.getReviewer().getName().equals(userString);
         Optional<BookReview> optionalReview = book.getReviews().stream().filter(matchingReviewer).findFirst();
-        // System.out.println("Looking for review: " +booklist.get(0).getReviews().toString());
 
         if (optionalReview.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -85,7 +80,6 @@ public class BookappModelController{
     
     @PutMapping("/updatelibrary")
     public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
-        //Assuming I can use booklist as a list of book objects
         System.out.println(booklist);
         for (Book book:booklist){
                 fhs.updateBookInLibrary(book);

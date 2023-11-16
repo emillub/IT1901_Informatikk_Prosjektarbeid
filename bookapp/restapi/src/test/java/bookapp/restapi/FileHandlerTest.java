@@ -16,7 +16,6 @@ import java.util.NoSuchElementException;
 
 public class FileHandlerTest {
 
-
     @Test void testGetFilePath(){
         String expectedEndOFPath = "bookapp/restapi/Library.json";
         assertTrue(FileHandler.getDefaultFilePath().endsWith(expectedEndOFPath));

@@ -1,0 +1,4 @@
+#Thu Nov 16 11:08:05 CET 2023
+configuration*?=46A728B7A5F0AC9F636F46CC3FD906A29CBA4DDC
+module-resource*?\:checkstyle-suppressions.xml=DEFE58CC34AFFD98EED44D8DB3A4643E86F459A
+module-resource*?\:checkstyle-xpath-suppressions.xml=18E1E60F50EA731B6CB12A33F57D76C0C854E0B1

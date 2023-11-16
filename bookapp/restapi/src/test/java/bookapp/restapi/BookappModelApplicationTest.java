@@ -38,7 +38,7 @@ public class BookappModelApplicationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private FileHandlerService fileHandlerService; // Mock the FileHandlerService
+    private FileHandlerService fileHandlerService; 
 
     private Book book;
     private List<Book> bookList;
@@ -46,15 +46,14 @@ public class BookappModelApplicationTest {
     
     @BeforeEach
     private void setUp(){
-        // // Sample data
+        //Sample data
         book = new Book("Sample book", "Author");
         bookList = Arrays.asList(book);
         user = new User("Sample User");
         given(fileHandlerService.readBooksFromFile()).willReturn(bookList);
-        // // Setup mock behavior of FileHandlerService
+        //Setup mock behavior of FileHandlerService
     }
     
-    // Test for GET request
     @Test
     public void getBooksTest() throws Exception {
         // Perform GET request and verify outcome
@@ -64,13 +63,11 @@ public class BookappModelApplicationTest {
         .andExpect(jsonPath("$[0].title", Matchers.equalTo(book.getTitle())));
     }
     
-    // Test for POST request
     @Test
     public void postReviewTest() throws Exception {
         String jsonPayload = "{\"reviewer\":{\"name\":\"User\"},\"rating\":2}";
-        // // No need to mock 'updateBookInLibrary' if it returns void, just verify it's called later
-        
-        // // Perform POST request and verify outcome
+        //No need to mock 'updateBookInLibrary' if it returns void, just verify it's called later
+        //Perform POST request and verify outcome
         mockMvc.perform(post("/api/books/post/"+book.getTitle().replace(" ", "%20"))
         .contentType(MediaType.APPLICATION_JSON)
         .content(jsonPayload))
@@ -100,7 +97,6 @@ public class BookappModelApplicationTest {
         //Test book not found
         mockMvc.perform(delete("/api/books/delete/{bookName}/{reviewer}","wrongbook",userString))
         .andExpect(status().isNotFound());
-        
         //Test review found
         new BookReview(book,user,2);
         mockMvc.perform(delete("/api/books/delete/{bookName}/{reviewer}",bookString,userString))

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="nb"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">fxui</a> &gt; <a href="index.source.html" class="el_package">bookapp.fxui</a> &gt; <span class="el_source">AppController.java</span></div><h1>AppController.java</h1><pre class="source lang-java linenums">package bookapp.fxui;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import bookapp.core.User;
+import bookapp.core.BookReview;
+import bookapp.core.Book;
+import bookapp.core.BookComparator;
+
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+
+
+<span class="fc" id="L26">public class AppController {</span>
+
+    @FXML
+    private Button loginbutton, vurderButton, deleteReviewButton;
+
+    @FXML
+    private Label mainwindow;
+
+    @FXML 
+    private TextField nameTextField;
+
+    @FXML
+    private Text markedBookText,userNameText;
+
+    @FXML
+    private ChoiceBox&lt;Integer&gt; rateChoiceBox;
+    @FXML
+    private ChoiceBox&lt;String&gt; sortChoiceBox;
+
+    @FXML
+    private ListView&lt;BookReview&gt; reviewListView;
+
+    @FXML
+    private ListView&lt;Object&gt; bookListView;
+
+    @FXML
+    private AnchorPane mainPane,loginPane;
+
+    @FXML
+    private HBox vurderHBox;
+
+
+    private User user;
+    
+<span class="fc" id="L60">    private ArrayList&lt;Book&gt; bookList = new ArrayList&lt;Book&gt;();</span>
+
+    private RemoteBookappModelAccess controller;
+    private Book selectedBook;
+    private BookReview selectedBookReview;
+
+    @FXML public void initialize(){
+<span class="fc" id="L67">        controller = new RemoteBookappModelAccess();</span>
+<span class="fc" id="L68">        rateChoiceBox.setItems(FXCollections.observableArrayList(BookReview.RATING_RANGE));</span>
+<span class="fc" id="L69">        rateChoiceBox.setValue(BookReview.RATING_RANGE[0]);</span>
+<span class="fc" id="L70">        sortChoiceBox.setItems(FXCollections.observableArrayList(Arrays.asList(BookComparator.BOOK_TITLE,BookComparator.AUTHOR_NAME,BookComparator.RATING)));</span>
+<span class="fc" id="L71">        sortChoiceBox.setValue(BookComparator.BOOK_TITLE);</span>
+<span class="fc" id="L72">        loginPane.setVisible(true);</span>
+<span class="fc" id="L73">        mainPane.setVisible(false);</span>
+<span class="fc" id="L74">    }</span>
+    
+    @FXML private void loginButtonClick(){ 
+        try{
+<span class="fc" id="L78">            user = getUser();</span>
+<span class="fc" id="L79">            userNameText.setText(&quot;Innlogget som: &quot; + user.getName());</span>
+<span class="fc" id="L80">            loadLibrary();</span>
+<span class="fc" id="L81">            updateVurderHbox();</span>
+<span class="fc" id="L82">            loginPane.setVisible(false);</span>
+<span class="fc" id="L83">            mainPane.setVisible(true);</span>
+        }
+<span class="fc" id="L85">        catch(IllegalArgumentException e){</span>
+<span class="fc" id="L86">            displayError(&quot;Invalid username&quot;,e);</span>
+<span class="fc" id="L87">        }</span>
+<span class="fc" id="L88">    }</span>
+
+    @FXML private void bookListViewClicked(){
+<span class="fc" id="L91">        Object selectedItem = bookListView.getSelectionModel().getSelectedItem();</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">        if (selectedItem != null &amp;&amp; selectedItem != selectedBook){</span>
+<span class="fc" id="L93">            selectedBookReview = null;</span>
+<span class="fc" id="L94">            selectedBook = (Book) selectedItem;</span>
+<span class="fc" id="L95">            updateVurderHbox();</span>
+<span class="fc" id="L96">            updateMarkedBookText(selectedBook.getTitle());</span>
+<span class="fc" id="L97">            updateReviewListView();</span>
+        }
+<span class="fc" id="L99">    }</span>
+    @FXML private void reviewListViewClicked(){
+<span class="fc" id="L101">        Object selectedItem = reviewListView.getSelectionModel().getSelectedItem();</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">        if (selectedItem != null &amp;&amp; selectedItem != selectedBookReview){</span>
+<span class="fc" id="L103">            selectedBookReview = (BookReview) selectedItem;</span>
+<span class="fc" id="L104">            updateVurderHbox();</span>
+<span class="fc" id="L105">            updateReviewListView();</span>
+        }
+<span class="fc" id="L107">    }</span>
+
+    @FXML private void vurderButtonClicked(){
+<span class="fc" id="L110">        var rating = rateChoiceBox.getSelectionModel().getSelectedItem();</span>
+<span class="fc" id="L111">        addReview(user, selectedBook, (int)rating);</span>
+<span class="fc" id="L112">        updateReviewListView();</span>
+<span class="fc" id="L113">        updateBookListView();</span>
+<span class="fc" id="L114">        saveLibrary();</span>
+<span class="fc" id="L115">    }</span>
+
+    @FXML private void deleteReviewButtonClick(){
+<span class="fc" id="L118">        delete(selectedBook, selectedBookReview);</span>
+<span class="fc" id="L119">        updateReviewListView();</span>
+<span class="fc" id="L120">        updateBookListView();</span>
+<span class="fc" id="L121">        selectedBookReview = null;</span>
+<span class="fc" id="L122">        updateVurderHbox();</span>
+<span class="fc" id="L123">        saveLibrary();</span>
+<span class="fc" id="L124">    }</span>
+
+    @FXML private void sortChoiceBoxClick(){
+<span class="fc" id="L127">        updateBookListView();</span>
+<span class="fc" id="L128">    }</span>
+
+   
+    private void loadLibrary(){
+<span class="fc" id="L132">        List&lt;Book&gt; loadedBooks = controller.fetchlibrary();</span>
+<span class="fc" id="L133">        bookList.addAll(loadedBooks);</span>
+<span class="fc" id="L134">        updateBookListView();</span>
+<span class="fc" id="L135">    } </span>
+
+    //Delete review through HTTP request
+    private void delete(Book book, BookReview bookreview){
+<span class="fc" id="L139">        String bookname = book.getTitle();</span>
+<span class="fc" id="L140">        book.deleteReview(bookreview);</span>
+<span class="fc" id="L141">        controller.deleteReview(bookname, bookreview); </span>
+<span class="fc" id="L142">        updateBookListView();</span>
+<span class="fc" id="L143">    }</span>
+    
+    //Add review through HTTP request
+    private void addReview(User user, Book book, int rating){
+        try {
+<span class="fc" id="L148">            BookReview review = new BookReview(book, user, rating);</span>
+<span class="fc" id="L149">            controller.addReview(book.getTitle(), review);</span>
+<span class="fc" id="L150">            updateBookListView();</span>
+<span class="fc" id="L151">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L152">            displayError(&quot;Already reviewed book&quot;, e);</span>
+<span class="fc" id="L153">        }</span>
+<span class="fc" id="L154">    }</span>
+
+    //Save library through HTTP method
+    private void saveLibrary(){
+<span class="fc" id="L158">        List&lt;Book&gt; listofbooks = new ArrayList&lt;Book&gt;();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (Book book : bookList){</span>
+<span class="fc" id="L160">            listofbooks.add(book);</span>
+<span class="fc" id="L161">        }</span>
+<span class="fc" id="L162">        controller.update(listofbooks);</span>
+<span class="fc" id="L163">    }</span>
+
+    private User getUser() throws IllegalArgumentException{ 
+<span class="fc" id="L166">        String name = nameTextField.getText();</span>
+<span class="fc" id="L167">        return new User(name);</span>
+    }
+
+    private void updateBookListView(){
+<span class="fc" id="L171">        bookList.sort(new BookComparator(sortChoiceBox.getValue()));</span>
+<span class="fc" id="L172">        bookListView.setItems(FXCollections.observableArrayList(bookList));    </span>
+<span class="fc" id="L173">    }</span>
+
+    private void updateReviewListView(){
+<span class="fc" id="L176">        reviewListView.setItems(FXCollections.observableArrayList(selectedBook.getReviews()));</span>
+<span class="fc" id="L177">    }</span>
+
+    private void updateMarkedBookText(String bookTitle){
+<span class="fc" id="L180">        markedBookText.setText(&quot;Markert bok: &quot; + bookTitle);</span>
+<span class="fc" id="L181">    }</span>
+
+    private void updateVurderHbox(){
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (selectedBook == null){</span>
+<span class="fc" id="L185">            vurderHBox.setDisable(true);</span>
+        } else {
+<span class="fc" id="L187">            vurderHBox.setDisable(false);</span>
+        }
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">        if (selectedBookReview == null || !selectedBookReview.getReviewer().getName().equals(user.getName())){</span>
+<span class="fc" id="L190">            deleteReviewButton.setDisable(true);</span>
+        } else {
+<span class="fc" id="L192">            deleteReviewButton.setDisable(false);</span>
+        }
+<span class="fc" id="L194">    }</span>
+
+    private void displayError(String errorName,Exception e){
+<span class="fc" id="L197">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="fc" id="L198">        alert.setTitle(&quot;Error Dialog&quot;);</span>
+<span class="fc" id="L199">        alert.setHeaderText(errorName);</span>
+<span class="fc" id="L200">        alert.setContentText(e.getMessage());             </span>
+<span class="fc" id="L201">        alert.showAndWait();</span>
+<span class="fc" id="L202">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
