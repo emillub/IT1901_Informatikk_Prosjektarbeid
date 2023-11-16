@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import bookapp.core.Book;
 import bookapp.core.BookReview;
@@ -25,34 +23,46 @@ public class BookappModelController{
 
     @Autowired
     FileHandlerService fhs;
+    protected final static String GET_ADRESS = "/fetchList";
+    protected final static String POST_ADRESS = "/post/{bookName}";
+    protected final static String DELETE_ADRESS = "/delete/{bookName}/{reviewer}";
+    protected final static String PUT_ADRESS = "/updatelibrary";
 
-    @GetMapping("/fetchList")
-    public List<Book> getBook(){
-            List<Book> bookList = FileHandler.readBooksFromFile();
+    protected final static String POST_OK_STATUS = "Review successfully added";
+    protected final static String DELETE_OK_STATUS = "Review deleted";
+    protected final static String PUT_OK_STATUS = "Successfully updated library";
+    
+    //GET for the entire list of entities in the JSON file
+    @GetMapping(GET_ADRESS)
+    public List<Book> getLibrary(){
+            List<Book> bookList = fhs.readBooksFromFile();
             return bookList;
     }
 
-    @PostMapping("/post/{bookName}")
+    // POST a new review for a book
+    @PostMapping(POST_ADRESS)
     public ResponseEntity<String> postReview(@PathVariable String bookName, @RequestBody BookReview review) {
-        List<Book> bookList = FileHandler.readBooksFromFile();
+        List<Book> bookList = fhs.readBooksFromFile();
         String updatedName = bookName.replace("%20", " ");
 
         for (Book book : bookList){
             if(book.getTitle().equals(updatedName)){
                 book.addReview(review);
                 fhs.updateBookInLibrary(book);
-                return ResponseEntity.ok("Review sucessfully added");
+                return ResponseEntity.ok(POST_OK_STATUS);
             }
         }
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{bookName}/{reviewer}")
+
+    // DELETE a review for a book
+    @DeleteMapping(DELETE_ADRESS)
     public ResponseEntity<String> deleteReview(@PathVariable("bookName") String bookName, @PathVariable("reviewer") String reviewer) {
         String userString = reviewer.replace("%20", " ");
         String bookString = bookName.replace("%20", " ");
 
-        List<Book> bookList = FileHandler.readBooksFromFile();
+        List<Book> bookList = fhs.readBooksFromFile();
         
         Predicate<Book> matchingName = b -> b.getTitle().equals(bookString);
         Optional<Book> wantedBook = bookList.stream()
@@ -75,16 +85,15 @@ public class BookappModelController{
         BookReview bookReview = optionalReview.get();
         book.deleteReview(bookReview);
         fhs.updateBookInLibrary(book);
-        return ResponseEntity.ok("review by " + reviewer + " deleted");
+        return ResponseEntity.ok(DELETE_OK_STATUS);
         }
     
-    @PutMapping("/updatelibrary")
-    public ResponseEntity<String> updateLibrary(@RequestBody List<Book> booklist){
-        System.out.println(booklist);
-        for (Book book:booklist){
+    @PutMapping(PUT_ADRESS)
+    public ResponseEntity<String> updateLibrary(@RequestBody List<Book> bookList){
+        for (Book book:bookList){
                 fhs.updateBookInLibrary(book);
             }
-        return ResponseEntity.ok("Sucessfully updated library");
+        return ResponseEntity.ok(PUT_OK_STATUS);
     }
     }
 
