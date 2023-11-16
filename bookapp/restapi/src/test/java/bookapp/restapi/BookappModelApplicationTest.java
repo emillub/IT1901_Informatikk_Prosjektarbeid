@@ -29,7 +29,7 @@ public class BookappModelApplicationTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private FileHandlerService fileHandlerService; // Mock the FileHandlerService
+    private FileHandlerService fileHandlerService; 
 
     private final String ADRESS_BASE = "/api/books";
     private final String GET_ADRESS = ADRESS_BASE+BookappModelController.GET_ADRESS;;
@@ -43,14 +43,13 @@ public class BookappModelApplicationTest {
     
     @BeforeEach
     private void setUp(){
-        // // Sample data
+        //Sample data
         book = new Book("Sample book", "Author");
         bookList = Arrays.asList(book);
         user = new User("Sample User");
         given(fileHandlerService.readBooksFromFile()).willReturn(bookList);
     }
     
-    // Test for GET request
     @Test
     public void getLibraryTest() throws Exception {
         mockMvc.perform(get(GET_ADRESS))
@@ -59,7 +58,6 @@ public class BookappModelApplicationTest {
         .andExpect(jsonPath("$[0].title", Matchers.equalTo(book.getTitle())));
     }
     
-    // Test for POST request
     @Test
     public void postReviewTest() throws Exception {
         String bookString = book.getTitle().replace(" ", "%20");
@@ -95,7 +93,6 @@ public class BookappModelApplicationTest {
         //Test book not found
         mockMvc.perform(delete(DELETE_ADRESS,"wrongbook",userString))
         .andExpect(status().isNotFound());
-        
         //Test review found
         new BookReview(book,user,2);
         mockMvc.perform(delete(DELETE_ADRESS,bookString,userString))

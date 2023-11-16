@@ -35,6 +35,9 @@ We have implemented our own restAPI which handles HTTP messages. This is done th
 * ```updateLibrary()```
   * This function is used to update the library in the database, takes no parameters and returns nothing.
 
+These methods are structured in a similar fashion with the methods first creating a new HTTP request and 
+a new client that sends the request. The body of the HTTP messages determine the format of the message sent and the URI is specified in the URI field. This allows for fluent communication between the client side and server side.
+
 ## Overview - Releases
 
 1. Release 2 - Writing to File Using Jackson Library

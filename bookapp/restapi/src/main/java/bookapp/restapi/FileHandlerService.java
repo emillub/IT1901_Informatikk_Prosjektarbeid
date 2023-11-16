@@ -6,20 +6,18 @@ import bookapp.core.BookReview;
 
 import java.util.List;
 
+// Wraps the static methods in FileHandler: readBooksFromFile, updateBookInLibrary and getBookFromLibrary
 @Service
 public class FileHandlerService {
 
-    // Wraps the readBooksFromFile static method
     public List<Book> readBooksFromFile() {
         return FileHandler.readBooksFromFile();
     }
 
-    // Wraps the updateBookInLibrary static method
     public void updateBookInLibrary(Book book) {
         FileHandler.updateBookInLibrary(book);
     }
 
-    // Wraps the getBookFromLibrary static method
     public Book getBookFromLibrary(Book book, List<Book> booksInLibrary) {
         return FileHandler.getBookFromLibrary(book, booksInLibrary);
     }
