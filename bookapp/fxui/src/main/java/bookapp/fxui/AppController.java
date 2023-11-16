@@ -115,7 +115,7 @@ public class AppController {
     }
 
     @FXML private void deleteReviewButtonClick(){
-        delete(selectedBook, selectedBookReview);
+        deleteReview(selectedBook, selectedBookReview);
         updateReviewListView();
         updateBookListView();
         selectedBookReview = null;
@@ -135,7 +135,7 @@ public class AppController {
     } 
 
     //Delete review through HTTP request
-    private void delete(Book book, BookReview bookreview){
+    private void deleteReview(Book book, BookReview bookreview){
         String bookname = book.getTitle();
         book.deleteReview(bookreview);
         controller.deleteReview(bookname, bookreview); 
