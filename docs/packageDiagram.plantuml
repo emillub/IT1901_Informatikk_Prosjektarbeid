@@ -13,11 +13,14 @@ component restapi {
     package bookapp.json #FFFCCC
 }
 
+component jackson {
+}
 
 ''Relationships
 bookapp.fxui ..> bookapp.core
 bookapp.restapi ..> bookapp.core
 bookapp.restapi ..> bookapp.json
 bookapp.fxui <..> bookapp.restapi
+bookapp.json ..> jackson
 
 @enduml
